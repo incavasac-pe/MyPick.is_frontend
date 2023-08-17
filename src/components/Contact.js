@@ -97,7 +97,7 @@ const Contact = () => {
                 </div>
                 <div className="col-md-6">
                   <div className="form-group">
-                    <label htmlFor="name" className='font-family-SpaceGrotesk-Medium'>Complete Name</label>
+                    <label  className='font-family-SpaceGrotesk-Medium'>Complete Name</label>
                     <input
                       type="text"
                       className={`form-control ${
@@ -115,7 +115,7 @@ const Contact = () => {
                 </div>
                 <div className="col-md-6">
                   <div className="form-group">
-                    <label htmlFor="email" className='font-family-SpaceGrotesk-Medium'>Email</label>
+                    <label  className='font-family-SpaceGrotesk-Medium'>Email</label>
                     <input
                       type="email"
                       className={`form-control ${
@@ -133,7 +133,7 @@ const Contact = () => {
                 </div>
                 <div className="col-md-12">
                   <div className="form-group">
-                    <label htmlFor="subject" className='font-family-SpaceGrotesk-Medium'>Subject</label>
+                    <label  className='font-family-SpaceGrotesk-Medium'>Subject</label>
                     <input
                       type="text"
                       className={`form-control ${
@@ -153,7 +153,7 @@ const Contact = () => {
                 </div>
                 <div className="col-md-12">
                   <div className="form-group">
-                    <label htmlFor="description" className='font-family-SpaceGrotesk-Medium'>Description</label>
+                    <label className='font-family-SpaceGrotesk-Medium'>Description</label>
                     <textarea
                       className={`form-control ${
                         formErrors.description ? "is-invalid" : ""
@@ -187,7 +187,7 @@ const Contact = () => {
                       checked={formData.privacyPolicy}
                       onChange={handleChange}
                     />
-                    <label className="font-family-SpaceGrotesk-Medium custom-control-label" htmlFor="privacyPolicy">
+                    <label className="font-family-SpaceGrotesk-Medium custom-control-label"  >
                       I Agree To The <a href='#terminos' className='text-morado'>Terms And Conditions</a> and <a href='#politica' className='text-morado'>Privacy Policy</a>
                     </label>
                     {formErrors.privacyPolicy && (

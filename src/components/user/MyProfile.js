@@ -77,8 +77,8 @@ const MyProfile = () => {
         </div>
         <div className='col-md-6 mb-4'>
             <div className='box-acordeon'>
-              <h2 class="font-family-SpaceGrotesk-SemiBold text-white">
-                Personal Information <button onClick={handleEdit} className='btn-editar'><i class="fas fa-pencil"></i> Edit</button>
+              <h2 className="font-family-SpaceGrotesk-SemiBold text-white">
+                Personal Information <button onClick={handleEdit} className='btn-editar'><i className="fas fa-pencil"></i> Edit</button>
               </h2>
               <div className='box-editar p-4'>
                 {!isEditing ? (
@@ -139,7 +139,7 @@ const MyProfile = () => {
         </div>
         <div className='col-md-6 mb-4'>
           <div className='box-acordeon'>
-            <h2 class="font-family-SpaceGrotesk-SemiBold text-white">
+            <h2 className="font-family-SpaceGrotesk-SemiBold text-white">
               Profile Picture
             </h2>
             <div className='box-editar p-4'>
@@ -173,8 +173,8 @@ const MyProfile = () => {
         </div>
         <div className='col-md-12 mb-4'>
           <div className='box-acordeon'>
-            <h2 class="font-family-SpaceGrotesk-SemiBold text-white">
-              Password <button onClick={handleEditPassword} className='btn-editar'><i class="fas fa-pencil"></i> Edit</button>
+            <h2 className="font-family-SpaceGrotesk-SemiBold text-white">
+              Password <button onClick={handleEditPassword} className='btn-editar'><i className="fas fa-pencil"></i> Edit</button>
             </h2>
             <div className='box-editar p-4' style={{ minHeight: 'auto' }}>
               <p className='text-gris-claro'>
@@ -242,7 +242,7 @@ const MyProfile = () => {
         </div>
         <div className='col-md-12 mb-4'>
           <div className='box-acordeon'>
-            <h2 class="font-family-SpaceGrotesk-SemiBold text-white mb-0">
+            <h2 className="font-family-SpaceGrotesk-SemiBold text-white mb-0">
               Picks History
             </h2>
             <div className='box-editar'>

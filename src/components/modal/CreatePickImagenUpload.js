@@ -43,7 +43,7 @@ const CreatePickImagenUpload = () => {
             style={{ display: 'none' }}
             onChange={handleImageChange1}
             />
-            <label htmlFor="fileInput1" style={{ display: 'block' }} className='uploadPick'>
+            <label   style={{ display: 'block' }} className='uploadPick'>
             {image1 ? (
                 <img src={image1} alt="Pick"/>
             ) : (
@@ -68,7 +68,7 @@ const CreatePickImagenUpload = () => {
             style={{ display: 'none' }}
             onChange={handleImageChange2}
             />
-            <label htmlFor="fileInput2" style={{ display: 'block' }} className='uploadPick'>
+            <label   style={{ display: 'block' }} className='uploadPick'>
             {image2 ? (
                 <img src={image2} alt="Pick" />
             ) : (
