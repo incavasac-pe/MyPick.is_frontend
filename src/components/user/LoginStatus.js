@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState,  useEffect } from 'react';
+import { useNavigate  } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const LoginStatus = () => {
+  
   const [loggedIn, setLoggedIn] = useState(false); // Estado de inicio de sesión
   const [user, setUser] = useState(null); // Información del usuario
   const [errors, setErrors] = useState({});
- 
+  const [showModal, setShowModal] = useState(false);
+  
   const navigate = useNavigate(); // Hook de navegación
 
   const handleLogin = (e) => {
@@ -36,17 +38,19 @@ const LoginStatus = () => {
         .then(data => { 
           if(data.error){        
               toast.error(data.msg);
-          } else {           
+          } else {     
+               // Lógica para iniciar sesión      
             setErrors({});
             setEmail('');
-            setPassword('');
-           
-            setMostrarCuadro1(false);
-            // Lógica para iniciar sesión
-            navigate('/MyProfile'); // Redirigir al usuario a la página de perfil
-            setLoggedIn(true); 
-            setUser({ name: data.data.user.full_name, photo: require('../img/user.jpg'), email: data.data.user.email,token:data.data.token});
-        }
+            setPassword('');             
+            setShowModal(false);
+               if (data.data.token) {             
+                 setLoggedIn(true); 
+                 setUser({ name: data.data.user.full_name, photo: require('../img/user.jpg'), email: data.data.user.email,token:data.data.token});
+                 localStorage.setItem('user', JSON.stringify({ name: data.data.user.full_name, photo: require('../img/user.jpg'), email: data.data.user.email,token:data.data.token}));
+                 navigate('/MyProfile'); // Redirigir al usuario a la página de perfil
+                }  
+           }
         })
         .catch(error => {
           // Manejar cualquier error de la solicitud           
@@ -59,12 +63,15 @@ const LoginStatus = () => {
     }
   };
 
-
+  const handleButtonClick = () => {
+    setShowModal(true);
+  };
+ 
   const [mostrarCuadro1, setMostrarCuadro1] = useState(true);
   const [mostrarCuadro2, setMostrarCuadro2] = useState(false);
   const [mostrarCuadro3, setMostrarCuadro3] = useState(false);
 
-  const mostrarCuadro = (cuadro) => {
+  const mostrarCuadro = (cuadro) => {   
     if (cuadro === 'cuadro1') {
       setMostrarCuadro1(true);
       setMostrarCuadro2(false);
@@ -82,6 +89,7 @@ const LoginStatus = () => {
 
   const handleLogout = () => {
     // Lógica para cerrar sesión
+    localStorage.removeItem('user');
     setLoggedIn(false);
     setUser(null);
     navigate('/');
@@ -141,13 +149,13 @@ const LoginStatus = () => {
                 
             ) : (
               // Mostrar botón de inicio de sesión si no ha iniciado sesión
-              <button data-toggle="modal" data-target="#ModaLogin" className='btn-login font-family-SpaceGrotesk-Bold'>Sign In / Sign up</button>
+              <button data-toggle="modal" data-target="#ModaLogin"  onClick={handleButtonClick}  className='btn-login font-family-SpaceGrotesk-Bold'>Sign In / Sign up</button>
             )}
           </li>
         </ul>
       </nav>
 
-      <div className="modal fade" id="ModaLogin">
+      {showModal && (  <div className="modal fade" id="ModaLogin" >
         <div className="modal-dialog modal-md">
           <div className="modal-content">        
             <div className="modal-body p-0">
@@ -322,6 +330,7 @@ const LoginStatus = () => {
           </div>
         </div>
       </div>
+         )}
     </div>
   );
 };
