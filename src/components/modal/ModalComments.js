@@ -23,7 +23,7 @@ class ModalComments extends Component {
                 </p>
                 <form>
                     <div className="form-group">
-                    <label for="magic">Pick Name</label>
+                    <label>Pick Name</label>
                     <input
                         type="text"
                         className="form-control"
@@ -34,7 +34,7 @@ class ModalComments extends Component {
                     <span className="icon fas fa-magic fa-lg"></span>
                     </div>
                     <div className="align-items-center d-flex form-group justify-content-center select-topic">
-                    <label for="topic">Select Topic</label>
+                    <label >Select Topic</label>
                     <span className="icon fas fa-check-double fa-lg"></span>
                     <select className="form-control" id="topic" name="topic">
                         <option selected className="d-none">

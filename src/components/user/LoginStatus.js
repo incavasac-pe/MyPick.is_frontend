@@ -170,19 +170,19 @@ const LoginStatus = () => {
                         {/* Campos de inicio de sesión */}                       
                         <div className="form-group">
                        
-                            <label for="email">Email</label>
+                            <label >Email</label>
                             <input type="email"  
                              className={`form-control ${errors.email ? "is-invalid" : ""}`} placeholder="Email Address" id="email" name="email" value={email}  onChange={(e) => setEmail(e.target.value)}/>
                             <span className='icon far fa-envelope fa-lg'></span>
                             {errors.email &&  <div className="invalid-feedback">{errors.email}</div>}                           
                         </div>
                         <div className="form-group">
-                            <label for="password">Contraseña</label>
+                            <label >Contraseña</label>
                             <input type={showPassword ? 'text' : 'password'} id="password"  className={`form-control ${errors.password ? "is-invalid" : ""}`} name='password' value={password}  onChange={(e) => setPassword(e.target.value)}placeholder='Password'/>
                               <span className='icon far fa-lock-alt fa-lg'></span>
                             {errors.password &&  <div className="invalid-feedback">{errors.password}</div>} 
                             <button type='button' className='icono' onClick={handleTogglePassword}>
-                                {showPassword ? (
+                                {showPassword  ? (
                                     <i className="fas fa-eye-slash"></i>
                                 ) : (
                                     <i className="fas fa-eye"></i>
@@ -248,7 +248,7 @@ const LoginStatus = () => {
                           <span className='icon far fa-envelope fa-lg'></span>
                         </div>
                         <div className="form-group">
-                            <label for="password">Contraseña</label>
+                            <label >Contraseña</label>
                             <input type={showPassword ? 'text' : 'password'} id="password" name='password' value={password} placeholder='Password'/>
                             <span className='icon far fa-lock-alt fa-lg'></span>
                             <button type='button' className='icono' onClick={handleTogglePassword}>

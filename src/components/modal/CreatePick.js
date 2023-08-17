@@ -32,7 +32,7 @@ const CreatePick = () => {
               </p>
               <form>                
                 <div className="align-items-center d-flex form-group justify-content-center select-topic mb-5">
-                  <label for="topic">Select Topic</label>
+                  <label>Select Topic</label>
                   <span className="icon fas fa-magic fa-lg"></span>                  
                   <select className="form-control" id="topic" name="topic">
                     <option selected className="d-none">

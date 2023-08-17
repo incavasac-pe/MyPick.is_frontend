@@ -171,10 +171,7 @@ const Contact = () => {
                     )}
                   </div>
                 </div>
-                {/* <div class="custom-control custom-checkbox mr-sm-2">
-                  <input type="checkbox" class="custom-control-input" id="customControlAutosizing" />
-                  <label class="custom-control-label" for="customControlAutosizing">Remember my preference</label>
-                </div> */}
+            
                 <div className="col-md-12">
                   <div className="form-group form-check custom-control custom-checkbox">
                     <input
