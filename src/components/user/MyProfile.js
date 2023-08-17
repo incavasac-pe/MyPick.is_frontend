@@ -1,12 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
+import { useLocation  } from 'react-router-dom';
 import PickHistory from './PickHistory';
 
 
 const MyProfile = () => {
+  const location = useLocation();
   const [isEditing, setIsEditing] = useState(false);
-  const [name, setName] = useState('Cary Wong');
-  const [email, setEmail] = useState('example@gmail.com');
-  const [nick] = useState('(cawong)');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');  
+  const [nick] = useState('');
+  
+  useEffect(() => {
+ 
+    const body = document.body; 
+    if (location.state && location.state.modalOpen) {
+      body.classList.add('modal-open'); 
+    } else {
+      body.classList.remove('modal-open');    
+    }
+    removeModalBackdropClass();
+
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);     
+      setName (parsedUser.name)
+      setEmail(parsedUser.email)
+    }
+  }, [location.state]);
+ 
+  const removeModalBackdropClass = () => {
+    const modalBackdrop = document.querySelector('.modal-backdrop');
+    if (modalBackdrop) {
+      modalBackdrop.classList.remove('modal-backdrop','fade', 'show');
+    }
+  };
+
 
 
   // const [password, setPassword] = useState('password123');
@@ -77,13 +105,14 @@ const MyProfile = () => {
         </div>
         <div className='col-md-6 mb-4'>
             <div className='box-acordeon'>
-              <h2 class="font-family-SpaceGrotesk-SemiBold text-white">
-                Personal Information <button onClick={handleEdit} className='btn-editar'><i class="fas fa-pencil"></i> Edit</button>
+              <h2 className="font-family-SpaceGrotesk-SemiBold text-white">
+                Personal Information <button onClick={handleEdit} className='btn-editar'><i className="fas fa-pencil"></i> Edit</button>
               </h2>
               <div className='box-editar p-4'>
                 {!isEditing ? (
                   <div className='text-white'>
                     <table className='table table-borderless text-white mb-0'>
+                    <tbody>
                       <tr>
                         <td className='text-gris-claro font-family-Inter-SemiBold'>Name</td>
                         <td className='font-family-Inter-Medium'>
@@ -93,7 +122,7 @@ const MyProfile = () => {
                       <tr>
                         <td className='text-gris-claro font-family-Inter-SemiBold'>Email</td>
                         <td className='font-family-Inter-Medium font-family-Inter-Medium'>
-                          {email}
+                        {email}
                         </td>
                       </tr>
                       <tr>
@@ -104,11 +133,13 @@ const MyProfile = () => {
                           </div>
                         </td>
                       </tr>
+                      </tbody>
                     </table>          
                   </div>
                 ) : (
                   <form>
                     <table className='table table-borderless text-white table-edit mb-0'>  
+                    <tbody>
                       <tr>
                         <td className='text-gris-claro font-family-Inter-SemiBold'>
                           <label>Name:</label>
@@ -131,6 +162,7 @@ const MyProfile = () => {
                           <button onClick={handleSave} className='btn-profile-edit'>Save</button>
                         </td>
                       </tr>
+                      </tbody>
                     </table>
                   </form>                  
                 )}
@@ -139,7 +171,7 @@ const MyProfile = () => {
         </div>
         <div className='col-md-6 mb-4'>
           <div className='box-acordeon'>
-            <h2 class="font-family-SpaceGrotesk-SemiBold text-white">
+            <h2 className="font-family-SpaceGrotesk-SemiBold text-white">
               Profile Picture
             </h2>
             <div className='box-editar p-4'>
@@ -173,8 +205,8 @@ const MyProfile = () => {
         </div>
         <div className='col-md-12 mb-4'>
           <div className='box-acordeon'>
-            <h2 class="font-family-SpaceGrotesk-SemiBold text-white">
-              Password <button onClick={handleEditPassword} className='btn-editar'><i class="fas fa-pencil"></i> Edit</button>
+            <h2 className="font-family-SpaceGrotesk-SemiBold text-white">
+              Password <button onClick={handleEditPassword} className='btn-editar'><i className="fas fa-pencil"></i> Edit</button>
             </h2>
             <div className='box-editar p-4' style={{ minHeight: 'auto' }}>
               <p className='text-gris-claro'>
@@ -183,12 +215,14 @@ const MyProfile = () => {
             {!showChangePassword && ( 
               <div>
                 <table className='table table-borderless text-white table-edit mb-0 w-auto'>
+                <tbody>
                   <tr>
                     <td className='text-gris-claro'>Password</td>
                     <td className='text-white'>
                       ********
                     </td>
                   </tr>
+                  </tbody>
                 </table>
               </div>
             )}
@@ -199,16 +233,19 @@ const MyProfile = () => {
                   <div className='row'>
                     <div className='col-md-6'>
                       <table className='table table-borderless text-white table-edit mb-0'>
+                      <tbody>
                         <tr>
                           <td className='text-gris-claro'>Previous Password</td>
                           <td className='text-white'>
                             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} disabled/>
                           </td>
                         </tr>
+                        </tbody>
                       </table>
                     </div>
                     <div className='col-md-6'>
                       <table className='table table-borderless text-white table-edit mb-0'>  
+                      <tbody>
                         <tr>
                           <td className='text-gris-claro font-family-Inter-SemiBold'>
                             <label>New Password:</label>
@@ -231,6 +268,7 @@ const MyProfile = () => {
                             <button onClick={handleSavePassword} className='btn-profile-edit'>Save</button>
                           </td>
                         </tr>
+                        </tbody>
                       </table>
                     </div>
                   </div>
@@ -242,7 +280,7 @@ const MyProfile = () => {
         </div>
         <div className='col-md-12 mb-4'>
           <div className='box-acordeon'>
-            <h2 class="font-family-SpaceGrotesk-SemiBold text-white mb-0">
+            <h2 className="font-family-SpaceGrotesk-SemiBold text-white mb-0">
               Picks History
             </h2>
             <div className='box-editar'>
