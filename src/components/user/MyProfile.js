@@ -8,7 +8,7 @@ const MyProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');  
-  const [nick] = useState('(cawong)');
+  const [nick] = useState('');
   
   useEffect(() => {
  

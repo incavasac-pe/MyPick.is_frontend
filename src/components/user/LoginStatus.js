@@ -1,4 +1,4 @@
-import React, { useState,  useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate  } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -8,6 +8,7 @@ const LoginStatus = () => {
   const [loggedIn, setLoggedIn] = useState(false); // Estado de inicio de sesión
   const [user, setUser] = useState(null); // Información del usuario
   const [errors, setErrors] = useState({});
+  const [errors_re, setErrors_re] = useState({});
   const [showModal, setShowModal] = useState(false);
   
   const navigate = useNavigate(); // Hook de navegación
@@ -37,7 +38,8 @@ const LoginStatus = () => {
         .then(response => response.json())
         .then(data => { 
           if(data.error){        
-              toast.error(data.msg);
+             toast.error(data.msg);   
+           
           } else {     
                // Lógica para iniciar sesión      
             setErrors({});
@@ -100,12 +102,67 @@ const LoginStatus = () => {
     console.log('Editar perfil');
   };
 
-  const handleRegister = () => {
+  const handleRegisterold = () => {
     // Lógica para el registro de usuarios
     // console.log('Registro de usuario');
     navigate('/MyProfile'); // Redirigir al usuario a la página de perfil
   };
-
+  
+  const handleRegister = (e) => {
+    e.preventDefault();
+    //llamar al servicio de login
+    console.log('Nombres Registro:', full_name);
+    console.log('Password:', password);
+    console.log('Email:', email);
+  
+    setErrors({});
+    const errors_re = {};
+    if (!email.trim()) {
+      errors_re.email = 'Please enter your email';       
+    } else if (!isValidEmail(email)) {
+      errors_re.email = 'Please enter a valid email';       
+    }
+    if (!password.trim()) errors_re.password = 'Please enter your password'
+    if (!full_name.trim()) errors_re.full_name = 'Please enter your full name'
+ 
+    if (Object.keys(errors_re).length === 0) {
+        fetch('http://localhost:3100/register', {
+          method: 'POST',
+          body: JSON.stringify({ full_name: full_name, email: email, password: password }),
+          headers: {
+            'Content-Type': 'application/json'      
+          }
+        })
+        .then(response => response.json())
+        .then(data => { 
+          if(data.error){        
+              toast.error(data.msg);
+          } else {     
+               // Lógica para iniciar sesión      
+            setErrors({});
+            setName('');
+            setEmail('');
+            setPassword('');             
+            setShowModal(false);
+               if (data.data.token) {             
+                 setLoggedIn(true); 
+                 setUser({ name: data.data.user.full_name, photo: require('../img/user.jpg'), email: data.data.user.email,token:data.data.token});
+                 localStorage.setItem('user', JSON.stringify({ name: data.data.user.full_name, photo: require('../img/user.jpg'), email: data.data.user.email,token:data.data.token}));
+                //navigate('/MyProfile'); // Redirigir al usuario a la página de perfil
+                }  
+           }
+        })
+        .catch(error => {
+          // Manejar cualquier error de la solicitud           
+          toast.error("An error has occurred");
+          console.error('Error:', error);
+        });
+    } else {
+      // Form is invalid, update the state with the errors
+      setErrors_re(errors_re);
+    }
+  };
+  const [full_name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -171,7 +228,7 @@ const LoginStatus = () => {
                             <p className='font-family-SpaceGrotesk-Medium'>
                                 Sign in to your account to save, create and edit your picks
                             </p>
-                            <ToastContainer position="top-center" autoClose={2000} closeOnClick theme="dark"/>                           
+                             <ToastContainer position="top-center" autoClose={2000} closeOnClick theme="dark"/>                         
                         </div>
                     </div>
                     <form onSubmit={handleLogin}>
@@ -186,7 +243,8 @@ const LoginStatus = () => {
                         </div>
                         <div className="form-group">
                             <label >Contraseña</label>
-                            <input type={showPassword ? 'text' : 'password'} id="password"  className={`form-control ${errors.password ? "is-invalid" : ""}`} name='password' value={password}  onChange={(e) => setPassword(e.target.value)}placeholder='Password'/>
+                            <input type={showPassword ? 'text' : 'password'} id="password"
+                              className={`form-control ${errors.password ? "is-invalid" : ""}`} name='password' value={password}  onChange={(e) => setPassword(e.target.value)} placeholder='Password'/>
                               <span className='icon far fa-lock-alt fa-lg'></span>
                             {errors.password &&  <div className="invalid-feedback">{errors.password}</div>} 
                             <button type='button' className='icono' onClick={handleTogglePassword}>
@@ -241,24 +299,31 @@ const LoginStatus = () => {
                         </div>
                         <div className='col-md-12'>
                             <p className='text-gray font-family-SpaceGrotesk-Medium'>Create a new account to save, create and edit your picks</p>
+                            <ToastContainer position="top-center" autoClose={2000} closeOnClick theme="dark"/>  
                         </div>
                     </div>
-                      <form className='mt-2'>
+                      <form className='mt-2' onSubmit={handleRegister}>
                         {/* Campos de registro */}
                         <div className="form-group">
                           <label>Nombre completo</label>
-                          <input type="text" className="form-control" placeholder='Complete name' />
+                          <input type="text"  placeholder='Complete name'  
+                          className={`form-control ${errors_re.full_name ? "is-invalid" : ""}`}  id="full_name" name="full_name" value={full_name}  onChange={(e) => setName(e.target.value)} />
                           <span className='icon far fa-user fa-lg'></span>
+                          {errors_re.full_name &&  <div className="invalid-feedback">{errors_re.full_name}</div>} 
                         </div>
                         <div className="form-group">
                           <label>Email</label>
-                          <input type="email" className="form-control" placeholder='Email Address' />
+                          <input type="email" placeholder='Email Address'
+                              className={`form-control ${errors_re.email ? "is-invalid" : ""}`}  id="email" name="email" value={email}  onChange={(e) => setEmail(e.target.value)} />
                           <span className='icon far fa-envelope fa-lg'></span>
+                          {errors_re.email &&  <div className="invalid-feedback">{errors_re.email}</div>} 
                         </div>
                         <div className="form-group">
                             <label >Contraseña</label>
-                            <input type={showPassword ? 'text' : 'password'} id="password" name='password' value={password} placeholder='Password'/>
+                            <input type={showPassword ? 'text' : 'password'} id="password" name='password'
+                              className={`form-control ${errors_re.password ? "is-invalid" : ""}`}   onChange={(e) => setPassword(e.target.value)} value={password} placeholder='Password'/>
                             <span className='icon far fa-lock-alt fa-lg'></span>
+                            {errors_re.password &&  <div className="invalid-feedback">{errors_re.password}</div>} 
                             <button type='button' className='icono' onClick={handleTogglePassword}>
                                 {showPassword ? (
                                     <i className="fas fa-eye-slash"></i>
@@ -267,7 +332,7 @@ const LoginStatus = () => {
                                 )}
                             </button>
                         </div>
-                        <button type="button" className="btn btn-login-modal font-family-SpaceGrotesk-Bold" onClick={handleRegister}>Sign Up</button>
+                        <button type="submit" className="btn btn-login-modal font-family-SpaceGrotesk-Bold" >Sign Up</button>
                       </form> 
                       <div className='row'>
                         <div className='col-md-12 mt-4 mb-3 text-center'>

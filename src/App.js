@@ -10,8 +10,9 @@ import MyPicks from './components/MyPicks';
 import FAQs from './components/FAQs';
 import Menu from './components/menu';
 import MyProfile from './components/user/MyProfile';
+import ActivateAccount from './components/ActivateAccount';
 
-const App = () => {
+const App = () => { 
   return (
     <Router>
       <div className="container-fluid">
@@ -30,6 +31,7 @@ const App = () => {
             <Route path="/contact" element={<Contact />} />
 
             <Route path="/MyProfile" element={<MyProfile />} />
+            <Route path="/activate/:token" element={<ActivateAccount />} />
         </Routes>
       </div>
     </Router>
