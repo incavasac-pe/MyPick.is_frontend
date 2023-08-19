@@ -35,8 +35,6 @@ const MyProfile = () => {
     }
   };
 
-
-
   // const [password, setPassword] = useState('password123');
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [newPassword, setNewPassword] = useState('');

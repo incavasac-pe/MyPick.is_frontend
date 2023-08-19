@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { useNavigate  } from 'react-router-dom';
+import React, { useState,useEffect } from 'react';
+import { useNavigate,useLocation  } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-const LoginStatus = () => {
-  
+ 
+const LoginStatus = () => { 
+  const location = useLocation(); 
   const [loggedIn, setLoggedIn] = useState(false); // Estado de inicio de sesión
   const [user, setUser] = useState(null); // Información del usuario
   const [errors, setErrors] = useState({});
@@ -12,6 +12,18 @@ const LoginStatus = () => {
   const [showModal, setShowModal] = useState(false);
   
   const navigate = useNavigate(); // Hook de navegación
+  
+  useEffect(() => {   
+      const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);     
+      setName (parsedUser.name)
+      setEmail(parsedUser.email)
+      setLoggedIn(true); 
+      setUser({ name: parsedUser.name, photo: require('../img/user.jpg'), email: parsedUser.email });
+    }
+  }, [location.state]);
+ 
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -38,8 +50,7 @@ const LoginStatus = () => {
         .then(response => response.json())
         .then(data => { 
           if(data.error){        
-             toast.error(data.msg);   
-           
+             toast.error(data.msg);              
           } else {     
                // Lógica para iniciar sesión      
             setErrors({});
@@ -101,13 +112,7 @@ const LoginStatus = () => {
     // Lógica para editar perfil
     console.log('Editar perfil');
   };
-
-  const handleRegisterold = () => {
-    // Lógica para el registro de usuarios
-    // console.log('Registro de usuario');
-    navigate('/MyProfile'); // Redirigir al usuario a la página de perfil
-  };
-  
+   
   const handleRegister = (e) => {
     e.preventDefault();
     //llamar al servicio de login

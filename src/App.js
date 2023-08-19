@@ -31,7 +31,7 @@ const App = () => {
             <Route path="/contact" element={<Contact />} />
 
             <Route path="/MyProfile" element={<MyProfile />} />
-            <Route path="/activate/:token" element={<ActivateAccount />} />
+            <Route path="/activate" element={<ActivateAccount />} />
         </Routes>
       </div>
     </Router>
