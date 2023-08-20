@@ -11,6 +11,7 @@ import FAQs from './components/FAQs';
 import Menu from './components/menu';
 import MyProfile from './components/user/MyProfile';
 import ActivateAccount from './components/ActivateAccount';
+import ResetPassword from './components/ResetPassword';
 
 const App = () => { 
   return (
@@ -32,6 +33,7 @@ const App = () => {
 
             <Route path="/MyProfile" element={<MyProfile />} />
             <Route path="/activate" element={<ActivateAccount />} />
+            <Route path="/resetPassword" element={<ResetPassword />} />
         </Routes>
       </div>
     </Router>
