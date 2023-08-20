@@ -1,17 +1,19 @@
 import React, { useState, useEffect} from 'react';
-import { useLocation  } from 'react-router-dom';
+import { useLocation,useNavigate  } from 'react-router-dom';
 import PickHistory from './PickHistory';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const MyProfile = () => {
   const location = useLocation();
+  const navigate = useNavigate(); // Hook de navegación
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');  
   const [nick] = useState('');
+  const [errors, setErrors] = useState({});
   
-  useEffect(() => {
- 
+  useEffect(() => { 
     const body = document.body; 
     if (location.state && location.state.modalOpen) {
       body.classList.add('modal-open'); 
@@ -20,12 +22,20 @@ const MyProfile = () => {
     }
     removeModalBackdropClass();
 
+    const storedUserPhotonNew = localStorage.getItem('photo');
+    if (storedUserPhotonNew) {
+      const parsedPhoto = JSON.parse(storedUserPhotonNew);     
+      setSelectedFileNew(parsedPhoto.photo)
+    }
+    
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);     
       setName (parsedUser.name)
       setEmail(parsedUser.email)
-    }
+    }else{
+      navigate('/'); // Redirigir al usuario a la página de home
+     }
   }, [location.state]);
  
   const removeModalBackdropClass = () => {
@@ -35,63 +45,163 @@ const MyProfile = () => {
     }
   };
 
-  // const [password, setPassword] = useState('password123');
+  //change password 
+  
+  const handleSavePassword = (e) => {
+    e.preventDefault();
+    setIsEditing(false);
+  
+    //llamar al servicio de change password  
+     
+    setErrors({});
+    const errors = {};
+    
+    if (!newPassword.trim()) errors.newPassword = 'Please enter your password'
+    if (!newPasswordConfir.trim()) errors.newPasswordConfir = 'Please enter your confirm password'
+    if(newPassword!== newPasswordConfir) errors.newPasswordConfir = 'Passwords do not match'
+    
+    if (Object.keys(errors).length === 0) {
+        fetch('http://localhost:3100/change_password', {
+          method: 'POST',
+          body: JSON.stringify({ email: email, new_password: newPassword }),
+          headers: {
+            'Content-Type': 'application/json'      
+          }
+        })
+        .then(response => response.json())
+        .then(data => { 
+          if(data.error){        
+             toast.error(data.msg);              
+          } else {     
+               // Lógica para iniciar sesión      
+            setErrors({}); 
+            setPassword(newPassword);                
+            toast.success(data.msg, {
+              position: toast.POSITION.TOP_RIGHT
+          });
+           }
+        })
+        .catch(error => {
+          // Manejar cualquier error de la solicitud           
+          toast.error("An error has occurred");     
+        });
+    } else {
+      setErrors(errors);  
+    }
+  };
+
+  //change profile  
+  const handleSave  = (e) => {
+    e.preventDefault();
+ 
+     setShowChangePassword(false);
+    //llamar al servicio de change password 
+  
+    setErrors({});
+    const errors = {};
+    
+    if (!name.trim()) errors.name = 'Please enter your name'  
+  
+    if (Object.keys(errors).length === 0) {
+        fetch('http://localhost:3100/change_profile', {
+          method: 'POST',
+          body: JSON.stringify({ email: email, full_name: name }),
+          headers: {
+            'Content-Type': 'application/json'      
+          }
+        })
+        .then(response => response.json())
+        .then(data => { 
+          if(data.error){        
+             toast.error(data.msg);              
+          } else {   
+            const storedUser = localStorage.getItem('user');
+            if (storedUser) {  
+              localStorage.setItem('user', JSON.stringify({ name:name,email:email}));     
+            }
+                       
+            setErrors({});                    
+            toast.success(data.msg, {
+              position: toast.POSITION.TOP_RIGHT
+             });
+             window.location.reload()
+           }
+        })
+        .catch(error => {
+          // Manejar cualquier error de la solicitud           
+          toast.error("An error has occurred");     
+        });
+    } else { 
+      setErrors(errors);
+    }
+  };
+ 
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [newPassword, setNewPassword] = useState('');
-
+  const [newPasswordConfir, setNewPasswordConfirm] = useState('');
 
   const [editing, setEditing] = useState(false);
   const [password, setPassword] = useState('password123');
-  // const [newPassword, setNewPassword] = useState('');
-
+  
   const handleEdit = () => {
     setIsEditing(true);
-  };
-  const handleSave = () => {
-    // Lógica para guardar los cambios
-    setIsEditing(false);
-    setShowChangePassword(false);
-  };
-
-
-  // const handleEditPassword = () => {
-  //   setEditing(true);
-  // };
-
-  // const handleSavePassword = () => {
-  //   console.log('Nuevo password:', newPassword);
-  //   setEditing(false);
-  //   setNewPassword('');
-  // };
-
+  }; 
+  const [selectedFileNew, setSelectedFileNew] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [defaultImage] = useState('user.jpg');
 
   const handleFileSelect = (event) => {
+    event.preventDefault();
     const file = event.target.files[0];
+   
     setSelectedFile(file);
+    var formdata = new FormData();
+    formdata.append("file", file);
+
+    var requestOptions = {
+      method: 'POST',
+      body: formdata,
+      redirect: 'follow'
+    };
+        if(file){
+        fetch(`http://localhost:3100/change_photo?email=${email}`, requestOptions) 
+              .then(response => {            
+                if (response.status===200){
+                    const storedUserPhoto = localStorage.getItem('photo');
+                      if (storedUserPhoto) { 
+                        localStorage.setItem('photo', JSON.stringify({ photo: `http://localhost:3100/see_photo?img=${file.name}`}));
+                        setSelectedFileNew(`http://localhost:3100/see_photo?img=${file.name}`)
+                      }
+                    toast.success('Upload photo successfully', {
+                      position: toast.POSITION.TOP_RIGHT
+                  });
+                }
+              }) 
+              window.location.reload()
+        .catch(() => {
+          // Manejar cualquier error de la solicitud           
+          toast.error("An error has occurred upload");     
+        });
+        }
   };
 
   const handleButtonClick = () => {
     document.getElementById('fileInput').click();
   };
-
+ 
   const handleEditPassword = () => {
     setEditing(true);
     setShowChangePassword(true);
   };
-
-  const handleSavePassword = () => {
-    // Lógica para guardar la nueva contraseña
-    console.log('Nuevo password:', newPassword);
-    setEditing(false);
-    // setShowChangePassword(false);
-    setNewPassword('');
-  };
-
-  const handlePasswordCancel = () => {
+ 
+  const handlePasswordCancel = (e) => {
+    e.preventDefault();
     // Cancelar la edición de contraseña y restaurar los valores originales
+    setIsEditing(false);
+    setEditing(false);
+    setShowChangePassword(false);
     setNewPassword('');
+    setNewPasswordConfirm('');
   };
 
   return (
@@ -114,7 +224,7 @@ const MyProfile = () => {
                       <tr>
                         <td className='text-gris-claro font-family-Inter-SemiBold'>Name</td>
                         <td className='font-family-Inter-Medium'>
-                          {name} <span className='text-gris-claro'>{nick}</span>
+                          {name} <span className='text-gris-claro'>{nick.toUpperCase()}</span>
                         </td>
                       </tr>
                       <tr>
@@ -143,7 +253,8 @@ const MyProfile = () => {
                           <label>Name:</label>
                         </td>
                         <td className='font-family-Inter-Medium'>
-                          <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                          <input className={`form-control ${errors.name ? "is-invalid" : ""}`} type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                          {errors.name &&  <div className="invalid-feedback">{errors.name}</div>}      
                         </td>
                       </tr>
                       <tr>
@@ -151,7 +262,7 @@ const MyProfile = () => {
                           <label>Email:</label>
                         </td>
                         <td className='font-family-Inter-Medium'>
-                          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled />
                         </td>
                       </tr>
                       <tr>                        
@@ -190,8 +301,8 @@ const MyProfile = () => {
                 </div>
                 <div className='align-items-center col-5 col-md-4 d-flex justify-content-center'>
                   <div className='img-profile'>
-                    {selectedFile ? (
-                      <img src={URL.createObjectURL(selectedFile)} alt="Vista previa" />
+                    {selectedFileNew ? (
+                      <img src={selectedFileNew} alt="Vista previa" />
                     ) : (
                       <img src={defaultImage} alt="Imagen por defecto" />
                     )}
@@ -206,6 +317,7 @@ const MyProfile = () => {
             <h2 className="font-family-SpaceGrotesk-SemiBold text-white">
               Password <button onClick={handleEditPassword} className='btn-editar'><i className="fas fa-pencil"></i> Edit</button>
             </h2>
+            <ToastContainer position="top-right"  autoClose={2000} closeOnClick theme="dark"/>    
             <div className='box-editar p-4' style={{ minHeight: 'auto' }}>
               <p className='text-gris-claro'>
                   We recommend updating your password periodically to prevent unauthorized access to your account.
@@ -249,7 +361,8 @@ const MyProfile = () => {
                             <label>New Password:</label>
                           </td>
                           <td className='font-family-Inter-Medium'>
-                            <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+                            <input className={`form-control ${errors.newPassword ? "is-invalid" : ""}`} type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+                            {errors.newPassword &&  <div className="invalid-feedback">{errors.newPassword}</div>}      
                           </td>
                         </tr>
                         <tr>
@@ -257,7 +370,8 @@ const MyProfile = () => {
                             <label>Confirm Password:</label>
                           </td>
                           <td className='font-family-Inter-Medium'>
-                            <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+                            <input className={`form-control ${errors.newPasswordConfir ? "is-invalid" : ""}`}  type="password" value={newPasswordConfir} onChange={(e) => setNewPasswordConfirm(e.target.value)} />
+                         <div className="invalid-feedback">{errors.newPasswordConfir}</div>   
                           </td>
                         </tr>
                         <tr>                        

@@ -15,21 +15,22 @@ const LoginStatus = () => {
   
   useEffect(() => {   
       const storedUser = localStorage.getItem('user');
+      const storedUserPhoto = localStorage.getItem('photo');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);     
+      const parsedUserPhoto = JSON.parse(storedUserPhoto);
+    
       setName (parsedUser.name)
       setEmail(parsedUser.email)
       setLoggedIn(true); 
-      setUser({ name: parsedUser.name, photo: require('../img/user.jpg'), email: parsedUser.email });
+      setUser({ name: parsedUser.name, photo: parsedUserPhoto.photo, email: parsedUser.email });
     }
-  }, [location.state]);
+   
+  }, [location.state,]);
  
-
   const handleLogin = (e) => {
     e.preventDefault();
-    //llamar al servicio de login
-    console.log('Email:', email);
-    console.log('Password:', password);
+    //llamar al servicio de login 
     setErrors({});
     const errors = {};
     if (!email.trim()) {
@@ -59,8 +60,9 @@ const LoginStatus = () => {
             setShowModal(false);
                if (data.data.token) {             
                  setLoggedIn(true); 
-                 setUser({ name: data.data.user.full_name, photo: require('../img/user.jpg'), email: data.data.user.email,token:data.data.token});
-                 localStorage.setItem('user', JSON.stringify({ name: data.data.user.full_name, photo: require('../img/user.jpg'), email: data.data.user.email,token:data.data.token}));
+                 setUser({ name: data.data.user.full_name, photo: `http://localhost:3100/see_photo?img=${data.data.user.photo}` , email: data.data.user.email,token:data.data.token});                 
+                 localStorage.setItem('user', JSON.stringify({ name: data.data.user.full_name,  email: data.data.user.email,token:data.data.token}));
+                 localStorage.setItem('photo', JSON.stringify({ photo: `http://localhost:3100/see_photo?img=${data.data.user.photo}`}));
                  navigate('/MyProfile'); // Redirigir al usuario a la página de perfil
                 }  
            }
@@ -110,15 +112,13 @@ const LoginStatus = () => {
 
   const handleEditProfile = () => {
     // Lógica para editar perfil
+    navigate('/MyProfile');
     console.log('Editar perfil');
   };
    
   const handleRegister = (e) => {
     e.preventDefault();
     //llamar al servicio de login
-    console.log('Nombres Registro:', full_name);
-    console.log('Password:', password);
-    console.log('Email:', email);
   
     setErrors({});
     const errors_re = {};
@@ -151,7 +151,7 @@ const LoginStatus = () => {
             setShowModal(false);
                if (data.data.token) {             
                  setLoggedIn(true); 
-                 setUser({ name: data.data.user.full_name, photo: require('../img/user.jpg'), email: data.data.user.email,token:data.data.token});
+                 setUser({ name: data.data.user.full_name, photo: user.photo, email: data.data.user.email,token:data.data.token});
                  localStorage.setItem('user', JSON.stringify({ name: data.data.user.full_name, photo: require('../img/user.jpg'), email: data.data.user.email,token:data.data.token}));
                 //navigate('/MyProfile'); // Redirigir al usuario a la página de perfil
                 }  
@@ -191,7 +191,7 @@ const LoginStatus = () => {
                 <div className="d-inline-block dropdown">
                     <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" className="dropdown-toggle"> 
                         <span className='text-white mr-4 font-family-SpaceGrotesk-Bold'>{user.name}</span>              
-                        <img src={user.photo} alt="User" />
+                        <img src={user.photo} alt="User" /> 
                     </button>
                     <div tabIndex={-1} role="menu" aria-hidden="true" className="dropdown-menu dropdown-menu-right" x-placement="bottom-end">
                         <ul className="nav flex-column">
