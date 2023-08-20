@@ -198,7 +198,7 @@ const LoginStatus = () => {
         });
           setErrors_re({});
           setEmailForgot(''); 
-       //  setShowModal(false);
+         setShowModal(false);
         //   navigate('/');      
          }
       })
@@ -342,7 +342,7 @@ const LoginStatus = () => {
                     <div className='row'>
                         <div className='col-md-12 position-relative'>
                           <h3 className='font-family-SpaceGrotesk-Bold text-white'>
-                            <button onClick={() => mostrarCuadro('cuadro1')} className='btn-back'><i clerrors_reSassName="far fa-arrow-left"></i></button>
+                            <button onClick={() => mostrarCuadro('cuadro1')} className='btn-back'><i className="far fa-arrow-left"></i></button>
                               Get your free account
                           </h3>
                             <button type="button" className="close cerrar-modal" data-dismiss="modal">&times;</button>
