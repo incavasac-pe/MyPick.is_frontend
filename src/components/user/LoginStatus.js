@@ -167,6 +167,51 @@ const LoginStatus = () => {
       setErrors_re(errors_re);
     }
   };
+   
+  const [email_forgot, setEmailForgot] = useState('');
+  const handleForgotPassword = (e) => {
+    e.preventDefault();
+   console.log("se envia el mensaje",email_forgot)
+    setErrors({});
+    const errors_re = {};
+    if (!email_forgot.trim()) {
+      errors_re.email_forgot = 'Please enter your email';       
+    } else if (!isValidEmail(email_forgot)) {
+      errors_re.email_forgot = 'Please enter a valid email';       
+    }
+    if (Object.keys(errors_re).length === 0) {
+      fetch('http://localhost:3100/link_password', {
+        method: 'POST',
+        body: JSON.stringify({ email: email_forgot }),
+        headers: {
+          'Content-Type': 'application/json'      
+        }
+      })
+      .then(response => response.json())
+      .then(data => { 
+        console.log("entewrwerwer",data)
+        if(data.error){        
+            toast.error(data.msg);
+        } else {     
+          toast.success(data.msg, {
+            position: toast.POSITION.TOP_RIGHT
+        });
+          setErrors_re({});
+          setEmailForgot(''); 
+       //  setShowModal(false);
+        //   navigate('/');      
+         }
+      })
+      .catch(() => {
+        // Manejar cualquier error de la solicitud           
+        toast.error("An error has occurred"); 
+      });
+  } else {
+    // Form is invalid, update the state with the errors
+    setErrors_re(errors_re);
+  }
+  }
+
   const [full_name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -297,7 +342,7 @@ const LoginStatus = () => {
                     <div className='row'>
                         <div className='col-md-12 position-relative'>
                           <h3 className='font-family-SpaceGrotesk-Bold text-white'>
-                            <button onClick={() => mostrarCuadro('cuadro1')} className='btn-back'><i className="far fa-arrow-left"></i></button>
+                            <button onClick={() => mostrarCuadro('cuadro1')} className='btn-back'><i clerrors_reSassName="far fa-arrow-left"></i></button>
                               Get your free account
                           </h3>
                             <button type="button" className="close cerrar-modal" data-dismiss="modal">&times;</button>
@@ -380,15 +425,18 @@ const LoginStatus = () => {
                         <p className='font-family-SpaceGrotesk-Medium'>
                           Enter your email address and we will send you a link to create a new password.
                         </p>
+                        <ToastContainer position="top-right"  autoClose={2000} closeOnClick theme="dark"/>    
                       </div>
                       <div className='col-md-12'>
-                        <form className='mt-4'>
+                        <form className='mt-4' onSubmit={handleForgotPassword}>
                           <div className="form-group">
-                              <label>Email</label>
-                              <input type="email" className="form-control" placeholder='Email Address' />
-                              <span className='icon far fa-envelope fa-lg'></span>
+                              <label>Email</label>                            
+                              <input type="email" placeholder='Email Address'
+                              className={`form-control ${errors_re.email_forgot ? "is-invalid" : ""}`}  id="email_forgot" name="email_forgot" value={email_forgot}  onChange={(e) => setEmailForgot(e.target.value)} />
+                          <span className='icon far fa-envelope fa-lg'></span>
+                          {errors_re.email_forgot &&  <div className="invalid-feedback">{errors_re.email_forgot}</div>} 
                           </div>
-                          <button type="button" className="btn btn-login-modal font-family-SpaceGrotesk-Bold mt-4">Send</button>
+                          <button type="submit" className="btn btn-login-modal font-family-SpaceGrotesk-Bold mt-4">Send</button>
                         </form>
                       </div>
                     </div>
