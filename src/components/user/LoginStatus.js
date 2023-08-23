@@ -198,18 +198,17 @@ const LoginStatus = () => {
         });
           setErrors_re({});
           setEmailForgot(''); 
-         setShowModal(false);
+          setShowModal(false);
         //   navigate('/');      
          }
-      })
-      .catch(() => {
+      }).catch(() => {
         // Manejar cualquier error de la solicitud           
         toast.error("An error has occurred"); 
       });
   } else {
-    // Form is invalid, update the state with the errors
-    setErrors_re(errors_re);
-  }
+      // Form is invalid, update the state with the errors
+      setErrors_re(errors_re);
+    }
   }
 
   const [full_name, setName] = useState('');
