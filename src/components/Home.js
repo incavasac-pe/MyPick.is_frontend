@@ -3,8 +3,10 @@ import MenuFlotante from './MenuFlotante';
 import Like from './like';
 import Commets from './commets';
 import CreatePick from './modal/CreatePick';
+import AuthLogin from './modal/AuthLogin';
 import ModalComments from './modal/ModalComments';
 import ModalRedes from './modal/ModalRedes';
+import { checkAuth }  from '../AuthMiddleware'; 
 
 class Home extends Component {
   constructor(props) {
@@ -13,6 +15,7 @@ class Home extends Component {
       currentStep: 1,
       imagenActiva: '',
       textoActivo: '',
+      login:null, 
     };
   }
 
@@ -52,8 +55,9 @@ class Home extends Component {
   }
 
   render() {
-    const { currentStep, imagenActiva, textoActivo } = this.state;
-
+    const { currentStep, imagenActiva, textoActivo,login } = this.state;
+  const isAuthenticated = checkAuth();
+    this.setState({ login: isAuthenticated })  
     return (
       <div>
         
@@ -206,7 +210,11 @@ class Home extends Component {
                   <div class="modal-body p-0">
                     <div className='cuadro'>
                       <div className='box-cuadro-modal'>
-                        <CreatePick />
+                      
+                    {login ? (
+                        <CreatePick  />
+                 ) : ( 
+                        < AuthLogin />  )}  
                       </div>
                     </div>
                   </div>
