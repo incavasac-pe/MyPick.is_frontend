@@ -16,10 +16,9 @@ class like extends Component {
   render() {
     const { activeLink } = this.state;
 
-    return (
+    return ( 
         <div className='like'>
-            <a href='javascript:void(0);' className={activeLink === 'heart' ? 'activo' : ''} onClick={() => this.handleClick('heart')}>
-            {/* <i className="far fa-heart"></i> */}
+            <a href='javascript:void(0);' className={activeLink === 'heart' ? 'activo' : ''} onClick={() => this.handleClick('heart')}>          
             <i class="fas fa-heart"></i>
             <p className='font-family-SpaceGrotesk-Light'>2134</p>
             </a>

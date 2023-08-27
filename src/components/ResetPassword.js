@@ -32,9 +32,9 @@ const ResetPassword = () => {
            // Lógica para iniciar sesión     
            if (data.data.email) {   
             setEmail(data.data.email)  
-            toast.success(data.msg, {
+          /*   toast.success(data.msg, {
               position: toast.POSITION.TOP_RIGHT
-           });         
+           });   */       
           }  
        }
     })

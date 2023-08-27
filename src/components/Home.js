@@ -3,8 +3,10 @@ import MenuFlotante from './MenuFlotante';
 import Like from './like';
 import Commets from './commets';
 import CreatePick from './modal/CreatePick';
-import ModalComments from './modal/ModalComments';
+import AuthLogin from './modal/AuthLogin';
+/* import ModalComments from './modal/ModalComments'; */
 import ModalRedes from './modal/ModalRedes';
+import { checkAuth }  from '../AuthMiddleware'; 
 
 class Home extends Component {
   constructor(props) {
@@ -13,9 +15,10 @@ class Home extends Component {
       currentStep: 1,
       imagenActiva: '',
       textoActivo: '',
+      login:null, 
+      muestras:null, 
     };
-  }
-
+  } 
   showStep = (stepNumber) => {
     const steps = document.getElementsByClassName('step');
     for (let i = 0; i < steps.length; i++) {
@@ -51,9 +54,35 @@ class Home extends Component {
     this.showStep(this.state.currentStep);
   }
 
-  render() {
-    const { currentStep, imagenActiva, textoActivo } = this.state;
 
+  render() {
+    const { currentStep, imagenActiva, textoActivo,login,muestras } = this.state;
+  
+    const isAuthenticated = checkAuth();
+    this.setState({ login: isAuthenticated })  
+ if(!muestras)   {
+    fetch(`http://localhost:3100/list_category?limit=${5}`, {
+      method: 'GET', 
+      headers: {
+        'Content-Type': 'application/json'      
+      }  
+    })
+    .then(response => response.json())
+    .then(data => { 
+      if(data.error){        
+         
+      } else {              
+           if (data.data) {   
+            this.setState({ muestras: data.data });
+          }  
+       }
+    })
+    .catch(error => {
+      // Manejar cualquier error de la solicitud           
+      
+     // navigate('/'); // Redirigir al usuario a la página de home  
+    });    
+  }
     return (
       <div>
         
@@ -206,7 +235,11 @@ class Home extends Component {
                   <div class="modal-body p-0">
                     <div className='cuadro'>
                       <div className='box-cuadro-modal'>
-                        <CreatePick />
+     
+                    {login ? (
+                        <CreatePick  />
+                 ) : ( 
+                        < AuthLogin />  )}  
                       </div>
                     </div>
                   </div>
@@ -227,7 +260,6 @@ class Home extends Component {
                 </div>
               </div>
             </div>
-
         </div>        
       </div>
     );

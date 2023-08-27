@@ -6,16 +6,17 @@ class Buscador extends Component {
     super(props);
     this.state = {
       searchTerm: '', // Almacena el término de búsqueda
-      muestras: [
+    /*   muestras: [
         { id: 1, texto: 'League', picks: '22.5K Picks', imagen1: require('../img/paris.jpg'), imagen2: require('../img/washinton.jpg') },
         { id: 2, texto: 'Soccer', picks: '10.5K Picks', imagen1: require('../img/washinton.jpg'), imagen2: require('../img/paris.jpg') },
         { id: 3, texto: 'Food', picks: '8.5K Picks', imagen1: require('../img/paris.jpg'), imagen2: require('../img/washinton.jpg') },
         { id: 4, texto: 'Places', picks: '7.5K Picks', imagen1: require('../img/washinton.jpg'), imagen2: require('../img/paris.jpg') },
         { id: 5, texto: 'Whatches', picks: '6.5K Picks', imagen1: require('../img/paris.jpg'), imagen2: require('../img/washinton.jpg') },
         { id: 6, texto: 'Flowers', picks: '5.5K Picks', imagen1: require('../img/washinton.jpg'), imagen2: require('../img/paris.jpg') },
-      ],
+      ], */
       resultados: [], // Resultados de búsqueda
     };
+    
   }
 
   componentDidMount() {
@@ -43,6 +44,8 @@ class Buscador extends Component {
       voiceButton.addEventListener('click', () => {
         recognition.start();
       });
+     
+  
     } else {
       console.log('El navegador no es compatible con la API Web Speech');
     }
@@ -54,18 +57,19 @@ class Buscador extends Component {
 
     // Filtrar las muestras que coinciden con el término de búsqueda
     const resultados = muestras.filter((muestra) =>
-      muestra.texto.toLowerCase().includes(searchTerm.toLowerCase())
+      muestra.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     this.setState({ searchTerm, resultados });
   };
 
   handleVoiceSearch = (transcript) => {
+    
     const { muestras } = this.state;
 
     // Filtrar las muestras que coinciden con el término de búsqueda por voz
     const resultados = muestras.filter((muestra) =>
-      muestra.texto.toLowerCase().includes(transcript.toLowerCase())
+      muestra.name.toLowerCase().includes(transcript.toLowerCase())
     );
 
     this.setState({ searchTerm: transcript, resultados });
@@ -77,12 +81,35 @@ class Buscador extends Component {
 
   renderMuestras = () => {
     const { resultados, muestras } = this.state;
-    const muestrasMostradas = resultados.length > 0 ? resultados : muestras.slice(0, 4);
-
-    if (muestrasMostradas.length === 0) {
+     if(!muestras){
+      fetch(`http://localhost:3100/list_category?limit=${100}`, {
+        method: 'GET', 
+        headers: {
+          'Content-Type': 'application/json'      
+        }  
+      })
+      .then(response => response.json())
+      .then(data => { 
+        if(data.error){        
+          // toast.error(data.msg);     
+        } else {              
+            if (data.data) {    
+              this.setState({ muestras: data.data }); // Actualizar el estado con los valores de data.data 
+            }  
+        }
+      })  .catch(error => {
+        // Manejar el error en caso de que ocurra
+        console.error('Error:', error);
+      });
+    }
+ 
+    const muestrasMostradas = resultados.length > 0 ? resultados : muestras ;
+   
+    console.log("muestrasMostradas",muestrasMostradas)
+ 
+    if (!muestrasMostradas || muestrasMostradas.length === 0) {
       return <p>No se encontraron resultados.</p>;
     }
-
     return (
       <table className="table table-busqueda table-borderless">
         <thead>
@@ -97,12 +124,12 @@ class Buscador extends Component {
                 <img src={muestra.imagen} alt={muestra.texto} className='img-busqueda' /> 
                 <span className='ml-3 modal-titulo'>{muestra.texto}</span>
               </td> */}
-              <td><span className='modal-titulo text-white'>{muestra.texto}</span></td>
+              <td><span className='modal-titulo text-white'>{muestra.name}</span></td>
               <td align='right' className='text-morado'>
                 <div className='align-items-center d-flex justify-content-end mt-2'>
                     <span className='mr-3 modal-picks'>{muestra.picks}</span>
-                    <img src= {muestra.imagen1} alt={muestra.texto}  className='img-busqueda-small'/>
-                    <img src= {muestra.imagen2} alt={muestra.texto} className='img-busqueda-small sobrepuesta pc'/>
+                    <img src= {muestra.imagen1} alt={muestra.name}  className='img-busqueda-small'/>
+                    <img src= {muestra.imagen2} alt={muestra.name} className='img-busqueda-small sobrepuesta pc'/>
                 </div>
               </td>
             </tr>

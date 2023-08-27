@@ -10,7 +10,7 @@ const MyProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');  
-  const [nick] = useState('');
+  const [nick,setNick] = useState('');
   const [errors, setErrors] = useState({});
   
   useEffect(() => { 
@@ -33,10 +33,11 @@ const MyProfile = () => {
       const parsedUser = JSON.parse(storedUser);     
       setName (parsedUser.name)
       setEmail(parsedUser.email)
+      setNick(parsedUser.nick)
     }else{
-      navigate('/'); // Redirigir al usuario a la página de home
+     // navigate('/'); // Redirigir al usuario a la página de home
      }
-  }, [location.state]);
+  }, [navigate,location.state]);
  
   const removeModalBackdropClass = () => {
     const modalBackdrop = document.querySelector('.modal-backdrop');
@@ -224,7 +225,7 @@ const MyProfile = () => {
                       <tr>
                         <td className='text-gris-claro font-family-Inter-SemiBold'>Name</td>
                         <td className='font-family-Inter-Medium'>
-                          {name} <span className='text-gris-claro'>{nick.toUpperCase()}</span>
+                          {name} <span className='text-gris-claro'>{nick}</span>
                         </td>
                       </tr>
                       <tr>

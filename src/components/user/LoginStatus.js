@@ -23,10 +23,10 @@ const LoginStatus = () => {
       setName (parsedUser.name)
       setEmail(parsedUser.email)
       setLoggedIn(true); 
-      setUser({ name: parsedUser.name, photo: parsedUserPhoto.photo, email: parsedUser.email });
+      setUser({ name: parsedUser.name, photo: parsedUserPhoto?.photo ?? 'user.jpg', email: parsedUser.email });
     }
    
-  }, [location.state,]);
+  }, []);
  
   const handleLogin = (e) => {
     e.preventDefault();
@@ -61,7 +61,7 @@ const LoginStatus = () => {
                if (data.data.token) {             
                  setLoggedIn(true); 
                  setUser({ name: data.data.user.full_name, photo: `http://localhost:3100/see_photo?img=${data.data.user.photo}` , email: data.data.user.email,token:data.data.token});                 
-                 localStorage.setItem('user', JSON.stringify({ name: data.data.user.full_name,  email: data.data.user.email,token:data.data.token}));
+                 localStorage.setItem('user', JSON.stringify({ name: data.data.user.full_name,  email: data.data.user.email,token:data.data.token,nick: data.data.username}));
                  localStorage.setItem('photo', JSON.stringify({ photo: `http://localhost:3100/see_photo?img=${data.data.user.photo}`}));
                  navigate('/MyProfile'); // Redirigir al usuario a la página de perfil
                 }  
@@ -102,9 +102,10 @@ const LoginStatus = () => {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = () => { 
     // Lógica para cerrar sesión
     localStorage.removeItem('user');
+/*     localStorage.removeItem('photo'); */
     setLoggedIn(false);
     setUser(null);
     navigate('/');
@@ -235,7 +236,7 @@ const LoginStatus = () => {
                 <div className="d-inline-block dropdown">
                     <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" className="dropdown-toggle"> 
                         <span className='text-white mr-4 font-family-SpaceGrotesk-Bold'>{user.name}</span>              
-                        <img src={user.photo} alt="User" /> 
+                        <img src={user.photo ?? 'user.jpg'} alt="User" /> 
                     </button>
                     <div tabIndex={-1} role="menu" aria-hidden="true" className="dropdown-menu dropdown-menu-right" x-placement="bottom-end">
                         <ul className="nav flex-column">
@@ -246,7 +247,7 @@ const LoginStatus = () => {
                             <a className="dropdown-item" href="Javascript:void(0)" onClick={handleEditProfile}>My profile</a>
                         </li>
                         <li className="nav-item">
-                            <a className="dropdown-item" href="Javascript:void(0)" onClick={handleLogout}><i className="far fa-sign-out"></i> Log out</a>
+                            <a className="dropdown-item" href="Javascript:void(0)" onClick={handleLogout()}><i className="far fa-sign-out"></i> Log out</a>
                         </li>
                         </ul>
                     </div>
