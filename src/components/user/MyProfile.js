@@ -36,7 +36,7 @@ const MyProfile = () => {
     }else{
       navigate('/'); // Redirigir al usuario a la página de home
      }
-  }, [location.state]);
+  }, [navigate,location.state]);
  
   const removeModalBackdropClass = () => {
     const modalBackdrop = document.querySelector('.modal-backdrop');
