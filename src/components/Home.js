@@ -15,7 +15,7 @@ class Home extends Component {
       currentStep: 1,
       imagenActiva: '',
       textoActivo: '',
-      login:null, 
+      login:null,
     };
   }
 

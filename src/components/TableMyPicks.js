@@ -1,15 +1,39 @@
-import React, { useState } from 'react';
-
-const data = [
+import React, { useState,useEffect } from 'react';
+/*
+const data1 = [
   { id: 1, pickName: 'Planet Earth', category: 'Nature', numOfPicks: '2.5K Picks', datePicked: '5m Ago', mostPicked: 'Flowers' },
   { id: 2, pickName: 'Premier League', category: 'Soccer', numOfPicks: '2.5K Picks', datePicked: '14m Ago', mostPicked: 'PSG' },
   { id: 3, pickName: 'Champions League', category: 'Soccer', numOfPicks: '8.5K Picks', datePicked: '52m Ago', mostPicked: 'Liverpool' },
   { id: 4, pickName: 'Nature', category: 'Nature', numOfPicks: '9.5K Picks', datePicked: '5m Ago', mostPicked: 'Flowers' },
   { id: 5, pickName: 'Musicians', category: 'Music', numOfPicks: '6.5K Picks', datePicked: '56m Ago', mostPicked: 'Otro' },
   { id: 6, pickName: 'Coffee', category: 'Snacks', numOfPicks: '9K Picks', datePicked: '50m Ago', mostPicked: 'Otros' },
-];
+];*/
 
 const TableMyPicks = () => {
+  const [data, setMyPick] = useState([]);
+  useEffect(() => { 
+     
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);    
+    fetch(`http://localhost:3100/list_my_picks?email=${parsedUser.email}`, {
+      method: 'GET',      
+      headers: {
+        'Content-Type': 'application/json'      
+      }
+    })
+    .then(response => response.json())
+    .then(data => { 
+      if(!data.error && data.data){     
+        setMyPick(data.data);
+       }
+    })
+    .catch(error => {
+      // Manejar cualquier error de la solicitud           
+     // toast.error("An error has occurred");     
+    });
+  }
+  }, []); 
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -44,22 +68,22 @@ const TableMyPicks = () => {
         </thead>        
         <tbody className='text-white'>
           {currentRows.map((row) => (
-            <tr key={row.id}>
+            <tr key={row.id_pick}>
               <td>
                 <div className='table-img d-flex align-items-center justify-content-start'>
                     <div>
-                      <img src={require('./img/paris.jpg')} alt="equipo" />
-                      <img src={require('./img/washinton.jpg')} alt="Imagen 2" className='pc' />
-                    </div>
+                      <img src={`http://localhost:3100/see_photo?img=${row.photo1_name}`} alt={`${row.photo1_name}`} />
+                      <img src={`http://localhost:3100/see_photo?img=${row.photo2_name}`} alt={`${row.photo2_name}`}  className='pc'/>
+                     </div>
                     <div>
-                      <span className='ml-3 d-block'>- {row.datePicked}</span>
-                      <span className='ml-3 d-block'>- {row.mostPicked}</span>
+                      <span className='ml-3 d-block'>- {row.choice1_name}</span>
+                      <span className='ml-3 d-block'>- {row.choice2_name}</span>
                     </div>
                 </div>        
               </td>
               <td>{row.category}</td>
-              <td className='pc'>{row.numOfPicks}</td>
-              <td className='pc'>{row.datePicked}</td>
+              <td className='pc'>{row.pick_ranking ?? '0'} Picks</td>
+              <td className='pc'>{row.datepicked}</td>
               <td>
                 <div className='table-img d-flex align-items-center justify-content-start'>
                     <img src={require('./img/paris.jpg')} alt="equipo" />

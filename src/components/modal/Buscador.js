@@ -1,19 +1,11 @@
 import React, { Component } from 'react';
 
-
 class Buscador extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchTerm: '', // Almacena el término de búsqueda
-    /*   muestras: [
-        { id: 1, texto: 'League', picks: '22.5K Picks', imagen1: require('../img/paris.jpg'), imagen2: require('../img/washinton.jpg') },
-        { id: 2, texto: 'Soccer', picks: '10.5K Picks', imagen1: require('../img/washinton.jpg'), imagen2: require('../img/paris.jpg') },
-        { id: 3, texto: 'Food', picks: '8.5K Picks', imagen1: require('../img/paris.jpg'), imagen2: require('../img/washinton.jpg') },
-        { id: 4, texto: 'Places', picks: '7.5K Picks', imagen1: require('../img/washinton.jpg'), imagen2: require('../img/paris.jpg') },
-        { id: 5, texto: 'Whatches', picks: '6.5K Picks', imagen1: require('../img/paris.jpg'), imagen2: require('../img/washinton.jpg') },
-        { id: 6, texto: 'Flowers', picks: '5.5K Picks', imagen1: require('../img/washinton.jpg'), imagen2: require('../img/paris.jpg') },
-      ], */
+      searchTerm: '', // Almacena el término de búsqueda  
+      muestras: [],
       resultados: [], // Resultados de búsqueda
     };
     
@@ -117,7 +109,8 @@ class Buscador extends Component {
             <th colSpan={2} className='table-titulo'>Top Topics</th>
           </tr>
         </thead>
-        <tbody>
+     {  muestrasMostradas && 
+          <tbody>
           {muestrasMostradas.map((muestra) => (
             <tr key={muestra.id}>
               {/* <td className='text-white'>
@@ -134,7 +127,7 @@ class Buscador extends Component {
               </td>
             </tr>
           ))}
-        </tbody>
+        </tbody>} 
       </table>
     );
   };

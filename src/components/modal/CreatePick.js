@@ -1,9 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import CreatePickImagenUpload from './CreatePickImagenUpload';
-
+ 
 const CreatePick = () => {
+
   const [showBox1, setShowBox1] = useState(true);
   const [showBox2, setShowBox2] = useState(false);
+  const [muestras, setMuestras] = useState([]);
+  const [selectedOptionTopic, setSelectedOption] = useState('');
+ 
+
+  useEffect(() => {
+     fetch(`http://localhost:3100/list_category?limit=${100}`, {
+        method: 'GET', 
+        headers: {
+          'Content-Type': 'application/json'      
+        }  
+      })
+      .then(response => response.json())
+      .then(data => { 
+        if(data.error){        
+          // toast.error(data.msg);     
+        } else {              
+            if (data.data) {    
+              setMuestras(data.data)             
+            }  
+        }
+      })  .catch(error => {
+        // Manejar el error en caso de que ocurra
+        console.error('Error:', error);
+      });    
+  }, []); 
 
   const handleShowBox2 = () => {
     setShowBox1(false);
@@ -14,7 +40,10 @@ const CreatePick = () => {
     setShowBox1(true);
     setShowBox2(false);
   };
-
+  const handleSelectChange = (event) => {
+    console.log("categoria",event.target.value)
+    setSelectedOption(event.target.value);
+  };
   return (
     <div>
       {showBox1 && (
@@ -33,15 +62,13 @@ const CreatePick = () => {
               <form>                
                 <div className="align-items-center d-flex form-group justify-content-center select-topic mb-5">
                   <label>Select Topic</label>
-                  <span className="icon fas fa-magic fa-lg"></span>                  
-                  <select className="form-control" id="topic" name="topic">
-                    <option selected className="d-none">
-                      Select Topic
-                    </option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                  </select>
+                  <span className="icon fas fa-magic fa-lg"></span>    
+                   <select className="form-control" id="topic" name="topic" value={selectedOptionTopic} onChange={handleSelectChange}>
+                  {muestras.map((opcion, index) => (
+                    <option key={index} value={opcion.id}>{opcion.name}</option>
+                  ))}
+                </select>              
+                
                 </div>
                 <button type="button" className="btn btn-login-modal font-family-SpaceGrotesk-Bold"  onClick={handleShowBox2}>
                   Next
@@ -67,17 +94,8 @@ const CreatePick = () => {
                 </p>
             </div>
 
-            <div className='col-md-12'><CreatePickImagenUpload /></div>
-                     
-            <div className='col-md-12'>
-                <form>
-                    <div className='form-group'>
-                        <button type="button" className="btn btn-login-modal font-family-SpaceGrotesk-Bold">
-                            Publish My Picks
-                        </button>
-                    </div>
-                </form>
-            </div>         
+            <div className='col-md-12'><CreatePickImagenUpload topics={selectedOptionTopic}/></div>
+               
         </div>
       )}
     </div>
