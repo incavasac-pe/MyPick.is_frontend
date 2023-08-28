@@ -89,7 +89,7 @@ class Buscador extends Component {
               this.setState({ muestras: data.data }); // Actualizar el estado con los valores de data.data 
             }  
         }
-      })  .catch(error => {
+      }).catch(error => {
         // Manejar el error en caso de que ocurra
         console.error('Error:', error);
       });

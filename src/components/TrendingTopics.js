@@ -7,6 +7,7 @@ class TrendingTopics extends Component {
     super(props);
     this.state = {
       activeTab: 'Top Trending',
+      muestras: [],
     };
   }
 
@@ -15,7 +16,31 @@ class TrendingTopics extends Component {
   };
 
   render() {
-    const { activeTab } = this.state;
+    const { activeTab,muestras } = this.state;
+    if( muestras.length === 0){
+      fetch(`http://localhost:3100/list_category?limit=${100}`, {
+        method: 'GET', 
+        headers: {
+          'Content-Type': 'application/json'      
+        }  
+      })
+      .then(response => response.json())
+      .then(data => { 
+        if(data.error){        
+          // toast.error(data.msg);     
+        } else {              
+            if (data.data) {    
+              this.setState({ muestras: data.data }); // Actualizar el estado con los valores de data.data 
+            }  
+        }
+      }).catch(error => {
+        // Manejar el error en caso de que ocurra
+        console.error('Error:', error);
+      });
+    }
+    if (muestras.length === 0) {
+      return <p>No se encontraron resultados.</p>;   
+    }
     return (
       <div className='trending contenido mb-5'>
         
@@ -23,73 +48,41 @@ class TrendingTopics extends Component {
         <div className='row'>
           <div className='col-md-12 text-center'>
             <h1 className='text-white titulo font-family-SpaceGrotesk-Light'>Trending Topics</h1>
-            <p className='text-gris descripcion'>Showing what’s eveyone’s picking at this moment!</p>
+             <p className='text-gris descripcion'>Showing what’s eveyone’s picking at this moment!</p>
           </div>          
         </div>
         <ul className="nav nav-tabs">
-          <li className="nav-item">
+        <li className="nav-item">
             <Link
               to="#"
-              className={`nav-link ${activeTab === 'Top Trending' ? 'active' : ''}`}
+              className={`nav-link ${activeTab === 'Top Trending' ? 'active' : ''}`}               
               onClick={() => this.changeTab('Top Trending')}
             >
               Top Trending
             </Link>
           </li>
-          <li className="nav-item">
-            <Link
-              to="#"
-              className={`nav-link ${activeTab === 'Places' ? 'active' : ''}`}
-              onClick={() => this.changeTab('Places')}
-            >
-              Places
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link
-              to="#"
-              className={`nav-link ${activeTab === 'Food' ? 'active' : ''}`}
-              onClick={() => this.changeTab('Food')}
-            >
-              Food
-            </Link>
-          </li>
-          <li className="nav-item pc">
-            <Link
-              to="#"
-              className={`nav-link ${activeTab === 'Soccer' ? 'active' : ''}`}
-              onClick={() => this.changeTab('Soccer')}
-            >
-              Soccer
-            </Link>
-          </li>
-          <li className="nav-item pc">
-            <Link
-              to="#"
-              className={`nav-link ${activeTab === 'Watches' ? 'active' : ''}`}
-              onClick={() => this.changeTab('Watches')}
-            >
-              Watches
-            </Link>
-          </li>
-          <li className="nav-item pc">
-            <Link
-              to="#"
-              className={`nav-link ${activeTab === 'Flowers' ? 'active' : ''}`}
-              onClick={() => this.changeTab('Flowers')}
-            >
-              Flowers
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link
-              to="#"
-              className={`nav-link ${activeTab === 'More' ? 'active' : ''}`}
-              onClick={() => this.changeTab('More')}
-            >
-              More...
-            </Link>
-          </li>
+        {muestras.map(category => (
+          <>          
+         <li className="nav-item"  key={category.id}>
+              <Link
+                to="#"
+                className={`nav-link ${activeTab === category.name ? 'active' : ''}`} 
+                onClick={() => this.changeTab(category.name)}
+              >
+              {category.name}
+              </Link>
+            </li>            
+           </>
+            ))}
+             <li className="nav-item">
+              <Link
+                to="#"
+                className={`nav-link ${activeTab === 'More' ? 'active' : ''}`}
+               onClick={() => this.changeTab('More')}
+              >
+                More...
+              </Link>
+            </li>
         </ul>
 
         <div className="tab-content">
@@ -186,8 +179,6 @@ class TrendingTopics extends Component {
       <MenuFlotante />
       </div>
     );
-  }
-}
-
+   }
+  } 
 export default TrendingTopics;
-

@@ -4,7 +4,6 @@ import Like from './like';
 import Commets from './commets';
 import CreatePick from './modal/CreatePick';
 import AuthLogin from './modal/AuthLogin';
-import ModalComments from './modal/ModalComments';
 import ModalRedes from './modal/ModalRedes';
 import { checkAuth }  from '../AuthMiddleware'; 
 

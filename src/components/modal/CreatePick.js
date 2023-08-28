@@ -25,7 +25,7 @@ const CreatePick = () => {
               setMuestras(data.data)             
             }  
         }
-      })  .catch(error => {
+      }).catch(error => {
         // Manejar el error en caso de que ocurra
         console.error('Error:', error);
       });    
