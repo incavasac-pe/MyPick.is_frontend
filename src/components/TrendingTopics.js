@@ -52,7 +52,7 @@ class TrendingTopics extends Component {
           </div>          
         </div>
         <ul className="nav nav-tabs">
-        <li className="nav-item">
+        <li className="nav-item" key={'0'}>
             <Link
               to="#"
               className={`nav-link ${activeTab === 'Top Trending' ? 'active' : ''}`}               
@@ -88,6 +88,7 @@ class TrendingTopics extends Component {
         <div className="tab-content">
           <div className={`tab-pane ${activeTab === 'Top Trending' ? 'active' : ''}`} id="top-trending">
             <div className='row'>
+              
               <div className='col-md-4 mb-3'>
                  <div className='box-tabs'>
                       <h6 className='font-family-SpaceMono-BoldItalic'>
@@ -156,7 +157,82 @@ class TrendingTopics extends Component {
               </div>
             </div>
           </div>
-          <div className={`tab-pane ${activeTab === 'Places' ? 'active' : ''}`} id="places">
+        {muestras.map(category => (
+          <>  
+          <div className={`tab-pane ${activeTab === category.name  ? 'active' : ''}`} id="top-trending">
+          Contenido de aaaaaaaaaa {category.name}
+            <div className='row'>
+              
+              <div className='col-md-4 mb-3'>
+                 <div className='box-tabs'>
+                      <h6 className='font-family-SpaceMono-BoldItalic'>
+                        <span className='d-block'>#1</span> 
+                        TRENDING
+                      </h6>
+                      <div className='box-tabs-img'>
+                        <img src={require('./img/washinton.jpg')} alt='icon' />
+                      </div>
+                      <h2 className='font-family-SpaceGrotesk-Bold'>Soccer</h2>
+                      {/* <p className='text-grey font-family-SpaceGrotesk-Medium'>Soccer</p> */}
+                      <div className='box-tabs-footer'>                        
+                        <div>
+                          <span className='text-morado font-family-SpaceGrotesk-Bold stats'>32K Picks</span>
+                        </div>
+                        <div className='box-equipos'>
+                          <img src={require('./img/washinton.jpg')} alt='icon' />
+                          <img src={require('./img/paris.jpg')} alt='icon'  className='sobrepuesta'/>
+                        </div>
+                      </div>                      
+                 </div>
+              </div>
+              <div className='col-md-4 mb-3'>
+                 <div className='box-tabs'>
+                      <h6 className='font-family-SpaceMono-BoldItalic'>
+                        <span className='d-block'>#1</span> 
+                        Champions League
+                      </h6>
+                      <div className='box-tabs-img'>
+                        <img src={require('./img/washinton.jpg')} alt='icon' />
+                      </div>
+                      <h2 className='font-family-SpaceGrotesk-Bold'>Soccer</h2>
+                      {/* <p className='text-grey font-family-SpaceGrotesk-Medium'>Soccer</p> */}
+                      <div className='box-tabs-footer'>                        
+                        <div>
+                          <span className='text-morado font-family-SpaceGrotesk-Bold stats'>32K Picks</span>
+                        </div>
+                        <div className='box-equipos'>
+                          <img src={require('./img/washinton.jpg')} alt='icon' />
+                          <img src={require('./img/paris.jpg')} alt='icon'  className='sobrepuesta'/>
+                        </div>
+                      </div>                      
+                 </div>
+              </div>
+              <div className='col-md-4 mb-3'>
+                 <div className='box-tabs'>
+                      <h6 className='font-family-SpaceMono-BoldItalic'>
+                        <span className='d-block'>#1</span> 
+                        Flowers
+                      </h6>
+                      <div className='box-tabs-img'>
+                        <img src={require('./img/washinton.jpg')} alt='icon' />
+                      </div>
+                      <h2 className='font-family-SpaceGrotesk-Bold'>Soccer</h2>
+                      {/* <p className='text-grey font-family-SpaceGrotesk-Medium'>Soccer</p> */}
+                      <div className='box-tabs-footer'>                        
+                        <div>
+                          <span className='text-morado font-family-SpaceGrotesk-Bold stats'>32K Picks</span>
+                        </div>
+                        <div className='box-equipos'>
+                          <img src={require('./img/washinton.jpg')} alt='icon' />
+                          <img src={require('./img/paris.jpg')} alt='icon'  className='sobrepuesta'/>
+                        </div>
+                      </div>                      
+                 </div>
+              </div>
+            </div>
+          </div>
+          </> ))}
+          {/* <div className={`tab-pane ${activeTab === 'Places' ? 'active' : ''}`} id="places">
             Contenido de Places
           </div>
           <div className={`tab-pane ${activeTab === 'Food' ? 'active' : ''}`} id="food">
@@ -170,7 +246,7 @@ class TrendingTopics extends Component {
           </div>
           <div className={`tab-pane ${activeTab === 'Flowers' ? 'active' : ''}`} id="flowers">
             Contenido de Flowers
-          </div>
+          </div> */}
           <div className={`tab-pane ${activeTab === 'More' ? 'active' : ''}`} id="more">
             Contenido de More
           </div>
