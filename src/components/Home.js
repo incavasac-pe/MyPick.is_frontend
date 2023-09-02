@@ -1,62 +1,83 @@
-import React, { Component } from 'react';
+import React, {useState, useEffect} from 'react';
 import MenuFlotante from './MenuFlotante';
 import Like from './like';
 import Commets from './commets';
 import CreatePick from './modal/CreatePick';
-import AuthLogin from './modal/AuthLogin';
+import AuthLogin from './modal/AuthLogin'; 
 import ModalRedes from './modal/ModalRedes';
 import { checkAuth }  from '../AuthMiddleware'; 
 
-class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentStep: 1,
-      imagenActiva: '',
-      textoActivo: '',
-      login:null,
-    };
-  }
+const Home = () => {
 
-  showStep = (stepNumber) => {
+  const [currentStep, setcurrentStep] = useState(1);
+  const [imagenActiva, setimagenActiva] = useState('');  
+  const [textoActivo, settextoActivo] = useState('');  
+  const [login, setlogin] = useState('');
+  const [muestras, setMuestras] = useState(null);
+ 
+/* const  showStep = (stepNumber) => {
     const steps = document.getElementsByClassName('step');
     for (let i = 0; i < steps.length; i++) {
       steps[i].classList.remove('current');
     }
     steps[stepNumber - 1].classList.add('current');
   };
-
-  nextStep = () => {
-    const { currentStep } = this.state;
+ */
+const  nextStep = () => {
+    console.log("paso a paso")
+ 
     const totalSteps = document.getElementsByClassName('step').length;
     if (currentStep < totalSteps) {
-      this.setState({ currentStep: currentStep + 1 });
+      setcurrentStep(  currentStep + 1 )
+    
     }
+    console.log("paso a paso new",currentStep)
   };
 
-  previousStep = () => {
-    const { currentStep } = this.state;
+/*  const previousStep = () => {
+ 
     if (currentStep > 1) {
-      this.setState({ currentStep: currentStep - 1 });
+      setcurrentStep(  currentStep - 1 )     
     }
+  }; */
+
+ const goToFirstStep = () => {
+  setcurrentStep(1)
+   
+  };
+ const goToSecondStep = () => {
+  setcurrentStep(2)
   };
 
-  goToFirstStep = () => {
-    this.setState({ currentStep: 1 });
+ const handleClickImagen = (imagen, texto) => { 
+  setimagenActiva(imagen)
+  settextoActivo(texto) 
   };
 
-  handleClickImagen = (imagen, texto) => {
-    this.setState({ imagenActiva: imagen, textoActivo: texto });
-  };
+  useEffect(() => { 
+    const isAuthenticated = checkAuth();
+    setlogin(isAuthenticated)
+    console.log("addddddddddddd")
+     
+    fetch(`http://localhost:3100/list_all_picks?limit=${1}`, {
+      method: 'GET', 
+      headers: {
+        'Content-Type': 'application/json'      
+      }  
+    })
+    .then(response => response.json())
+    .then(data => { 
+      if(!data.error && data.data){   
+        setMuestras(data.data)        
+      }
+    })
+    .catch(error => { 
+      
+    // navigate('/'); // Redirigir al usuario a la página de home  
+    });
+  }, []);
 
-  componentDidMount() {
-    this.showStep(this.state.currentStep);
-  }
-
-  render() {
-    const { currentStep, imagenActiva, textoActivo,login } = this.state;
-  const isAuthenticated = checkAuth();
-    this.setState({ login: isAuthenticated })  
+ 
     return (
       <div>
         
@@ -74,29 +95,29 @@ class Home extends Component {
                     <div className='box-flex'>
                       <div className='columna'>
                         <div
-                          className={`box-img ${imagenActiva === 'washinton' ? 'activo' : ''}`}
-                          onClick={() => this.handleClickImagen('washinton', 'Washington DC, USA')}
+                          className={`box-img ${imagenActiva === muestras?.[0]?.photo1_name ? 'activo' : ''}`}
+                          onClick={() => handleClickImagen(muestras?.[0]?.photo1_name, muestras?.[0]?.choice1_name)}
                         >
-                          <img src={require('./img/washinton.jpg')} alt="ciudad" onClick={this.nextStep}/>
+                          <img src={`http://localhost:3100/see_photo?img=${muestras?.[0]?.photo1_name}`}  alt="ciudad" onClick={goToSecondStep}/>
                         </div>
                         <div className='nombre'>
-                          <h3 className='text-white font-family-SpaceGrotesk-Bold'>Washington DC, USA</h3>
+                          <h3 className='text-white font-family-SpaceGrotesk-Bold'>{ muestras?.[0]?.choice1_name}</h3>
                         </div>
                       </div>
                       <div className='columna-refresh'>
-                        <button onClick={this.goToFirstStep}>
+                        <button onClick={goToFirstStep}>
                           <i className="fas fa-redo"></i>
                         </button>
                       </div>
                       <div className='columna'>
                         <div
-                          className={`box-img ${imagenActiva === 'paris' ? 'activo' : ''}`}
-                          onClick={() => this.handleClickImagen('paris', 'Paris, France')}
+                          className={`box-img ${imagenActiva === muestras?.[0]?.photo2_name ? 'activo' : ''}`}
+                          onClick={() => handleClickImagen(muestras?.[0]?.photo2_name, muestras?.[0]?.choice2_name)}
                         >
-                          <img src={require('./img/paris.jpg')} alt="ciudad" onClick={this.nextStep}/>
+                          <img src={`http://localhost:3100/see_photo?img=${muestras?.[0]?.photo2_name}`} alt="ciudad" onClick={goToSecondStep}/>
                         </div>
                         <div className='nombre'>
-                          <h3 className='text-white font-family-SpaceGrotesk-Bold'>Paris, France</h3>
+                          <h3 className='text-white font-family-SpaceGrotesk-Bold'>{ muestras?.[0]?.choice2_name}</h3>
                         </div>
                       </div>
                     </div>
@@ -115,12 +136,12 @@ class Home extends Component {
                     <div className='box-flex'>
                       <div className='columna'>
                         <div className='box-img activo'>                      
-                          {imagenActiva === 'washinton' && (
-                            <img src={require('./img/washinton.jpg')} alt="ciudad" onClick={this.nextStep}/>
+                          {imagenActiva === muestras?.[0]?.photo1_name && (
+                            <img src={require('./img/washinton.jpg')} alt="ciudad" onClick={nextStep}/>
                           )}
                           
-                          {imagenActiva === 'paris' && (
-                            <img src={require('./img/paris.jpg')} alt="ciudad" onClick={this.nextStep} />
+                          {imagenActiva === muestras?.[0]?.photo2_name && (
+                            <img src={require('./img/paris.jpg')} alt="ciudad" onClick={nextStep} />
                           )}
                         
                         </div>
@@ -160,7 +181,7 @@ class Home extends Component {
                         </div>
                       </div>
                       <div className='columna-refresh'>
-                        <button onClick={this.goToFirstStep}>
+                        <button onClick={goToFirstStep}>
                           <i className="fas fa-redo"></i>
                         </button>
                       </div>
@@ -209,7 +230,7 @@ class Home extends Component {
                   <div class="modal-body p-0">
                     <div className='cuadro'>
                       <div className='box-cuadro-modal'>
-                      
+     
                     {login ? (
                         <CreatePick  />
                  ) : ( 
@@ -234,11 +255,10 @@ class Home extends Component {
                 </div>
               </div>
             </div>
-
         </div>        
       </div>
     );
   }
-}
+ 
 
 export default Home;

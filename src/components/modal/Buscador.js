@@ -4,8 +4,7 @@ class Buscador extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchTerm: '', // Almacena el término de búsqueda  
-      muestras: [],
+      searchTerm: '', // Almacena el término de búsqueda       
       resultados: [], // Resultados de búsqueda
     };
     
