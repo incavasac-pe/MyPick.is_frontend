@@ -14,7 +14,9 @@ const Home = () => {
   const [textoActivo, settextoActivo] = useState('');  
   const [login, setlogin] = useState('');
   const [muestras, setMuestras] = useState(null);
- 
+  const [porciento1, setPorcentaje1] = useState(''); 
+  const [porciento2, setPorcentaje2] = useState('');
+
 /* const  showStep = (stepNumber) => {
     const steps = document.getElementsByClassName('step');
     for (let i = 0; i < steps.length; i++) {
@@ -49,7 +51,25 @@ const  nextStep = () => {
   setcurrentStep(2)
   };
 
- const handleClickImagen = (imagen, texto) => { 
+ const handleClickImagen = (id_choice,imagen, texto) => { 
+  console.log("qwererert",id_choice)
+  
+  fetch(`http://localhost:3100/list_all_picks?limit=${1}`, {
+    method: 'GET', 
+    headers: {
+      'Content-Type': 'application/json'      
+    }  
+  })
+  .then(response => response.json())
+  .then(data => { 
+    if(!data.error && data.data){   
+     // setMuestras(data.data)        
+    }
+  })
+  .catch(error => { 
+    
+  // navigate('/'); // Redirigir al usuario a la página de home  
+  });
   setimagenActiva(imagen)
   settextoActivo(texto) 
   };
@@ -96,7 +116,7 @@ const  nextStep = () => {
                       <div className='columna'>
                         <div
                           className={`box-img ${imagenActiva === muestras?.[0]?.photo1_name ? 'activo' : ''}`}
-                          onClick={() => handleClickImagen(muestras?.[0]?.photo1_name, muestras?.[0]?.choice1_name)}
+                          onClick={() => handleClickImagen(muestras?.[0]?.id_choice1, muestras?.[0]?.photo1_name, muestras?.[0]?.choice1_name)}
                         >
                           <img src={`http://localhost:3100/see_photo?img=${muestras?.[0]?.photo1_name}`}  alt="ciudad" onClick={goToSecondStep}/>
                         </div>
@@ -112,7 +132,7 @@ const  nextStep = () => {
                       <div className='columna'>
                         <div
                           className={`box-img ${imagenActiva === muestras?.[0]?.photo2_name ? 'activo' : ''}`}
-                          onClick={() => handleClickImagen(muestras?.[0]?.photo2_name, muestras?.[0]?.choice2_name)}
+                          onClick={() => handleClickImagen(muestras?.[0]?.id_choice2,  muestras?.[0]?.photo2_name, muestras?.[0]?.choice2_name)}
                         >
                           <img src={`http://localhost:3100/see_photo?img=${muestras?.[0]?.photo2_name}`} alt="ciudad" onClick={goToSecondStep}/>
                         </div>
@@ -137,11 +157,11 @@ const  nextStep = () => {
                       <div className='columna'>
                         <div className='box-img activo'>                      
                           {imagenActiva === muestras?.[0]?.photo1_name && (
-                            <img src={require('./img/washinton.jpg')} alt="ciudad" onClick={nextStep}/>
+                            <img src={`http://localhost:3100/see_photo?img=${muestras?.[0]?.photo1_name}`} alt="ciudad" onClick={nextStep}/>
                           )}
                           
                           {imagenActiva === muestras?.[0]?.photo2_name && (
-                            <img src={require('./img/paris.jpg')} alt="ciudad" onClick={nextStep} />
+                            <img src={`http://localhost:3100/see_photo?img=${muestras?.[0]?.photo2_name}`} alt="ciudad" onClick={nextStep} />
                           )}
                         
                         </div>
