@@ -14,71 +14,57 @@ const Home = () => {
   const [textoActivo, settextoActivo] = useState('');  
   const [login, setlogin] = useState('');
   const [muestras, setMuestras] = useState(null);
-  const [porciento1, setPorcentaje1] = useState(''); 
-  const [porciento2, setPorcentaje2] = useState('');
+  const [porciento, setPorcentaje] = useState(null); 
+  const [id_pick, setPick] = useState(''); 
 
-/* const  showStep = (stepNumber) => {
-    const steps = document.getElementsByClassName('step');
-    for (let i = 0; i < steps.length; i++) {
-      steps[i].classList.remove('current');
-    }
-    steps[stepNumber - 1].classList.add('current');
-  };
- */
-const  nextStep = () => {
-    console.log("paso a paso")
  
+const  nextStep = () => { 
     const totalSteps = document.getElementsByClassName('step').length;
     if (currentStep < totalSteps) {
-      setcurrentStep(  currentStep + 1 )
-    
-    }
-    console.log("paso a paso new",currentStep)
+      setcurrentStep(  currentStep + 1 )    
+    } 
   };
-
-/*  const previousStep = () => {
- 
-    if (currentStep > 1) {
-      setcurrentStep(  currentStep - 1 )     
-    }
-  }; */
-
+  
  const goToFirstStep = () => {
+  fetchData()
   setcurrentStep(1)
    
   };
- const goToSecondStep = () => {
-  setcurrentStep(2)
-  };
-
+ 
  const handleClickImagen = (id_choice,imagen, texto) => { 
   console.log("qwererert",id_choice)
-  
-  fetch(`http://localhost:3100/list_all_picks?limit=${1}`, {
-    method: 'GET', 
+  console.log("el idpicks", id_pick)
+  fetch(`http://localhost:3100/select_picks`, {
+    method: 'POST', 
+    body: JSON.stringify({ id_pick: id_pick, id_choice: id_choice }),
     headers: {
       'Content-Type': 'application/json'      
     }  
   })
   .then(response => response.json())
   .then(data => { 
-    if(!data.error && data.data){   
-     // setMuestras(data.data)        
+    if(!data.error && data.data){  
+      setPorcentaje(data.data) 
+      setimagenActiva(imagen)
+      settextoActivo(texto)    
+      setcurrentStep(2)   
     }
   })
-  .catch(error => { 
-    
-  // navigate('/'); // Redirigir al usuario a la página de home  
+  .catch(error => {  
   });
-  setimagenActiva(imagen)
-  settextoActivo(texto) 
+
   };
 
   useEffect(() => { 
     const isAuthenticated = checkAuth();
     setlogin(isAuthenticated)
     console.log("addddddddddddd")
-     
+    fetchData()
+  }, []);
+
+  const fetchData = async () => {
+    
+    setMuestras(null)    
     fetch(`http://localhost:3100/list_all_picks?limit=${1}`, {
       method: 'GET', 
       headers: {
@@ -88,19 +74,15 @@ const  nextStep = () => {
     .then(response => response.json())
     .then(data => { 
       if(!data.error && data.data){   
-        setMuestras(data.data)        
+        setMuestras(data.data)  
+        setPick(data.data?.[0]?.id)     
       }
     })
-    .catch(error => { 
-      
-    // navigate('/'); // Redirigir al usuario a la página de home  
+    .catch(error => {        
     });
-  }, []);
-
- 
+  };
     return (
-      <div>
-        
+      <div>        
         <div className='container'>
           <div className='contenido'>
             <div className='row'>
@@ -118,7 +100,7 @@ const  nextStep = () => {
                           className={`box-img ${imagenActiva === muestras?.[0]?.photo1_name ? 'activo' : ''}`}
                           onClick={() => handleClickImagen(muestras?.[0]?.id_choice1, muestras?.[0]?.photo1_name, muestras?.[0]?.choice1_name)}
                         >
-                          <img src={`http://localhost:3100/see_photo?img=${muestras?.[0]?.photo1_name}`}  alt="ciudad" onClick={goToSecondStep}/>
+                          <img src={`http://localhost:3100/see_photo?img=${muestras?.[0]?.photo1_name}`}  alt="ciudad"  />
                         </div>
                         <div className='nombre'>
                           <h3 className='text-white font-family-SpaceGrotesk-Bold'>{ muestras?.[0]?.choice1_name}</h3>
@@ -134,7 +116,7 @@ const  nextStep = () => {
                           className={`box-img ${imagenActiva === muestras?.[0]?.photo2_name ? 'activo' : ''}`}
                           onClick={() => handleClickImagen(muestras?.[0]?.id_choice2,  muestras?.[0]?.photo2_name, muestras?.[0]?.choice2_name)}
                         >
-                          <img src={`http://localhost:3100/see_photo?img=${muestras?.[0]?.photo2_name}`} alt="ciudad" onClick={goToSecondStep}/>
+                          <img src={`http://localhost:3100/see_photo?img=${muestras?.[0]?.photo2_name}`} alt="ciudad" />
                         </div>
                         <div className='nombre'>
                           <h3 className='text-white font-family-SpaceGrotesk-Bold'>{ muestras?.[0]?.choice2_name}</h3>
@@ -177,10 +159,9 @@ const  nextStep = () => {
                       <div className='col-auto m-auto'>
                         <Like />
                       </div>
-                    </div>
-                    {/* <button onClick={this.previousStep}>Anterior</button>
-                    <button onClick={this.nextStep}>Siguiente</button> */}
+                    </div>                   
                   </div>
+                  {porciento && ( 
                   <div className={`step ${currentStep === 3 ? 'current' : ''}`} id="step3">
                     <div className='row'>
                       <div className='col-md-12 mb-4'>
@@ -190,14 +171,18 @@ const  nextStep = () => {
                       </div>
                     </div>
                     <div className='box-flex'>
-                      <div className='columna'>
+                      <div className='columna' >
                         <div className='box-img'>
                            <div className='box-color bg-morado'>
-                              <p className='mb-0 font-family-SpaceGrotesk-Light text-white'>75%</p>
-                           </div>
+                              {porciento.map((percen) => (
+                                muestras?.[0]?.id_choice1 === percen.id_choice ? (
+                                  <p  className='mb-0 font-family-SpaceGrotesk-Light text-white'> {percen.percentage_selected} %</p>
+                                ) : null
+                              ))}
+                            </div>
                         </div>
                         <div className='nombre'>
-                          <h3 className='text-white font-family-SpaceGrotesk-Bold'>Washington DC, USA</h3>
+                          <h3 className='text-white font-family-SpaceGrotesk-Bold'>{muestras?.[0]?.choice1_name}</h3>
                         </div>
                       </div>
                       <div className='columna-refresh'>
@@ -206,13 +191,17 @@ const  nextStep = () => {
                         </button>
                       </div>
                       <div className='columna'>
-                        <div className='box-img'>
+                        <div className='box-img'>                         
                           <div className='box-color bg-gris'>
-                            <p className='mb-0 font-family-SpaceGrotesk-Light text-white'>25%</p>
-                          </div>
+                              {porciento.map((percen2) => (
+                                muestras?.[0]?.id_choice2 === percen2.id_choice ? (
+                                  <p  className='mb-0 font-family-SpaceGrotesk-Light text-white'> {percen2.percentage_selected} %</p>
+                                ) : null
+                              ))}
+                            </div>
                         </div>
                         <div className='nombre'>
-                          <h3 className='text-white font-family-SpaceGrotesk-Bold'>Paris, France</h3>
+                          <h3 className='text-white font-family-SpaceGrotesk-Bold'>{ muestras?.[0]?.choice2_name}</h3>
                         </div>
                       </div>
                     </div>
@@ -223,10 +212,9 @@ const  nextStep = () => {
                     </div>
                     <div className='pc'>
                       <Commets />
-                    </div>
-                    {/* <button onClick={this.previousStep}>Anterior</button>
-                    <button onClick={this.goToFirstStep}>Actualizar</button> */}
+                    </div>               
                   </div>
+                      )}
                 </div>
               </div>
             </div>
