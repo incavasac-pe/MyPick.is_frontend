@@ -9,6 +9,7 @@ const MyProfile = () => {
   const navigate = useNavigate(); // Hook de navegación
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState('');
+  const [new_email, setEmailNew] = useState('');  
   const [email, setEmail] = useState('');  
   const [nick, setNick] = useState('');
   const [errors, setErrors] = useState({});
@@ -102,11 +103,11 @@ const MyProfile = () => {
     const errors = {};
     
     if (!name.trim()) errors.name = 'Please enter your name'  
-  
+     
     if (Object.keys(errors).length === 0) {
         fetch('http://localhost:3100/change_profile', {
           method: 'POST',
-          body: JSON.stringify({ email: email, full_name: name }),
+          body: JSON.stringify({ email: email, new_email:new_email, full_name: name }),
           headers: {
             'Content-Type': 'application/json'      
           }
@@ -117,15 +118,16 @@ const MyProfile = () => {
              toast.error(data.msg);              
           } else {   
             const storedUser = localStorage.getItem('user');
-            if (storedUser) {  
-              localStorage.setItem('user', JSON.stringify({ name:name,email:email}));     
-            }
-                       
+            if (storedUser) {    
+                localStorage.setItem('user', JSON.stringify({ name: data.data.user.full_name,  email: data.data.user.email, nick:data.data.user.username}));
+                if(data.data.user.photo!=null)   localStorage.setItem('photo', JSON.stringify({ photo: `http://localhost:3100/see_photo?img=${data.data.user.photo}`}));
+               } 
+                  
             setErrors({});                    
             toast.success(data.msg, {
               position: toast.POSITION.TOP_RIGHT
              });
-             window.location.reload()
+            window.location.reload()
            }
         })
         .catch(error => {
@@ -263,7 +265,7 @@ const MyProfile = () => {
                           <label>Email:</label>
                         </td>
                         <td className='font-family-Inter-Medium'>
-                          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled />
+                          <input className={`form-control`} type="email" value={new_email !== '' ? new_email : email} onChange={(e) => setEmailNew(e.target.value)} />
                         </td>
                       </tr>
                       <tr>                        

@@ -66,8 +66,8 @@ const CreatePickImagenUpload = (props) => {
   
     var formdata = new FormData();
     formdata.append("id_category", props.topics);
-    formdata.append("name_choice1", text1);
-    formdata.append("name_choice2", text2); 
+    formdata.append("name_choice1", searchTerm);
+    formdata.append("name_choice2", searchTerm2); 
     formdata.append("photo1", photo1);
     formdata.append("photo2", photo2); 
     formdata.append("email", email);
@@ -98,7 +98,59 @@ const CreatePickImagenUpload = (props) => {
         }
   };
 
+  const [searchTerm, setSearchTerm] = useState('');
+  const [results, setResults] = useState([]);
+  const [notFound, setNotFound] = useState(false);
 
+  const [searchTerm2, setSearchTerm2] = useState('');
+  const [results2, setResults2] = useState([]);
+  const [notFound2, setNotFound2] = useState(false);
+  const data = [
+    {id:"1", name:"Ron"},
+    {id:"2", name:"Agua"},
+    {id:"3", name:"Café"},
+    {id:"4", name:"Agua San mateo"},
+    {id:"5", name:"Agua San luis"},
+  ]
+  const handleSearch = (e) => {
+    const searchTerm = e.target.value;
+    setSearchTerm(searchTerm);
+    console.log("busca en la api ",searchTerm)
+    // Aquí puedes realizar la lógica de búsqueda con los datos que tengas disponibles. 
+
+    // Supongamos que tienes una lista de elementos llamada "data" que contiene objetos con una propiedad "name":
+    const filteredResults = data.filter((item) =>
+      item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    if (filteredResults.length > 0) {
+      setResults(filteredResults);
+      setNotFound(false);
+    } else {
+      setResults([]);
+      setNotFound(true);
+    }
+  };
+ 
+  const handleSearch2 = (e) => {
+    const searchTerm2 = e.target.value;
+    setSearchTerm2(searchTerm2);
+    console.log("busca en la api ",searchTerm2)
+    // Aquí puedes realizar la lógica de búsqueda con los datos que tengas disponibles. 
+
+    // Supongamos que tienes una lista de elementos llamada "data" que contiene objetos con una propiedad "name":
+    const filteredResults = data.filter((item) =>
+      item.name.toLowerCase().includes(searchTerm2.toLowerCase())
+    );
+
+    if (filteredResults.length > 0) {
+      setResults2(filteredResults);
+      setNotFound2(false);
+    } else {
+      setResults2([]);
+      setNotFound2(true);
+    }
+  };
   return (
     <><div className='row'>
       {/* Primer cuadro */} 
@@ -120,9 +172,18 @@ const CreatePickImagenUpload = (props) => {
           </label>
           <input className='font-family-SpaceGrotesk-Bold'
             type="text"
-            value={text1}
-            onChange={(e) => setText1(e.target.value)}
+            value={searchTerm}
+            onChange={handleSearch} 
             placeholder="Type your choice..." />
+            
+            {!notFound && searchTerm && ( 
+           
+              <select   className="form-control" onChange={handleSearch}> 
+                  {results.map((item) => (
+              <option data-tokens="ketchup mustard" value={item.name}>{item.name}</option>
+              ))}
+            </select> 
+            )}
         </div>
       </div>
 
@@ -144,9 +205,18 @@ const CreatePickImagenUpload = (props) => {
           </label>
           <input className='font-family-SpaceGrotesk-Bold'
             type="text"
-            value={text2}
-            onChange={(e) => setText2(e.target.value)}
+            value={searchTerm2}
+            onChange={handleSearch2} 
             placeholder="Type your choice..." />
+              
+              {!notFound2 && searchTerm2 && ( 
+           
+           <select  className="form-control"   onChange={handleSearch2}> 
+               {results2.map((item) => (
+           <option data-tokens="ketchup mustard" value={item.name}>{item.name}</option>
+           ))}
+         </select> 
+         )}
         </div>
       </div>
     </div><div>

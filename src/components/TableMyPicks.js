@@ -86,8 +86,9 @@ const TableMyPicks = () => {
               <td className='pc'>{row.datepicked}</td>
               <td>
                 <div className='table-img d-flex align-items-center justify-content-start'>
-                    <img src={require('./img/paris.jpg')} alt="equipo" />
-                     <span className='ml-3'>{row.mostPicked}</span>
+          
+                    <img src={`http://localhost:3100/see_photo?img=${row.selectd1 >= row.selectd2 ? row.photo1_name : row.photo2_name}`} alt="equipo" />
+                     <span className='ml-3'>{ row.selectd1 >= row.selectd2 ? row.choice1_name : row.choice2_name }</span>
                 </div>
                 
               </td>              
