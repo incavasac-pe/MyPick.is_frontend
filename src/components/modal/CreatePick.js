@@ -40,8 +40,7 @@ const CreatePick = () => {
     setShowBox1(true);
     setShowBox2(false);
   };
-  const handleSelectChange = (event) => {
-    console.log("categoria",event.target.value)
+  const handleSelectChange = (event) => { 
     setSelectedOption(event.target.value);
   };
   return (

@@ -32,8 +32,7 @@ const  nextStep = () => {
   };
  
  const handleClickImagen = (id_choice,imagen, texto) => { 
-  console.log("qwererert",id_choice)
-  console.log("el idpicks", id_pick)
+ 
   fetch(`http://localhost:3100/select_picks`, {
     method: 'POST', 
     body: JSON.stringify({ id_pick: id_pick, id_choice: id_choice }),
@@ -57,8 +56,7 @@ const  nextStep = () => {
 
   useEffect(() => { 
     const isAuthenticated = checkAuth();
-    setlogin(isAuthenticated)
-    console.log("addddddddddddd")
+    setlogin(isAuthenticated)    
     fetchData()
   }, []);
 
@@ -125,7 +123,7 @@ const  nextStep = () => {
                     </div>
                     <div className='row'>
                       <div className='col-auto m-auto'>
-                        <Like />
+                        <Like likes={muestras?.[0]?.likes} id_pick={id_pick}  />
                       </div>
                     </div>
                   </div>
@@ -157,7 +155,7 @@ const  nextStep = () => {
                     </div>
                     <div className='row'>
                       <div className='col-auto m-auto'>
-                        <Like />
+                        <Like likes={muestras?.[0]?.likes} id_pick={id_pick} />
                       </div>
                     </div>                   
                   </div>
@@ -207,7 +205,7 @@ const  nextStep = () => {
                     </div>
                     <div className='row'>
                       <div className='col-auto m-auto'>
-                        <Like />
+                        <Like likes={muestras?.[0]?.likes} id_pick={id_pick} />
                       </div>
                     </div>
                     <div className='pc'>
@@ -237,12 +235,11 @@ const  nextStep = () => {
                 <div class="modal-content">              
                   <div class="modal-body p-0">
                     <div className='cuadro'>
-                      <div className='box-cuadro-modal'>
-     
-                    {login ? (
+                      <div className='box-cuadro-modal'>     
+                      {login ? (
                         <CreatePick  />
-                 ) : ( 
-                        < AuthLogin />  )}  
+                      ) : ( 
+                        < AuthLogin label={'Create My Pick'} />  )}  
                       </div>
                     </div>
                   </div>
@@ -263,6 +260,21 @@ const  nextStep = () => {
                 </div>
               </div>
             </div>
+
+            {!login && (   <div class="modal fade" id="login">
+              <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">              
+                  <div class="modal-body p-0">
+                    <div className='cuadro'>
+                      <div className='box-cuadro-modal'>                                    
+                        < AuthLogin  label={'Information'} />                       
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}  
         </div>        
       </div>
     );

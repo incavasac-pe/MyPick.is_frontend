@@ -1035,9 +1035,11 @@ input:-webkit-autofill:active {
 }
 #creapick,
 #ModaLogin,
+#login,
 #redes{
   backdrop-filter: blur(20px);
 }
+#login .modal-content,
 #comentarios .modal-content,
 #creapick .modal-content,
 #ModaLogin .modal-content,
@@ -1045,7 +1047,7 @@ input:-webkit-autofill:active {
   background-color: #1B161E;
   border: 1px solid #242C36;
 }
-
+#login .cuadro .icono,
 #creapick .cuadro .icono,
 #ModaLogin .cuadro .icono{
   position: relative;
@@ -1076,10 +1078,13 @@ input:-webkit-autofill:active {
   color: #757E95;
   outline: none !important;
 }
+#login .cuadro .label,
 #creapick .cuadro label,
 #ModaLogin .cuadro label{
   display: none;
 }
+
+#login .cuadro .label,
 #creapick .cuadro form,
 #ModaLogin .cuadro form{
   margin-top: 41px;

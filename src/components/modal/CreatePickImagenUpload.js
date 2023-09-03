@@ -76,8 +76,7 @@ const CreatePickImagenUpload = (props) => {
       method: 'POST',
       body: formdata,
       redirect: 'follow'
-    };
-    console.log("formulariosssssssssss",formdata)
+    }; 
 
         if(image1 && image2){
         fetch(`http://localhost:3100/register_picks`, requestOptions) 
