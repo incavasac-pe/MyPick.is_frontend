@@ -172,8 +172,7 @@ const LoginStatus = () => {
    
   const [email_forgot, setEmailForgot] = useState('');
   const handleForgotPassword = (e) => {
-    e.preventDefault();
-   console.log("se envia el mensaje",email_forgot)
+    e.preventDefault(); 
     setErrors({});
     const errors_re = {};
     if (!email_forgot.trim()) {
@@ -190,8 +189,7 @@ const LoginStatus = () => {
         }
       })
       .then(response => response.json())
-      .then(data => { 
-        console.log("entewrwerwer",data)
+      .then(data => {  
         if(data.error){        
             toast.error(data.msg);
         } else {     

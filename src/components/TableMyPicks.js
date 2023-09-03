@@ -1,13 +1,4 @@
-import React, { useState,useEffect } from 'react';
-/*
-const data1 = [
-  { id: 1, pickName: 'Planet Earth', category: 'Nature', numOfPicks: '2.5K Picks', datePicked: '5m Ago', mostPicked: 'Flowers' },
-  { id: 2, pickName: 'Premier League', category: 'Soccer', numOfPicks: '2.5K Picks', datePicked: '14m Ago', mostPicked: 'PSG' },
-  { id: 3, pickName: 'Champions League', category: 'Soccer', numOfPicks: '8.5K Picks', datePicked: '52m Ago', mostPicked: 'Liverpool' },
-  { id: 4, pickName: 'Nature', category: 'Nature', numOfPicks: '9.5K Picks', datePicked: '5m Ago', mostPicked: 'Flowers' },
-  { id: 5, pickName: 'Musicians', category: 'Music', numOfPicks: '6.5K Picks', datePicked: '56m Ago', mostPicked: 'Otro' },
-  { id: 6, pickName: 'Coffee', category: 'Snacks', numOfPicks: '9K Picks', datePicked: '50m Ago', mostPicked: 'Otros' },
-];*/
+import React, { useState,useEffect } from 'react'; 
 
 const TableMyPicks = () => {
   const [data, setMyPick] = useState([]);
