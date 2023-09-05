@@ -6,6 +6,11 @@ import React, {useState, useEffect} from 'react';
     const [activeLink, setactiveLink] = useState('');
     const [pick_like, setpick_like] = useState('');
     const [email, setEmail] = useState(''); 
+
+
+    const [liked, setLiked] = useState(false);
+
+
     useEffect(() => { 
       
     const storedUser = localStorage.getItem('user');
@@ -14,11 +19,23 @@ import React, {useState, useEffect} from 'react';
       setEmail(parsedUser.email)      
       }  
       setpick_like(likes)
+    //valida si ya le dio like este usuario al pick 
+      const storedLiked = localStorage.getItem('liked');
+      console.log("1111111",storedLiked)
+      console.log("2222222",id_pick)
+      if (storedLiked == id_pick) {
+        console.log("3333333333333",id_pick)
+        setLiked(true);
+        setactiveLink('heart')      
+      }
    
-    }, []);
+    }, [id_pick]);
  
     const handleClick = (link) => { 
-      if(link === 'heart' && email!==''){
+      if(link === 'heart' && !liked ){
+        console.log("44444444444",liked)
+        setLiked(true);
+        localStorage.setItem('liked', id_pick);
         fetchLike();
         setpick_like(  likes + 1 ) 
         setactiveLink(link)      
@@ -65,7 +82,7 @@ import React, {useState, useEffect} from 'react';
     }
     return (
     <div className='like'>
-          <a href='javascript:void(0);' className={activeLink === 'heart' ? 'activo' : ''} onClick={() => handleClick('heart')} data-toggle="modal" data-target="#login">
+          <a href='javascript:void(0);' className={activeLink === 'heart' ? 'activo' : ''} onClick={() => handleClick('heart')} >
             <i class="fas fa-heart"></i>
             <p className='font-family-SpaceGrotesk-Light'> {pick_like}</p>
           </a>
