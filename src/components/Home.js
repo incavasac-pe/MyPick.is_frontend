@@ -32,10 +32,17 @@ const  nextStep = () => {
   };
  
  const handleClickImagen = (id_choice,imagen, texto) => { 
- if(login){
+ 
+      const storedUser = localStorage.getItem('user');
+      let email = 'default@test.com';
+      if (storedUser) {
+        const parsedUser = JSON.parse(storedUser);     
+        email = parsedUser.email 
+      }
+   
       fetch(`http://localhost:3100/select_picks`, {
         method: 'POST', 
-        body: JSON.stringify({ id_pick: id_pick, id_choice: id_choice }),
+        body: JSON.stringify({ id_pick: id_pick, id_choice: id_choice,email:email }),
         headers: {
           'Content-Type': 'application/json'      
         }  
@@ -51,7 +58,7 @@ const  nextStep = () => {
       })
       .catch(error => {  
       });
-    }
+   
   };
 
   useEffect(() => { 

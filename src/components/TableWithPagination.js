@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react'; 
- 
+import { formatearTiempo } from '../utils'; 
 const TableWithPagination = () => {
 
   
@@ -46,7 +46,8 @@ const TableWithPagination = () => {
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   const currentRows = data.slice(indexOfFirstRow, indexOfLastRow);
-
+ 
+  
   return (
     <div className='Bookmarks border-linea mb-5'>
       <table className="table table-striped table-bordered">
@@ -79,7 +80,7 @@ const TableWithPagination = () => {
               <td className='pc'>
                 {row.pick_ranking}
               </td>
-              <td className='pc'>{row.datepicked}</td>
+              <td className='pc'> {formatearTiempo(row.dias)}</td>
               <td className='pc'>
                 <div className='table-img'>
                 <img src={`http://localhost:3100/see_photo?img=${row.selectd1 >= row.selectd2 ? row.photo1_name : row.photo2_name}`}/> 
