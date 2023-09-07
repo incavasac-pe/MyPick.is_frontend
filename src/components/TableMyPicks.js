@@ -1,4 +1,5 @@
 import React, { useState,useEffect } from 'react'; 
+import { formatearTiempo } from '../utils'; 
 
 const TableMyPicks = () => {
   const [data, setMyPick] = useState([]);
@@ -74,7 +75,7 @@ const TableMyPicks = () => {
               </td>
               <td>{row.category}</td>
               <td className='pc'>{row.pick_ranking ?? '0'} Picks</td>
-              <td className='pc'>{row.datepicked}</td>
+              <td className='pc'>{formatearTiempo(row.dias)}</td>
               <td>
                 <div className='table-img d-flex align-items-center justify-content-start'>
           

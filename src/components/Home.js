@@ -33,25 +33,32 @@ const  nextStep = () => {
  
  const handleClickImagen = (id_choice,imagen, texto) => { 
  
-  fetch(`http://localhost:3100/select_picks`, {
-    method: 'POST', 
-    body: JSON.stringify({ id_pick: id_pick, id_choice: id_choice }),
-    headers: {
-      'Content-Type': 'application/json'      
-    }  
-  })
-  .then(response => response.json())
-  .then(data => { 
-    if(!data.error && data.data){  
-      setPorcentaje(data.data) 
-      setimagenActiva(imagen)
-      settextoActivo(texto)    
-      setcurrentStep(2)   
-    }
-  })
-  .catch(error => {  
-  });
-
+      const storedUser = localStorage.getItem('user');
+      let email = 'default@test.com';
+      if (storedUser) {
+        const parsedUser = JSON.parse(storedUser);     
+        email = parsedUser.email 
+      }
+   
+      fetch(`http://localhost:3100/select_picks`, {
+        method: 'POST', 
+        body: JSON.stringify({ id_pick: id_pick, id_choice: id_choice,email:email }),
+        headers: {
+          'Content-Type': 'application/json'      
+        }  
+      })
+      .then(response => response.json())
+      .then(data => { 
+        if(!data.error && data.data){  
+          setPorcentaje(data.data) 
+          setimagenActiva(imagen)
+          settextoActivo(texto)    
+          setcurrentStep(2)   
+        }
+      })
+      .catch(error => {  
+      });
+   
   };
 
   useEffect(() => { 
@@ -123,7 +130,7 @@ const  nextStep = () => {
                     </div>
                     <div className='row'>
                       <div className='col-auto m-auto'>
-                        <Like likes={muestras?.[0]?.likes} id_pick={id_pick}  />
+                       {muestras && (<Like likes={muestras?.[0]?.likes} id_pick={id_pick}  /> )} 
                       </div>
                     </div>
                   </div>
@@ -155,7 +162,7 @@ const  nextStep = () => {
                     </div>
                     <div className='row'>
                       <div className='col-auto m-auto'>
-                        <Like likes={muestras?.[0]?.likes} id_pick={id_pick} />
+                      {muestras && (<Like likes={muestras?.[0]?.likes} id_pick={id_pick}  /> )} 
                       </div>
                     </div>                   
                   </div>
@@ -205,7 +212,7 @@ const  nextStep = () => {
                     </div>
                     <div className='row'>
                       <div className='col-auto m-auto'>
-                        <Like likes={muestras?.[0]?.likes} id_pick={id_pick} />
+                      {muestras && (<Like likes={muestras?.[0]?.likes} id_pick={id_pick}  /> )} 
                       </div>
                     </div>
                     <div className='pc'>

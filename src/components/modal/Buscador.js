@@ -95,8 +95,7 @@ class Buscador extends Component {
     }
  
     const muestrasMostradas = resultados.length > 0 ? resultados : muestras ;
-   
-    console.log("muestrasMostradas",muestrasMostradas)
+    
  
     if (!muestrasMostradas || muestrasMostradas.length === 0) {
       return <p>No se encontraron resultados.</p>;
@@ -111,11 +110,7 @@ class Buscador extends Component {
      {  muestrasMostradas && 
           <tbody>
           {muestrasMostradas.map((muestra) => (
-            <tr key={muestra.id}>
-              {/* <td className='text-white'>
-                <img src={muestra.imagen} alt={muestra.texto} className='img-busqueda' /> 
-                <span className='ml-3 modal-titulo'>{muestra.texto}</span>
-              </td> */}
+            <tr key={muestra.id}> 
               <td><span className='modal-titulo text-white'>{muestra.name}</span></td>
               <td align='right' className='text-morado'>
                 <div className='align-items-center d-flex justify-content-end mt-2'>

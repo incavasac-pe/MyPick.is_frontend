@@ -1,15 +1,32 @@
-import React, { useState } from 'react';
-
-const data = [
-  { id: 1, pickName: 'Planet Earth', category: 'Nature', numOfPicks: '2.5K Picks', datePicked: '5m Ago', mostPicked: 'Flowers', myPick: 'Artic' },
-  { id: 2, pickName: 'Premier League', category: 'Soccer', numOfPicks: '2.5K Picks', datePicked: '14m Ago', mostPicked: 'PSG', myPick: 'Liverpool' },
-  { id: 3, pickName: 'Who’ll Win?', category: 'Soccer', numOfPicks: '8.5K Picks', datePicked: '52m Ago', mostPicked: 'Liverpool', myPick: 'PSG' },
-  { id: 4, pickName: 'Nature', category: 'Nature', numOfPicks: '9.5K Picks', datePicked: '5m Ago', mostPicked: 'Flowers', myPick: 'Artic' },
-  { id: 5, pickName: 'Pick 5', category: 'Category 4', numOfPicks: '6.5K Picks', datePicked: '56m Ago', mostPicked: 'Otro', myPick: 'Artic new' },
-  { id: 6, pickName: 'Pick 6', category: 'Category 5', numOfPicks: '9K Picks', datePicked: '50m Ago', mostPicked: 'Otros', myPick: 'Artic old' },
-];
-
+import React, { useState,useEffect } from 'react'; 
+import { formatearTiempo } from '../utils'; 
 const TableWithPagination = () => {
+
+  
+  const [data, setMyBookmark] = useState([]);
+  useEffect(() => { 
+     
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);    
+    fetch(`http://localhost:3100/my_bookmarks?email=${parsedUser.email}`, {
+      method: 'GET',      
+      headers: {
+        'Content-Type': 'application/json'      
+      }
+    })
+    .then(response => response.json())
+    .then(data => { 
+      if(!data.error && data.data){     
+        setMyBookmark(data.data);
+       }
+    })
+    .catch(error => {
+      // Manejar cualquier error de la solicitud           
+     // toast.error("An error has occurred");     
+    });
+  }
+  }, []); 
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -29,7 +46,8 @@ const TableWithPagination = () => {
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   const currentRows = data.slice(indexOfFirstRow, indexOfLastRow);
-
+ 
+  
   return (
     <div className='Bookmarks border-linea mb-5'>
       <table className="table table-striped table-bordered">
@@ -40,7 +58,7 @@ const TableWithPagination = () => {
             <th className='pc'>NO OF PICKS</th>
             <th className='pc'>DATE PICKED</th>
             <th className='pc'>MOST PICKED</th>
-            <th>MY PICK</th>
+           {/*  <th>MY PICK</th> */}
           </tr>
         </thead>
         <tbody className='text-white'>
@@ -49,33 +67,33 @@ const TableWithPagination = () => {
               <td>
                 <div className='table-img d-flex align-items-center justify-content-start'>
                     <div>
-                      <img src={require('./img/paris.jpg')} alt="equipo" />
-                      <img src={require('./img/washinton.jpg')} alt="Imagen 2" className='pc' />
+                      <img src={`http://localhost:3100/see_photo?img=${row.photo1_name}`} alt={`${row.photo1_name}`} />
+                      <img src={`http://localhost:3100/see_photo?img=${row.photo2_name}`} alt={`${row.photo2_name}`} className='pc' />
                     </div>                    
                     <div>
-                      <span className='ml-2 d-block'>- {row.mostPicked}</span>
-                      <span className='ml-2 d-block'>- {row.myPick}</span>
+                    <span className='ml-3 d-block'>- {row.choice1_name}</span>
+                      <span className='ml-3 d-block'>- {row.choice2_name}</span>
                     </div>
                 </div>        
               </td>
               <td>{row.category}</td>
               <td className='pc'>
-                {row.numOfPicks}
+                {row.pick_ranking}
               </td>
-              <td className='pc'>{row.datePicked}</td>
+              <td className='pc'> {formatearTiempo(row.dias)}</td>
               <td className='pc'>
                 <div className='table-img'>
-                    <img src={require('./img/paris.jpg')} alt="equipo" />
-                     <span className='ml-3'>{row.mostPicked}</span>
+                <img src={`http://localhost:3100/see_photo?img=${row.selectd1 >= row.selectd2 ? row.photo1_name : row.photo2_name}`}/> 
+                   <span className='ml-3'>{ row.selectd1 >= row.selectd2 ? row.choice1_name : row.choice2_name }</span>
                 </div>
                 
               </td>
-              <td>
+            {/*   <td>
                 <div className='table-img'>
                     <img src={require('./img/washinton.jpg')} alt="equipo2" />
                     <span className='ml-3'>{row.myPick}</span>
                 </div>
-              </td>
+              </td> */}
             </tr>
           ))}
         </tbody>
