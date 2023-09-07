@@ -4,40 +4,11 @@ class Comments extends Component {
 
   constructor(props) {
     super(props);
+   console.log("el pcik del comentario es ", props)
     this.state = {
       comentarios: [],
-    /*   comentarios: [
-        {
-          id: 1,
-          usuario: 'Comment as cawong',
-          contenido:
-            'Serious astronomy fanatic like a lot of us are, you can probably remember that one event in childhood that started you along this exciting hobby.',
-          fecha: '20 ENE 2023',
-          respuestas: [],
-        },
-        {
-          id: 2,
-          usuario: 'Cameron Williamson',
-          contenido:
-            'Serious astronomy fanatic like a lot of us are, you can probably remember that one event in childhood that started you along this exciting hobby.',
-          fecha: '17 JUN 2023',
-          respuestas: [
-            {
-              id: 1,
-              usuario: 'Bessie Cooper',
-              contenido: 'Serious astronomy fanatic like.',
-              fecha: '17 JUN 2023',
-            },
-            {
-              id: 2,
-              usuario: 'Kathryn Murphy',
-              contenido: 'Serious astronomy fanatic like.',
-              fecha: '17 JUN 2023',
-            },
-          ],
-        },
-      ], */
-      id_pick:4,
+      flag: false,
+      id_pick:props.id_pick,
       nuevoComentario: '',
       nuevaRespuesta: '',
       mostrarRespuestas: {},
@@ -45,10 +16,8 @@ class Comments extends Component {
     };
   }
 
-
-  fetchDataComments = () => {
-    console.log("buscar el top")
-        fetch(`http://localhost:3100/list_comments_bypicks?id_pick=${this.id_pick}`, {
+  fetchDataComments = (id_pick) => {  
+        fetch(`http://localhost:3100/list_comments_bypicks?id_pick=${id_pick}`, {
           method: 'GET', 
           headers: {
             'Content-Type': 'application/json'      
@@ -57,7 +26,7 @@ class Comments extends Component {
         .then(response => response.json())
         .then(data => { 
           if(data.error){        
-            this.setState({ comentarios:[] }); 
+            this.setState({ comentarios:[] ,flag:true}); 
           } else {              
               if (data.data) {    
                 this.setState({ comentarios: data.data }); // Actualizar el estado con los valores de data.data                 
@@ -69,24 +38,75 @@ class Comments extends Component {
         });   
   }
 
+  registerComments = (nuevoComentario) => { 
+    const { id_pick } = this.state; 
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+    const parsedUser = JSON.parse(storedUser);    
+       
+    fetch(`http://localhost:3100/register_comments`, {
+      method: 'POST', 
+      body: JSON.stringify({ id_pick: id_pick, contenido: nuevoComentario, email:parsedUser.email }),
+      headers: {
+        'Content-Type': 'application/json'      
+      }  
+    })
+    .then(response => response.json())
+    .then(data => { 
+      if(data.error){        
+       // this.setState({ comentarios:[] }); 
+      } else {              
+          if (data.data) {    
+            this.setState({ comentarios: data.data }); // Actualizar el estado con los valores de data.data                 
+          }  
+      }
+    }).catch(error => {
+      // Manejar el error en caso de que ocurra
+      console.error('Error:', error);
+    });   
+  }
+}
+
+
+registerReply = (comentario_id,id_pick,nuevoComentario) => { 
+ 
+  const storedUser = localStorage.getItem('user');
+  if (storedUser) {
+  const parsedUser = JSON.parse(storedUser);    
+     
+  fetch(`http://localhost:3100/register_reply`, {
+    method: 'POST', 
+    body: JSON.stringify({ id_pick:id_pick, comentario_id: comentario_id, contenido: nuevoComentario, email:parsedUser.email }),
+    headers: {
+      'Content-Type': 'application/json'      
+    }  
+  })
+  .then(response => response.json())
+  .then(data => { 
+    if(data.error){        
+    //  this.setState({ comentarios:[] }); 
+    } else {              
+        if (data.data) {    
+          this.setState({ comentarios: data.data }); // Actualizar el estado con los valores de data.data                 
+        }  
+    }
+  }).catch(error => {
+    // Manejar el error en caso de que ocurra
+    console.error('Error:', error);
+  });   
+}
+}
 
   handleChangeNuevoComentario = (event) => {
     this.setState({ nuevoComentario: event.target.value });
   };
 
-  agregarComentario = () => {
-    const { comentarios, nuevoComentario } = this.state;
-    const nuevoComentarioObj = {
-      id: comentarios.length + 1,
-      usuario: 'Usuario Personalizado',
-      contenido: nuevoComentario,
-      fecha: '26 JUN 2023',
-      respuestas: [],
-    };
-    this.setState((prevState) => ({
-      comentarios: [...prevState.comentarios, nuevoComentarioObj],
+  agregarComentario = () => {  
+    const { nuevoComentario } = this.state;
+    this.registerComments(nuevoComentario)
+    this.setState( {      
       nuevoComentario: '',
-    }));
+    }); 
   };
 
   toggleMostrarRespuestas = (id) => {
@@ -112,33 +132,19 @@ class Comments extends Component {
   };
 
   agregarRespuesta = (id) => {
-    const { comentarios, nuevaRespuesta } = this.state;
-    const comentarioIndex = comentarios.findIndex((comentario) => comentario.id === id);
-    const comentario = comentarios[comentarioIndex];
-    const nuevaRespuestaObj = {
-      id: comentario.respuestas.length + 1,
-      usuario: 'Usuario Personalizado',
-      contenido: nuevaRespuesta,
-      fecha: '26 JUN 2023',
-    };
-    const comentariosActualizados = [
-      ...comentarios.slice(0, comentarioIndex),
-      {
-        ...comentario,
-        respuestas: [...comentario.respuestas, nuevaRespuestaObj],
-      },
-      ...comentarios.slice(comentarioIndex + 1),
-    ];
-    this.setState({
-      comentarios: comentariosActualizados,
+    const {  nuevaRespuesta ,id_pick} = this.state;
+ 
+    this.registerReply(id,id_pick,nuevaRespuesta) 
+    this.setState( {      
       nuevaRespuesta: '',
-    });
+    }); 
+  
   };
 
   render() {
-    const { comentarios, nuevoComentario, nuevaRespuesta, mostrarRespuestas, mostrarFormularioRespuesta } = this.state;
-      if( comentarios.length === 0){
-      this.fetchDataComments()
+    const { comentarios, nuevoComentario, nuevaRespuesta, mostrarRespuestas, mostrarFormularioRespuesta,id_pick} = this.state;
+      if( comentarios.length === 0 && id_pick ){
+       this.fetchDataComments(id_pick)
       }
     return (
       <div className="wrapper">
@@ -158,7 +164,7 @@ class Comments extends Component {
             <div className="box-comentario" key={comentario.id}>
               <div className="content">
                 <div className="avatar">
-                  <img src={require('./img/user.jpg')} alt="user" />
+             <img src={`http://localhost:3100/see_photo?img=${comentario.foto}`} alt="user" />
                 </div>
                 <div className="content-comment">
                   <div className="user">
@@ -185,7 +191,7 @@ class Comments extends Component {
                       {comentario.respuestas.map((respuesta) => (
                         <div key={respuesta.id} className="respuesta">
                           <div className="avatar">
-                            <img src={require('./img/user.jpg')} alt="user" />
+                          <img src={`http://localhost:3100/see_photo?img=${respuesta.foto}`}  alt="user" />
                           </div>
                           <div className='content-comment'>
                             <h5>{respuesta.usuario}</h5>
@@ -201,7 +207,7 @@ class Comments extends Component {
                       <textarea
                         value={nuevaRespuesta}
                         onChange={this.handleChangeNuevaRespuesta}
-                        placeholder="@CameronWilliamson"
+                        placeholder=""
                       />
                       <div className='text-right mt-3 mb-3'>
                         <button className="login mr-3" onClick={() => this.toggleMostrarFormularioRespuesta(comentario.id)}>
