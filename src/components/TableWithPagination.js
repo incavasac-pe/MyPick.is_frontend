@@ -58,7 +58,7 @@ const TableWithPagination = () => {
             <th className='pc'>NO OF PICKS</th>
             <th className='pc'>DATE PICKED</th>
             <th className='pc'>MOST PICKED</th>
-            <th>MY PICK</th>
+           {/*  <th>MY PICK</th> */}
           </tr>
         </thead>
         <tbody className='text-white'>
@@ -88,12 +88,12 @@ const TableWithPagination = () => {
                 </div>
                 
               </td>
-              <td>
+            {/*   <td>
                 <div className='table-img'>
                     <img src={require('./img/washinton.jpg')} alt="equipo2" />
                     <span className='ml-3'>{row.myPick}</span>
                 </div>
-              </td>
+              </td> */}
             </tr>
           ))}
         </tbody>

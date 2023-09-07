@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 
 class Comments extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
-      comentarios: [
+      comentarios: [],
+    /*   comentarios: [
         {
           id: 1,
           usuario: 'Comment as cawong',
@@ -34,13 +36,39 @@ class Comments extends Component {
             },
           ],
         },
-      ],
+      ], */
+      id_pick:4,
       nuevoComentario: '',
       nuevaRespuesta: '',
       mostrarRespuestas: {},
       mostrarFormularioRespuesta: {},
     };
   }
+
+
+  fetchDataComments = () => {
+    console.log("buscar el top")
+        fetch(`http://localhost:3100/list_comments_bypicks?id_pick=${this.id_pick}`, {
+          method: 'GET', 
+          headers: {
+            'Content-Type': 'application/json'      
+          }  
+        })
+        .then(response => response.json())
+        .then(data => { 
+          if(data.error){        
+            this.setState({ comentarios:[] }); 
+          } else {              
+              if (data.data) {    
+                this.setState({ comentarios: data.data }); // Actualizar el estado con los valores de data.data                 
+              }  
+          }
+        }).catch(error => {
+          // Manejar el error en caso de que ocurra
+          console.error('Error:', error);
+        });   
+  }
+
 
   handleChangeNuevoComentario = (event) => {
     this.setState({ nuevoComentario: event.target.value });
@@ -109,7 +137,9 @@ class Comments extends Component {
 
   render() {
     const { comentarios, nuevoComentario, nuevaRespuesta, mostrarRespuestas, mostrarFormularioRespuesta } = this.state;
-
+      if( comentarios.length === 0){
+      this.fetchDataComments()
+      }
     return (
       <div className="wrapper">
         <div className="comment">
