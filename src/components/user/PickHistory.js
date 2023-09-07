@@ -69,7 +69,7 @@ const PickHistory = () => {
                     </div>
                     <div>                      
                       <span className='ml-3 d-block'>-  {row.choice1_name}</span>
-                      <span className='ml-3 d-block'>-  {row.choice1_name}</span>
+                      <span className='ml-3 d-block'>-  {row.choice2_name}</span>
                     </div>
                 </div>        
               </td>

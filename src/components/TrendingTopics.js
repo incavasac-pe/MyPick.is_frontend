@@ -20,8 +20,7 @@ class TrendingTopics extends Component {
     }
   };
 
-  fetchDataTop3 = () => {
-  console.log("buscar el top")
+  fetchDataTop3 = () => { 
       fetch(`http://localhost:3100/list_trendingTopics`, {
         method: 'GET', 
         headers: {

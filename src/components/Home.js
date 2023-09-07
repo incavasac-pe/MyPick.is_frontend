@@ -105,7 +105,7 @@ const  nextStep = () => {
                           className={`box-img ${imagenActiva === muestras?.[0]?.photo1_name ? 'activo' : ''}`}
                           onClick={() => handleClickImagen(muestras?.[0]?.id_choice1, muestras?.[0]?.photo1_name, muestras?.[0]?.choice1_name)}
                         >
-                          <img src={`http://localhost:3100/see_photo?img=${muestras?.[0]?.photo1_name}`}  alt="ciudad"  />
+                          <img src={`http://localhost:3100/see_photo?img=${muestras?.[0]?.photo1_name}`} width={"282px"}  height={"282px"} alt="ciudad"  />
                         </div>
                         <div className='nombre'>
                           <h3 className='text-white font-family-SpaceGrotesk-Bold'>{ muestras?.[0]?.choice1_name}</h3>
@@ -121,7 +121,7 @@ const  nextStep = () => {
                           className={`box-img ${imagenActiva === muestras?.[0]?.photo2_name ? 'activo' : ''}`}
                           onClick={() => handleClickImagen(muestras?.[0]?.id_choice2,  muestras?.[0]?.photo2_name, muestras?.[0]?.choice2_name)}
                         >
-                          <img src={`http://localhost:3100/see_photo?img=${muestras?.[0]?.photo2_name}`} alt="ciudad" />
+                          <img src={`http://localhost:3100/see_photo?img=${muestras?.[0]?.photo2_name}`} width={"282px"}  height={"282px"} alt="ciudad" />
                         </div>
                         <div className='nombre'>
                           <h3 className='text-white font-family-SpaceGrotesk-Bold'>{ muestras?.[0]?.choice2_name}</h3>
@@ -144,11 +144,11 @@ const  nextStep = () => {
                       <div className='columna'>
                         <div className='box-img activo'>                      
                           {imagenActiva === muestras?.[0]?.photo1_name && (
-                            <img src={`http://localhost:3100/see_photo?img=${muestras?.[0]?.photo1_name}`} alt="ciudad" onClick={nextStep}/>
+                            <img src={`http://localhost:3100/see_photo?img=${muestras?.[0]?.photo1_name}`} width={"282px"}  height={"282px"} alt="ciudad" onClick={nextStep}/>
                           )}
                           
                           {imagenActiva === muestras?.[0]?.photo2_name && (
-                            <img src={`http://localhost:3100/see_photo?img=${muestras?.[0]?.photo2_name}`} alt="ciudad" onClick={nextStep} />
+                            <img src={`http://localhost:3100/see_photo?img=${muestras?.[0]?.photo2_name}`}  width={"282px"}  height={"282px"}alt="ciudad" onClick={nextStep} />
                           )}
                         
                         </div>
@@ -216,7 +216,7 @@ const  nextStep = () => {
                       </div>
                     </div>
                     <div className='pc'>
-                      <Commets />
+                      <Commets  id_pick={id_pick}/>
                     </div>               
                   </div>
                       )}
