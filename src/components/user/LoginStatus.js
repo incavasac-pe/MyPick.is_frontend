@@ -9,8 +9,7 @@ import jwt_decode from "jwt-decode";
 
 const LoginStatus = () => { 
   const location = useLocation(); 
-  const [loggedIn, setLoggedIn] = useState(false); // Estado de inicio de sesión
- // const [loggedInFacebook, setFacebookLogin] = useState(false); // Estado de inicio de sesión Facebbok
+  const [loggedIn, setLoggedIn] = useState(false); // Estado de inicio de sesión 
   const [user, setUser] = useState(null); // Información del usuario
   const [errors, setErrors] = useState({});
   const [errors_re, setErrors_re] = useState({});
@@ -236,7 +235,11 @@ const LoginStatus = () => {
   
 
   const responseFacebook = (response) => {    
-     if (response.accessToken) {
+    console.log("respuesta de facebook", response)
+    if(response.error) {
+      setLoggedIn(false); 
+    } else  {
+      if(response.accessToken ){
       setLoggedIn(true);
       
       setUser({ facebook:true, name: response.name, 
@@ -262,10 +265,9 @@ const LoginStatus = () => {
   // Manejar cualquier error de la solicitud           
   toast.error("An error has occurred upload");     
 });
-      
-    } else {
-      setLoggedIn(false); 
-    } 
+}
+}
+ 
   }
 
   
@@ -416,7 +418,7 @@ const LoginStatus = () => {
                         </div> */}
                         {!loggedIn &&
                         <FacebookLogin
-                          appId="314814467736334"
+                          appId="172576561281270"
                           autoLoad={false}
                           fields="name,email,picture"                    
                           callback={responseFacebook}
@@ -495,7 +497,7 @@ const LoginStatus = () => {
                         </div>
                         {!loggedIn &&
                         <FacebookLogin
-                          appId="314814467736334"
+                          appId="172576561281270"
                           autoLoad={false}
                           fields="name,email,picture"                    
                           callback={responseFacebook}
