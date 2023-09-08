@@ -141,7 +141,7 @@ const LoginStatus = () => {
     if (Object.keys(errors_re).length === 0) {
         fetch('http://localhost:3100/register', {
           method: 'POST',
-          body: JSON.stringify({ full_name: full_name, email: email, password: password, origin }),
+          body: JSON.stringify({ full_name: full_name, email: email, password: password, origin:'mipick' }),
           headers: {
             'Content-Type': 'application/json'      
           }
@@ -272,7 +272,6 @@ const LoginStatus = () => {
   /*Google*/
   
   const responseGoogle = (response) => {    
-    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagoogle",response)
     var decoded = jwt_decode(response);
     if (decoded.email) {
      setLoggedIn(true);
@@ -401,7 +400,7 @@ const LoginStatus = () => {
                          buttonText='Sign In with Google'  
                           onSuccess={credentialResponse => {
                             responseGoogle(credentialResponse.credential)
-                            console.log(credentialResponse.credential);
+                      
                           }}
                           onError={() => {
                             console.log('Login Failed');

@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 class Comments extends Component {
 
   constructor(props) {
-    super(props);
-   console.log("el pcik del comentario es ", props)
+    super(props); 
     this.state = {
       comentarios: [],
       flag: false,

@@ -43,8 +43,7 @@ class TrendingTopics extends Component {
       });   
 }
  
-fetchDataTopCategory = (id) => {
-  console.log("buscar el top de la cateorua",id)
+fetchDataTopCategory = (id) => { 
       fetch(`http://localhost:3100/list_trendingTopics_category?id_category=${id}`, {
         method: 'GET', 
         headers: {
