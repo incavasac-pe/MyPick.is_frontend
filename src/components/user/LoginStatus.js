@@ -2,10 +2,15 @@ import React, { useState,useEffect } from 'react';
 import { useNavigate,useLocation  } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
- 
+import sleep from '@react-corekit/sleep';
+import FacebookLogin from 'react-facebook-login';
+import { GoogleOAuthProvider ,GoogleLogin} from '@react-oauth/google'; 
+import jwt_decode from "jwt-decode";
+
 const LoginStatus = () => { 
   const location = useLocation(); 
   const [loggedIn, setLoggedIn] = useState(false); // Estado de inicio de sesión
+ // const [loggedInFacebook, setFacebookLogin] = useState(false); // Estado de inicio de sesión Facebbok
   const [user, setUser] = useState(null); // Información del usuario
   const [errors, setErrors] = useState({});
   const [errors_re, setErrors_re] = useState({});
@@ -63,7 +68,9 @@ const LoginStatus = () => {
                  setUser({ name: data.data.user.full_name, photo: `http://localhost:3100/see_photo?img=${data.data.user.photo}` , email: data.data.user.email,token:data.data.token});                 
                  localStorage.setItem('user', JSON.stringify({ name: data.data.user.full_name,  email: data.data.user.email,token:data.data.token,nick:data.data.user.username}));
                  if(data.data.user.photo!=null)   localStorage.setItem('photo', JSON.stringify({ photo: `http://localhost:3100/see_photo?img=${data.data.user.photo}`}));
-                 navigate('/MyProfile'); // Redirigir al usuario a la página de perfil
+                 sleep(4000);
+                 window.location.reload()
+               //  navigate('/MyProfile'); // Redirigir al usuario a la página de perfil
                 }  
            }
         })
@@ -134,7 +141,7 @@ const LoginStatus = () => {
     if (Object.keys(errors_re).length === 0) {
         fetch('http://localhost:3100/register', {
           method: 'POST',
-          body: JSON.stringify({ full_name: full_name, email: email, password: password }),
+          body: JSON.stringify({ full_name: full_name, email: email, password: password, origin }),
           headers: {
             'Content-Type': 'application/json'      
           }
@@ -224,6 +231,80 @@ const LoginStatus = () => {
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
     return emailRegex.test(email);
   };
+
+  /*Facebook*/
+  
+
+  const responseFacebook = (response) => {    
+     if (response.accessToken) {
+      setLoggedIn(true);
+      
+      setUser({ facebook:true, name: response.name, 
+        photo: response.picture.data.url , email: response.email,token:response.accessToken});                 
+      localStorage.setItem('user', JSON.stringify({ name: response.name,  email: response.email,token:response.accessToken,nick:response.graphDomain}));
+      localStorage.setItem('photo', JSON.stringify({ photo:response.picture.data.url}));
+     
+      fetch(`http://localhost:3100/register `,   {
+        method: 'POST', 
+        body: JSON.stringify({ full_name: response.name, email:  response.email,password:'qwerty',origin:response.graphDomain }),
+        headers: {
+          'Content-Type': 'application/json'      
+        }  
+      })  
+      .then(response => {            
+        if (response.status===201 || response.status===401){ 
+          sleep(2000);
+          window.location.reload()   
+        }
+      }) 
+    
+.catch(() => {
+  // Manejar cualquier error de la solicitud           
+  toast.error("An error has occurred upload");     
+});
+      
+    } else {
+      setLoggedIn(false); 
+    } 
+  }
+
+  
+  /*Google*/
+  
+  const responseGoogle = (response) => {    
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagoogle",response)
+    var decoded = jwt_decode(response);
+    if (decoded.email) {
+     setLoggedIn(true);
+     
+     setUser({ google:true, name: decoded.name, 
+       photo:decoded.picture , email: decoded.email,token:response});                 
+     localStorage.setItem('user', JSON.stringify({ name: decoded.name,  email: decoded.email,token:response,nick:decoded.given_name}));
+     localStorage.setItem('photo', JSON.stringify({ photo: decoded.picture}));
+    
+     fetch(`http://localhost:3100/register `,   {
+       method: 'POST', 
+       body: JSON.stringify({ full_name: decoded.name, email:  decoded.email,password:'qwerty',origin:'google' }),
+       headers: {
+         'Content-Type': 'application/json'      
+       }  
+     })  
+     .then(response => {            
+       if (response.status===201 || response.status===401){ 
+         sleep(2000);
+         window.location.reload()   
+       }
+     }) 
+   
+.catch(() => {
+ // Manejar cualquier error de la solicitud           
+ toast.error("An error has occurred upload");     
+});
+     
+   } else {
+     setLoggedIn(false); 
+   } 
+ }
   return (
     <div>
       <nav className='text-right'>
@@ -315,17 +396,37 @@ const LoginStatus = () => {
                         <div className='col-md-12 mt-4 mb-3 text-center'>
                             <h4 className='text-gris-claro title-or d-inline-block'>O R</h4>
                         </div>
-                        <div className='col-md-6'>
+                        <GoogleOAuthProvider clientId="951089599558-ss3is472v1vb57vd3e9gmqt5aeq6ag89.apps.googleusercontent.com">
+                        <GoogleLogin
+                         buttonText='Sign In with Google'  
+                          onSuccess={credentialResponse => {
+                            responseGoogle(credentialResponse.credential)
+                            console.log(credentialResponse.credential);
+                          }}
+                          onError={() => {
+                            console.log('Login Failed');
+                          }}
+                        />;
+                          
+                          </GoogleOAuthProvider>;
+                     {/*    <div className='col-md-6'>
                             <button className='btn-redes font-family-SpaceGrotesk-Bold' type='button'>
                               <img src={require('../img/gmail.png')} alt='gmail' className='mr-2' />
                               Sign In with Google
                             </button>
-                        </div>
-                        <div className='col-md-6'>
-                            <button className='btn-redes font-family-SpaceGrotesk-Bold' type='button'>
-                              <i className="fab fa-facebook-square mr-2"></i> Sign In with Facebook
-                            </button>
-                        </div>
+                        </div> */}
+                        {!loggedIn &&
+                        <FacebookLogin
+                          appId="314814467736334"
+                          autoLoad={false}
+                          fields="name,email,picture"                    
+                          callback={responseFacebook}
+                          textButton=" Sign In with Facebook"                       
+                          icon="fa-facebook-square mr-2"
+                          cssClass="btn-redes font-family-SpaceGrotesk-Bold" />
+                       
+                      }
+                     
                     </div>
                     </div>
                     <div className='cuadro-footer-modal font-family-SpaceGrotesk-Light'>
@@ -393,11 +494,22 @@ const LoginStatus = () => {
                               Continue with Google
                             </button>
                         </div>
-                        <div className='col-md-6'>
+                        {!loggedIn &&
+                        <FacebookLogin
+                          appId="314814467736334"
+                          autoLoad={false}
+                          fields="name,email,picture"                    
+                          callback={responseFacebook}
+                          textButton=" Continue with Facebook"                       
+                          icon="fa-facebook-square mr-2"
+                          cssClass="btn-redes font-family-SpaceGrotesk-Bold" />
+                       
+                      }
+                       {/*  <div className='col-md-6'>
                             <button className='btn-redes font-family-SpaceGrotesk-Bold' type='button'>
                               <i className="fab fa-facebook-square mr-2"></i> Continue with Facebook
                             </button>
-                        </div>
+                        </div> */}
                     </div> 
                   </div>     
                   <div className='cuadro-footer-modal font-family-SpaceGrotesk-Light'>
@@ -424,7 +536,7 @@ const LoginStatus = () => {
                         <p className='font-family-SpaceGrotesk-Medium'>
                           Enter your email address and we will send you a link to create a new password.
                         </p>
-                        <ToastContainer position="top-right"  autoClose={2000} closeOnClick theme="dark"/>    
+                        <ToastContainer position="top-right"  autoClose={4000} closeOnClick theme="dark"/>    
                       </div>
                       <div className='col-md-12'>
                         <form className='mt-4' onSubmit={handleForgotPassword}>
