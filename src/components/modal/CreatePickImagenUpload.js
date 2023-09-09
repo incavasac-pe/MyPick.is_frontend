@@ -1,7 +1,7 @@
 import React, { useState,useEffect,useRef  } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import sleep from '@react-corekit/sleep';
+import sleep from '@react-corekit/sleep'; 
 
 const CreatePickImagenUpload = (props) => {
   const [image1, setImage1] = useState(null);
@@ -20,12 +20,76 @@ const CreatePickImagenUpload = (props) => {
       const parsedUser = JSON.parse(storedUser);   
       setEmail(parsedUser.email)
     } 
+    if(searchTerm){
+      fetchDataChoice();
+    }
+   
   }, []);
 
+  
+  const fetchDataChoice =  () => {
+    if (searchTerm.length > 5 && searchTerm !=undefined) {
+    console.log("se busca el producto en amazon",searchTerm)
+    const apiKey = 'YXV0aDB8NjRmYTJlMWFlZGExYWI1MDBmODA0NDU1fGZhM2E0YTIxODE';
+  const url = `https://api.app.outscraper.com/amazon/products?query=https://www.amazon.com/s?k=${searchTerm}&limit=1&async=false`;
+  
+  fetch(url, {
+    method: 'GET',
+    headers: {
+      'X-API-KEY': apiKey
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.data) {  
+      const nombreProducto = data.data[0][0].name;
+      const precioProducto = data.data[0][0].price;
+      const imagenProducto = data.data[0][0].image_1;
+      console.log("el nombre del productos es",nombreProducto);
+      console.log("el precio del productos es",precioProducto);
+      console.log("la imagen  del productos es",imagenProducto);
+      // Handle the response data here
+      console.log(data.data[0][0]);
+      if(imagenProducto!= undefined && nombreProducto!=undefined){
+        const truncatedString = nombreProducto.substring(0, 30)
+        setSearchTerm(truncatedString)
+        ImageDownloader(imagenProducto)
+        getImageName(imagenProducto)
+      }
+    }
+    })
+    .catch(error => {
+      // Handle any errors that occurred during the fetch request
+      console.error(error);
+    });
+  }}
+
+  const getImageName = (url) => {
+    const urlParts = url.split('/');
+    const imageName = urlParts[urlParts.length - 1];
+    setText1(imageName)
+  };
+
+  const ImageDownloader = (imageUrl) => {
+     
+fetch(imageUrl)
+.then(response => response.blob())
+.then(blob => { 
+  setPhoto1(blob)
+  const src = URL.createObjectURL(blob);
+  setImage1(src);
+})
+.catch(error => {
+  console.error('Error al descargar la imagen:', error);
+});
+}
   const handleImageChange1 = (e) => {
+    setImage1(null);
+    setPhoto1(null)
     console.log("la imagen1",e.target.files[0])
     const file = e.target.files[0];
     setPhoto1(file)
+    setText1(file.name)
     const reader = new FileReader();
 
     reader.onloadend = () => {
@@ -68,10 +132,11 @@ const CreatePickImagenUpload = (props) => {
     formdata.append("id_category", props.topics);
     formdata.append("name_choice1", searchTerm);
     formdata.append("name_choice2", searchTerm2); 
-    formdata.append("photo1", photo1);
+   // formdata.append("photo1", photo1);
     formdata.append("photo2", photo2); 
     formdata.append("email", email);
-
+    formdata.append('photo1', photo1, text1);
+    
     var requestOptions = {
       method: 'POST',
       body: formdata,
@@ -116,7 +181,7 @@ const CreatePickImagenUpload = (props) => {
     setSearchTerm(searchTerm);
     console.log("busca en la api ",searchTerm)
     // Aquí puedes realizar la lógica de búsqueda con los datos que tengas disponibles. 
-
+   // fetchDataChoice(searchTerm)
     // Supongamos que tienes una lista de elementos llamada "data" que contiene objetos con una propiedad "name":
     const filteredResults = data.filter((item) =>
       item.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -172,6 +237,7 @@ const CreatePickImagenUpload = (props) => {
           <input className='font-family-SpaceGrotesk-Bold'
             type="text"
             value={searchTerm}
+           onBlur={fetchDataChoice}
             onChange={handleSearch} 
             placeholder="Type your choice..." />
             
