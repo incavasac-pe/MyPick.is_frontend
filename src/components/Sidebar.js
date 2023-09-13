@@ -51,8 +51,7 @@ const Sidebar = () => {
       <div className='nav_redes mb-0'>
           <h6 className='text-white font-family-SpaceGrotesk-Light'>Follow us</h6>
           <div className='align-items-center d-flex justify-content-start list-redes mb-0 p-0'>
-            <a href='#'><i class="fab fa-facebook"></i></a>
-            <a href='#'><i class="fab fa-whatsapp"></i></a>
+            <a href='#'><i class="fab fa-facebook"></i></a>           
             <a href='#'><i class="fab fa-instagram"></i></a>
             <a href='#'><i class="fab fa-twitter"></i></a>
           </div>
