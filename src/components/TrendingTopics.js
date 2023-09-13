@@ -43,8 +43,7 @@ class TrendingTopics extends Component {
       });   
 }
  
-fetchDataTopCategory = (id) => {
-  console.log("buscar el top de la cateorua",id)
+fetchDataTopCategory = (id) => { 
       fetch(`http://localhost:3100/list_trendingTopics_category?id_category=${id}`, {
         method: 'GET', 
         headers: {
@@ -130,7 +129,7 @@ fetchDataTopCategory = (id) => {
             </li>            
            </>
             ))}
-             <li className="nav-item">
+           {/*   <li className="nav-item">
               <Link
                 to="#"
                 className={`nav-link ${activeTab === 'More' ? 'active' : ''}`}
@@ -138,7 +137,7 @@ fetchDataTopCategory = (id) => {
               >
                 More...
               </Link>
-            </li>
+            </li> */}
         </ul>
 
         <div className="tab-content">
@@ -188,7 +187,7 @@ fetchDataTopCategory = (id) => {
                       <h2 className='font-family-SpaceGrotesk-Bold'>{top_by_cat.trending_choice}</h2>          
                       <div className='box-tabs-footer'>                        
                         <div>
-                          <span className='text-morado font-family-SpaceGrotesk-Bold stats'>{top_by_cat.pick_ranking }Picks</span>
+                          <span className='text-morado font-family-SpaceGrotesk-Bold stats'>{top_by_cat.pick_ranking } Picks</span>
                         </div>
                         <div className='box-equipos'>
                         <img src={`http://localhost:3100/see_photo?img=${top_by_cat.photo1_name}`} alt='icon' />
@@ -203,9 +202,9 @@ fetchDataTopCategory = (id) => {
           </div>
           </> ))}
          
-          <div className={`tab-pane ${activeTab === 'More' ? 'active' : ''}`} id="more">
+         {/*  <div className={`tab-pane ${activeTab === 'More' ? 'active' : ''}`} id="more">
             Contenido de More
-          </div>
+          </div> */}
         </div>
       </div>
       <MenuFlotante />

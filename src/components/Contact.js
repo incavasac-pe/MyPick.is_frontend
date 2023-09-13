@@ -1,42 +1,99 @@
 import React, { useState } from 'react';
-
+import { ToastContainer, toast } from 'react-toastify';
 const Contact = () => {
-  const [formData, setFormData] = useState({
+
+  const [formDataForm, setFormData] = useState({
     name: '',
     email: '',
     subject: '',
-    description: '',
-    privacyPolicy: false,
+    description: '', 
   });
 
   const [formErrors, setFormErrors] = useState({
     name: '',
     email: '',
     subject: '',
-    description: '',
-    privacyPolicy: '',
+    description: '', 
   });
+  const [isChecked, setIsChecked] = useState(false);
+  const [isDisable, setIsDisable] = useState(false);
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, type, checked } = e.target;  
     const fieldValue = type === 'checkbox' ? checked : value;
     setFormData((prevData) => ({ ...prevData, [name]: fieldValue }));
     setFormErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
   };
+  
+  const handleCheckboxChange = () => {   
+    setIsChecked(!isChecked);   
+  };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     if (!validateForm()) {
       return;
     }
-
+    setIsDisable(true)
     // Enviar el correo o realizar otras acciones con los datos del formulario
-    console.log('Formulario enviado:', formData);
+    console.log('Formulario enviado:', formDataForm);
+
+    const html = `
+<!DOCTYPE html>
+<html>
+<head> 
+</head>
+<body>
+<table>
+  <tr>
+    <th>Name:</th>
+    <td>${formDataForm.name}</td>
+  </tr>
+  <tr>
+    <th>Subject:</th>
+    <td>${formDataForm.subject}</td>
+  </tr>
+  <tr>
+    <th>Email:</th>
+    <td>${formDataForm.email}</td>
+  </tr>
+  <tr>
+  <th>Description:</th>
+  <td>${formDataForm.description}</td>
+</tr> 
+</table>
+</body>
+</html>`;
+    const formDataSend = new FormData();
+       formDataSend.append("content", html );
+       formDataSend.append("subject", `My Picks Contact Request`);
+       formDataSend.append("to", "noreplymypick@gmail.com");   
+
+        fetch(`http://localhost:3100/send_email_contact`, {
+          method: 'POST', 
+           body: formDataSend,          
+        })
+        .then(response => response.json())
+        .then(data => { 
+          if(!data.error){   
+              toast.success('Contact request sent', {
+                position: toast.POSITION.TOP_RIGHT
+            });
+            
+          } else {            
+            toast.error("An error has occurred"); 
+          }
+          setIsDisable(false)
+      }).catch(() => {          
+          toast.error("An error has occurred"); 
+          setIsDisable(false)
+        }); 
+
   };
 
   const validateForm = () => {
-    const { name, email, subject, description, privacyPolicy } = formData;
+    const { name, email, subject, description } = formDataForm;
     let isValid = true;
     const errors = {};
 
@@ -62,11 +119,11 @@ const Contact = () => {
       errors.description = 'Por favor, ingresa la descripción del mensaje.';
       isValid = false;
     }
-
-    if (!privacyPolicy) {
+ 
+     if (!isChecked) {
       errors.privacyPolicy = 'Debes aceptar las políticas de privacidad.';
       isValid = false;
-    }
+    } 
 
     setFormErrors(errors);
     return isValid;
@@ -88,7 +145,8 @@ const Contact = () => {
         <div className="col-md-10 m-auto">
           <div className="box-contacto">
             <form onSubmit={handleSubmit}>
-              <div className="row">
+              <div className="row"> 
+               <ToastContainer position="top-center" autoClose={3000} closeOnClick theme="dark"/>  
                 <div className='col-md-12'>
                   <p className='text-white font-family-SpaceGrotesk-Light'>
                     Praesent Maximus Nisl At Interdum Sodales. Fusce Fermentum
@@ -105,7 +163,7 @@ const Contact = () => {
                       }`}
                       id="name"
                       name="name"
-                      value={formData.name}
+                      value={formDataForm.name}
                       onChange={handleChange}
                     />
                     {formErrors.name && (
@@ -123,7 +181,7 @@ const Contact = () => {
                       }`}
                       id="email"
                       name="email"
-                      value={formData.email}
+                      value={formDataForm.email}
                       onChange={handleChange}
                     />
                     {formErrors.email && (
@@ -141,7 +199,7 @@ const Contact = () => {
                       }`}
                       id="subject"
                       name="subject"
-                      value={formData.subject}
+                      value={formDataForm.subject}
                       onChange={handleChange}
                     />
                     {formErrors.subject && (
@@ -161,7 +219,7 @@ const Contact = () => {
                       id="description"
                       name="description"
                       rows="4"
-                      value={formData.description}
+                      value={formDataForm.description}
                       onChange={handleChange}
                     ></textarea>
                     {formErrors.description && (
@@ -178,11 +236,9 @@ const Contact = () => {
                       type="checkbox"
                       className={`custom-control-input ${
                         formErrors.privacyPolicy ? "is-invalid" : ""
-                      }`}
-                      id="privacyPolicy"
-                      name="privacyPolicy"
-                      checked={formData.privacyPolicy}
-                      onChange={handleChange}
+                      }`} 
+                      checked={isChecked}
+                      onChange={handleCheckboxChange}
                     />
                     <label className="font-family-SpaceGrotesk-Medium custom-control-label"  >
                       I Agree To The <a href='#terminos' className='text-morado'>Terms And Conditions</a> and <a href='#politica' className='text-morado'>Privacy Policy</a>
@@ -195,7 +251,7 @@ const Contact = () => {
                   </div>
                 </div>
                 <div className="col-md-12">
-                  <button type="submit" className="btn btn-enviar font-family-SpaceGrotesk-Bold">
+                  <button type="submit" disabled={isDisable} className="btn btn-enviar font-family-SpaceGrotesk-Bold">
                   Submit
                   </button>
                 </div>

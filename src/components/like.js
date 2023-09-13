@@ -21,10 +21,8 @@ import React, {useState, useEffect} from 'react';
       setpick_like(likes)
     //valida si ya le dio like este usuario al pick 
       const storedLiked = localStorage.getItem('liked');
-      console.log("1111111",storedLiked)
-      console.log("2222222",id_pick)
-      if (storedLiked == id_pick) {
-        console.log("3333333333333",id_pick)
+  
+      if (storedLiked == id_pick) { 
         setLiked(true);
         setactiveLink('heart')      
       }
@@ -32,8 +30,7 @@ import React, {useState, useEffect} from 'react';
     }, [id_pick]);
  
     const handleClick = (link) => { 
-      if(link === 'heart' && !liked ){
-        console.log("44444444444",liked)
+      if(link === 'heart' && !liked ){ 
         setLiked(true);
         localStorage.setItem('liked', id_pick);
         fetchLike();

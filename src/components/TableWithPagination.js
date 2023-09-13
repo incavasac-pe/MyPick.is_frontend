@@ -78,7 +78,7 @@ const TableWithPagination = () => {
               </td>
               <td>{row.category}</td>
               <td className='pc'>
-                {row.pick_ranking}
+                {row.pick_ranking} Picks
               </td>
               <td className='pc'> {formatearTiempo(row.dias)}</td>
               <td className='pc'>
