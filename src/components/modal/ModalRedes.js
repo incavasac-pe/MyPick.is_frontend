@@ -19,11 +19,7 @@ class ModalRedes extends Component {
                     <a href='#' target="_blank" className='redes'>
                         <span className='d-block twitter mb-2'><i class="fab fa-twitter"></i></span>
                         Twitter
-                    </a>
-                  {/*   <a href='#' className='redes'>
-                        <span className='d-block whatsapp mb-2'><i class="fab fa-whatsapp"></i></span>
-                        Whatsapp
-                    </a> */}
+                    </a>                 
                     <a href='#' className='redes'>
                         <span className='d-block reddit mb-2'><i class="fab fa-reddit-alien"></i></span>
                         Reddit

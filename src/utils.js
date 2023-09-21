@@ -9,15 +9,15 @@ export function formatearTiempo(valor) {
   let resultado = '';
 
   if (dias > 0) {
-    resultado += `${dias} día${dias > 1 ? 's' : ''} `;
+    resultado += `${dias} day${dias > 1 ? 's' : ''} `;
   }
 
   if (horas > 0) {
-    resultado += `${horas} hora${horas > 1 ? 's' : ''} `;
+    resultado += `${horas} hour${horas > 1 ? 's' : ''} `;
   }
 
   if (minutos > 0) {
-    resultado += `${minutos} minuto${minutos > 1 ? 's' : ''}`;
+    resultado += `${minutos} minutes${minutos > 1 ? 's' : ''}`;
   }
 
   return resultado.trim();

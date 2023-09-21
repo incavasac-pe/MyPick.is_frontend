@@ -14,70 +14,95 @@ const CreatePickImagenUpload = (props) => {
   const [photo1, setPhoto1] = useState(null);
   const [photo2, setPhoto2] = useState(null);
 
+
+  const [product1, setProduct1] = useState(null);
+  const [product2, setProduct2] = useState(null);
   useEffect(() => { 
    const storedUser = localStorage.getItem('user'); 
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);   
       setEmail(parsedUser.email)
-    } 
-    if(searchTerm){
-      fetchDataChoice();
-    }
+    }   
    
   }, []);
 
   
   const fetchDataChoice =  () => {
-    if (searchTerm.length > 5 && searchTerm !=undefined) {
-    console.log("se busca el producto en amazon",searchTerm)
-    const apiKey = 'YXV0aDB8NjRmYTJlMWFlZGExYWI1MDBmODA0NDU1fGZhM2E0YTIxODE';
-  const url = `https://api.app.outscraper.com/amazon/products?query=https://www.amazon.com/s?k=${searchTerm}&limit=1&async=false`;
+    if (searchTerm.length > 5 && searchTerm !=undefined ) {
+    console.log("se busca el producto en amazon",searchTerm) 
+   const url = `http://localhost:3100/list_products_api_externa?search=${searchTerm}`;
   
   fetch(url, {
     method: 'GET',
     headers: {
-      'X-API-KEY': apiKey
-    }
+      'Content-Type': 'application/json'      
+    } 
   })
     .then(response => response.json())
     .then(data => {
-      if (data.data) {  
-      const nombreProducto = data.data[0][0].name;
-      const precioProducto = data.data[0][0].price;
-      const imagenProducto = data.data[0][0].image_1;
-      console.log("el nombre del productos es",nombreProducto);
-      console.log("el precio del productos es",precioProducto);
-      console.log("la imagen  del productos es",imagenProducto);
-      // Handle the response data here
-      console.log(data.data[0][0]);
-      if(imagenProducto!= undefined && nombreProducto!=undefined){
-        const truncatedString = nombreProducto.substring(0, 30)
-        setSearchTerm(truncatedString)
-        ImageDownloader(imagenProducto)
-        getImageName(imagenProducto)
-      }
+      if (data.data) {        
+        const resp = data?.data
+       
+        setProduct1(resp)
+        setResults(resp); 
+        setNotFound(false); 
     }
     })
     .catch(error => {
       // Handle any errors that occurred during the fetch request
       console.error(error);
+      setProduct1(null) 
     });
   }}
 
-  const getImageName = (url) => {
+  const fetchDataChoice2 =  () => {
+    if (searchTerm2.length > 5 && searchTerm2 !=undefined ) {
+    console.log("se busca el producto en amazon",searchTerm2) 
+   const url = `http://localhost:3100/list_products_api_externa?search=${searchTerm2}`;
+  
+  fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'      
+    } 
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.data) {        
+        const resp = data?.data       
+        setProduct2(resp)
+        setResults2(resp); 
+        setNotFound(false);     }
+    })
+    .catch(error => {
+      // Handle any errors that occurred during the fetch request
+      console.error(error);
+      setProduct2(null)       
+    });
+  }}
+  const getImageName = (url,origin) => {
     const urlParts = url.split('/');
     const imageName = urlParts[urlParts.length - 1];
+    if(origin== '1'){
     setText1(imageName)
+    }else{
+      setText2(imageName)
+    }
   };
 
-  const ImageDownloader = (imageUrl) => {
-     
+const ImageDownloader = (imageUrl,origen) => {     
 fetch(imageUrl)
 .then(response => response.blob())
 .then(blob => { 
+  if(origen=='1'){
   setPhoto1(blob)
   const src = URL.createObjectURL(blob);
   setImage1(src);
+}else{
+  setPhoto2(blob)
+  const src = URL.createObjectURL(blob);
+  setImage2(src);
+  }
 })
 .catch(error => {
   console.error('Error al descargar la imagen:', error);
@@ -86,7 +111,6 @@ fetch(imageUrl)
   const handleImageChange1 = (e) => {
     setImage1(null);
     setPhoto1(null)
-    console.log("la imagen1",e.target.files[0])
     const file = e.target.files[0];
     setPhoto1(file)
     setText1(file.name)
@@ -103,9 +127,11 @@ fetch(imageUrl)
   };
 
   const handleImageChange2 = (e) => {
-     console.log("la imagen2",e.target.files[0])
+    setImage2(null);
+    setPhoto2(null)
     const file = e.target.files[0];
     setPhoto2(file)
+    setText2(file.name)
     const reader = new FileReader();
 
     reader.onloadend = () => {
@@ -132,8 +158,8 @@ fetch(imageUrl)
     formdata.append("id_category", props.topics);
     formdata.append("name_choice1", searchTerm);
     formdata.append("name_choice2", searchTerm2); 
-   // formdata.append("photo1", photo1);
-    formdata.append("photo2", photo2); 
+ 
+   formdata.append('photo2', photo2, text2);
     formdata.append("email", email);
     formdata.append('photo1', photo1, text1);
     
@@ -169,51 +195,40 @@ fetch(imageUrl)
   const [searchTerm2, setSearchTerm2] = useState('');
   const [results2, setResults2] = useState([]);
   const [notFound2, setNotFound2] = useState(false);
-  const data = [
-    {id:"1", name:"Ron"},
-    {id:"2", name:"Agua"},
-    {id:"3", name:"Café"},
-    {id:"4", name:"Agua San mateo"},
-    {id:"5", name:"Agua San luis"},
-  ]
+ 
   const handleSearch = (e) => {
     const searchTerm = e.target.value;
     setSearchTerm(searchTerm);
-    console.log("busca en la api ",searchTerm)
-    // Aquí puedes realizar la lógica de búsqueda con los datos que tengas disponibles. 
-   // fetchDataChoice(searchTerm)
-    // Supongamos que tienes una lista de elementos llamada "data" que contiene objetos con una propiedad "name":
-    const filteredResults = data.filter((item) =>
-      item.name.toLowerCase().includes(searchTerm.toLowerCase())
+ 
+   const filteredResults = results.filter((item) =>
+      item.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
-
-    if (filteredResults.length > 0) {
-      setResults(filteredResults);
-      setNotFound(false);
+ 
+const imagenProducto = filteredResults[0]?.imageUrls[0] 
+    if (filteredResults.length > 0) { 
+      ImageDownloader(imagenProducto,'1')
+      getImageName(imagenProducto,'1')
+   
     } else {
-      setResults([]);
-      setNotFound(true);
-    }
+       setNotFound(true);
+    }  
   };
  
   const handleSearch2 = (e) => {
     const searchTerm2 = e.target.value;
-    setSearchTerm2(searchTerm2);
-    console.log("busca en la api ",searchTerm2)
-    // Aquí puedes realizar la lógica de búsqueda con los datos que tengas disponibles. 
-
-    // Supongamos que tienes una lista de elementos llamada "data" que contiene objetos con una propiedad "name":
-    const filteredResults = data.filter((item) =>
-      item.name.toLowerCase().includes(searchTerm2.toLowerCase())
+    setSearchTerm2(searchTerm2); 
+    const filteredResults2 = results2.filter((item) =>
+      item.title.toLowerCase().includes(searchTerm2.toLowerCase())
     );
 
-    if (filteredResults.length > 0) {
-      setResults2(filteredResults);
-      setNotFound2(false);
+    const imagenProducto2 = filteredResults2[0]?.imageUrls[0] 
+    if (filteredResults2.length > 0) { 
+      ImageDownloader(imagenProducto2,'2')
+      getImageName(imagenProducto2,'2')
+   
     } else {
-      setResults2([]);
       setNotFound2(true);
-    }
+    }  
   };
   return (
     <><div className='row'>
@@ -236,16 +251,16 @@ fetch(imageUrl)
           </label>
           <input className='font-family-SpaceGrotesk-Bold'
             type="text"
-            value={searchTerm}
-           onBlur={fetchDataChoice}
-            onChange={handleSearch} 
+            value={searchTerm} 
+            onBlur={fetchDataChoice}
+            onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Type your choice..." />
             
             {!notFound && searchTerm && ( 
            
               <select   className="form-control" onChange={handleSearch}> 
                   {results.map((item) => (
-              <option data-tokens="ketchup mustard" value={item.name}>{item.name}</option>
+              <option data-tokens="ketchup mustard" value={item.title}>{item.title}</option>
               ))}
             </select> 
             )}
@@ -271,14 +286,15 @@ fetch(imageUrl)
           <input className='font-family-SpaceGrotesk-Bold'
             type="text"
             value={searchTerm2}
-            onChange={handleSearch2} 
+            onBlur={fetchDataChoice2}
+            onChange={(e) => setSearchTerm2(e.target.value)}
             placeholder="Type your choice..." />
               
               {!notFound2 && searchTerm2 && ( 
            
            <select  className="form-control"   onChange={handleSearch2}> 
                {results2.map((item) => (
-           <option data-tokens="ketchup mustard" value={item.name}>{item.name}</option>
+          <option data-tokens="ketchup mustard" value={item.title}>{item.title}</option>
            ))}
          </select> 
          )}
