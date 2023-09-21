@@ -234,8 +234,7 @@ const LoginStatus = () => {
   /*Facebook*/
   
 
-  const responseFacebook = (response) => {    
-    console.log("respuesta de facebook", response)
+  const responseFacebook = (response) => {     
     if(response.error) {
       setLoggedIn(false); 
     } else  {
