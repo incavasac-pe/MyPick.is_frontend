@@ -20,11 +20,11 @@ class ModalRedes extends Component {
                         <span className='d-block twitter mb-2'><i class="fab fa-twitter"></i></span>
                         Twitter
                     </a>                 
-                    <a href='https://www.reddit.com/mypickis' className='redes'>
+                    <a href='https://www.reddit.com/r/Mypicks/' target="_blank" className='redes'>
                         <span className='d-block reddit mb-2'><i class="fab fa-reddit-alien"></i></span>
                         Reddit
                     </a>
-                    <a href='https://www.facebook.com/MyPick.Is/' className='redes'>
+                    <a href='https://www.facebook.com/MyPick.Is/' target="_blank" className='redes'>
                         <span className='d-block facebook mb-2'><i class="fab fa-facebook-f"></i></span>
                         Facebook
                     </a>
