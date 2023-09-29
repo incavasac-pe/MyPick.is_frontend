@@ -16,15 +16,15 @@ class ModalRedes extends Component {
                     </p>
                 </div>
                 <div className='col-md-12 d-flex align-items-center justify-content-around mb-3 font-family-SpaceGrotesk-Bold'>
-                    <a href='#' target="_blank" className='redes'>
+                    <a href='https://twitter.com/mypick_is' target="_blank" className='redes'>
                         <span className='d-block twitter mb-2'><i class="fab fa-twitter"></i></span>
                         Twitter
                     </a>                 
-                    <a href='#' className='redes'>
+                    <a href='https://www.reddit.com/mypickis' className='redes'>
                         <span className='d-block reddit mb-2'><i class="fab fa-reddit-alien"></i></span>
                         Reddit
                     </a>
-                    <a href='https://es-la.facebook.com/' className='redes'>
+                    <a href='https://www.facebook.com/MyPick.Is/' className='redes'>
                         <span className='d-block facebook mb-2'><i class="fab fa-facebook-f"></i></span>
                         Facebook
                     </a>
