@@ -27,7 +27,7 @@ const TableMyPicks = () => {
   }
   }, []); 
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -94,9 +94,9 @@ const TableMyPicks = () => {
                     Rows per page
                 </p>
                 <select value={rowsPerPage} onChange={handleRowsPerPageChange} className='form-control seleccionar'>
-                <option value={5}>5</option>
                 <option value={10}>10</option>
                 <option value={15}>15</option>
+                <option value={25}>25</option>
                 </select>
             </div>
             <div className='ml-5 mr-5 margin-mobil'>
