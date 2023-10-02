@@ -108,7 +108,7 @@ class Buscador extends Component {
      {  muestrasMostradas && 
           <tbody>
           {muestrasMostradas.map((muestra) => (
-            <tr key={muestra.id} onClick={this.handleBusqueda(muestra.id)}> 
+            <tr key={muestra.id}  > 
               <td><span className='modal-titulo text-white'>{muestra.name}</span></td>
               <td align='right' className='text-morado'>
                 {/* <div className='align-items-center d-flex justify-content-end mt-2'>
