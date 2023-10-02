@@ -409,13 +409,8 @@ const LoginStatus = () => {
                         />;
                           
                           </GoogleOAuthProvider>;
-                     {/*    <div className='col-md-6'>
-                            <button className='btn-redes font-family-SpaceGrotesk-Bold' type='button'>
-                              <img src={require('../img/gmail.png')} alt='gmail' className='mr-2' />
-                              Sign In with Google
-                            </button>
-                        </div> */}
-                        {!loggedIn &&
+                   
+                       {/*  {!loggedIn &&
                         <FacebookLogin
                           appId="172576561281270"
                           autoLoad={false}
@@ -425,7 +420,7 @@ const LoginStatus = () => {
                           icon="fa-facebook-square mr-2"
                           cssClass="btn-redes font-family-SpaceGrotesk-Bold" />
                        
-                      }
+                      } */}
                      
                     </div>
                     </div>
@@ -489,12 +484,25 @@ const LoginStatus = () => {
                             <h4 className='text-gris-claro title-or d-inline-block'>O R</h4>
                         </div>
                         <div className='col-md-6'>
-                            <button className='btn-redes font-family-SpaceGrotesk-Bold' type='button'>
+                          {/*   <button className='btn-redes font-family-SpaceGrotesk-Bold' type='button'>
                               <img src={require('../img/gmail.png')} alt='gmail' className='mr-2' />
                               Continue with Google
-                            </button>
+                            </button> */}
+                      <GoogleOAuthProvider clientId="951089599558-ss3is472v1vb57vd3e9gmqt5aeq6ag89.apps.googleusercontent.com">
+                        <GoogleLogin
+                         buttonText='Sign In with Google'  
+                          onSuccess={credentialResponse => {
+                            responseGoogle(credentialResponse.credential)
+                      
+                          }}
+                          onError={() => {
+                            console.log('Login Failed');
+                          }}
+                        />;
+                          
+                          </GoogleOAuthProvider>;
                         </div>
-                        {!loggedIn &&
+                  {/*         {!loggedIn &&
                         <FacebookLogin
                           appId="172576561281270"
                           autoLoad={false}
@@ -502,14 +510,10 @@ const LoginStatus = () => {
                           callback={responseFacebook}
                           textButton=" Continue with Facebook"                       
                           icon="fa-facebook-square mr-2"
-                          cssClass="btn-redes font-family-SpaceGrotesk-Bold" />
+                          cssClass="btn-redes font-family-SpaceGrotesk-Bold" />  
                        
-                      }
-                       {/*  <div className='col-md-6'>
-                            <button className='btn-redes font-family-SpaceGrotesk-Bold' type='button'>
-                              <i className="fab fa-facebook-square mr-2"></i> Continue with Facebook
-                            </button>
-                        </div> */}
+                      } */}
+                   
                     </div> 
                   </div>     
                   <div className='cuadro-footer-modal font-family-SpaceGrotesk-Light'>
