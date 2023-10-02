@@ -32,6 +32,7 @@ class Menu extends Component {
                 </div>
                 <Buscador />
             </div>
+            
         );
     }
 }

@@ -68,7 +68,7 @@ const Contact = () => {
     const formDataSend = new FormData();
        formDataSend.append("content", html );
        formDataSend.append("subject", `My Picks Contact Request`);
-       formDataSend.append("to", "noreplymypick@gmail.com");   
+       formDataSend.append("to", "contactmypickdev.is@gmail.com");   
 
         fetch(`http://localhost:3100/send_email_contact`, {
           method: 'POST', 

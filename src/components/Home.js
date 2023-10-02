@@ -55,9 +55,7 @@ const  nextStep = () => {
           settextoActivo(texto)    
           setcurrentStep(2)   
         }
-      })
-      .catch(error => {  
-      });
+      }) 
    
   };
 
@@ -83,8 +81,7 @@ const  nextStep = () => {
         setPick(data.data?.[0]?.id)     
       }
     })
-    .catch(error => {        
-    });
+  
   };
     return (
       <div>        

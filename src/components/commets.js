@@ -6,7 +6,7 @@ class Comments extends Component {
     super(props); 
     this.state = {
       comentarios: [],
-      flag: false,
+      flag: 1,
       id_pick:props.id_pick,
       nuevoComentario: '',
       nuevaRespuesta: '',
@@ -25,16 +25,13 @@ class Comments extends Component {
         .then(response => response.json())
         .then(data => { 
           if(data.error){        
-            this.setState({ comentarios:[] ,flag:true}); 
+            this.setState({ comentarios:[] ,flag:2}); 
           } else {              
               if (data.data) {    
-                this.setState({ comentarios: data.data }); // Actualizar el estado con los valores de data.data                 
+                this.setState({ comentarios: data.data,flag:3 }); // Actualizar el estado con los valores de data.data                 
               }  
           }
-        }).catch(error => {
-          // Manejar el error en caso de que ocurra
-          console.error('Error:', error);
-        });   
+        })   
   }
 
   registerComments = (nuevoComentario) => { 
@@ -51,18 +48,12 @@ class Comments extends Component {
       }  
     })
     .then(response => response.json())
-    .then(data => { 
-      if(data.error){        
-       // this.setState({ comentarios:[] }); 
-      } else {              
+    .then(data => {  
           if (data.data) {    
             this.setState({ comentarios: data.data }); // Actualizar el estado con los valores de data.data                 
           }  
-      }
-    }).catch(error => {
-      // Manejar el error en caso de que ocurra
-      console.error('Error:', error);
-    });   
+      
+    })    
   }
 }
 
@@ -81,18 +72,12 @@ registerReply = (comentario_id,id_pick,nuevoComentario) => {
     }  
   })
   .then(response => response.json())
-  .then(data => { 
-    if(data.error){        
-    //  this.setState({ comentarios:[] }); 
-    } else {              
+  .then(data => {  
         if (data.data) {    
           this.setState({ comentarios: data.data }); // Actualizar el estado con los valores de data.data                 
         }  
-    }
-  }).catch(error => {
-    // Manejar el error en caso de que ocurra
-    console.error('Error:', error);
-  });   
+    
+  })   
 }
 }
 
@@ -141,15 +126,15 @@ registerReply = (comentario_id,id_pick,nuevoComentario) => {
   };
 
   render() {
-    const { comentarios, nuevoComentario, nuevaRespuesta, mostrarRespuestas, mostrarFormularioRespuesta,id_pick} = this.state;
-      if( comentarios.length === 0 && id_pick ){
+    const { comentarios, nuevoComentario, nuevaRespuesta, mostrarRespuestas, mostrarFormularioRespuesta,id_pick,flag} = this.state;
+      if( comentarios.length === 0 && id_pick && flag === 1){
        this.fetchDataComments(id_pick)
       }
     return (
       <div className="wrapper">
         <div className="comment">
           <div className="commet-title">
-            <h3 className="text-white font-family-SpaceGrotesk-Bold">Comments {comentarios.length}</h3>
+            <h3 className="text-white font-family-SpaceGrotesk-Bold">Comments </h3>
             <button
                 type="button"
                 class="close cerrar-modal movil"

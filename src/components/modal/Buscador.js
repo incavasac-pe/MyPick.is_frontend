@@ -81,13 +81,9 @@ class Buscador extends Component {
       })
       .then(response => response.json())
       .then(data => { 
-        if(data.error){        
-          // toast.error(data.msg);     
-        } else {              
-            if (data.data) {    
-              this.setState({ muestras: data.data }); // Actualizar el estado con los valores de data.data 
-            }  
-        }
+        if(!data.error && data.data){  
+            this.setState({ muestras: data.data }); 
+          }   
       }).catch(error => {
         // Manejar el error en caso de que ocurra
         console.error('Error:', error);
@@ -113,11 +109,11 @@ class Buscador extends Component {
             <tr key={muestra.id}> 
               <td><span className='modal-titulo text-white'>{muestra.name}</span></td>
               <td align='right' className='text-morado'>
-                <div className='align-items-center d-flex justify-content-end mt-2'>
+                {/* <div className='align-items-center d-flex justify-content-end mt-2'>
                     <span className='mr-3 modal-picks'>{muestra.picks}</span>
                     <img src= {muestra.imagen1} alt={muestra.name}  className='img-busqueda-small'/>
                     <img src= {muestra.imagen2} alt={muestra.name} className='img-busqueda-small sobrepuesta pc'/>
-                </div>
+                </div> */}
               </td>
             </tr>
           ))}
