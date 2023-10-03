@@ -2,6 +2,7 @@ import React, { useState,useEffect,useRef  } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import sleep from '@react-corekit/sleep'; 
+import {RotatingLines} from 'react-loader-spinner';
 
 const CreatePickImagenUpload = (props) => {
   const [image1, setImage1] = useState(null);
@@ -13,6 +14,9 @@ const CreatePickImagenUpload = (props) => {
   const [email, setEmail] = useState('');
   const [photo1, setPhoto1] = useState(null);
   const [photo2, setPhoto2] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading2, setIsLoading2] = useState(false);
+
 
 
   const [product1, setProduct1] = useState(null);
@@ -29,6 +33,7 @@ const CreatePickImagenUpload = (props) => {
   
   const fetchDataChoice =  () => {
     if (searchTerm.length > 5 && searchTerm !=undefined ) {
+      setIsLoading(true);
     console.log("se busca el producto en amazon",searchTerm) 
    const url = `http://localhost:3100/list_products_api_externa?search=${searchTerm}`;
   
@@ -46,18 +51,20 @@ const CreatePickImagenUpload = (props) => {
         setProduct1(resp)
         setResults(resp); 
         setNotFound(false); 
+        setIsLoading(false);
     }
     })
     .catch(error => {
       // Handle any errors that occurred during the fetch request
       console.error(error);
       setProduct1(null) 
+      setIsLoading(false);
     });
   }}
 
   const fetchDataChoice2 =  () => {
     if (searchTerm2.length > 5 && searchTerm2 !=undefined ) {
-    console.log("se busca el producto en amazon",searchTerm2) 
+      setIsLoading2(true); 
    const url = `http://localhost:3100/list_products_api_externa?search=${searchTerm2}`;
   
   fetch(url, {
@@ -72,12 +79,15 @@ const CreatePickImagenUpload = (props) => {
         const resp = data?.data       
         setProduct2(resp)
         setResults2(resp); 
-        setNotFound(false);     }
+        setNotFound2(false);  
+        setIsLoading2(false); 
+         }
     })
     .catch(error => {
       // Handle any errors that occurred during the fetch request
       console.error(error);
-      setProduct2(null)       
+      setProduct2(null)    
+      setIsLoading2(false);    
     });
   }}
   const getImageName = (url,origin) => {
@@ -249,14 +259,26 @@ const imagenProducto = filteredResults[0]?.imageUrls[0]
               <span><i class="fas fa-plus" onClick={handleIconClick}></i></span>
             )}
           </label>
-          <input className='font-family-SpaceGrotesk-Bold'
+          {!isLoading && (
+          <input className='font-family-SpaceGrotesk-Bold'         
             type="text"
             value={searchTerm} 
             onBlur={fetchDataChoice}
             onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Type your choice..." />
-            
-            {!notFound && searchTerm && ( 
+            placeholder="Type your choice..." />  )}
+           {isLoading && (
+                <div className="spinner">
+                <RotatingLines
+                  strokeColor="grey"
+                  strokeWidth="3"
+                  animationDuration="0.75"
+                  width="40"
+                  visible={true}
+                />
+                          </div>
+                  )}
+              
+            {!notFound && searchTerm && !isLoading && ( 
            
               <select   className="form-control" onChange={handleSearch}> 
                   {results.map((item) => (
@@ -283,14 +305,28 @@ const imagenProducto = filteredResults[0]?.imageUrls[0]
               <span><i class="fas fa-plus" onClick={handleIconClick2}></i></span>
             )}
           </label>
-          <input className='font-family-SpaceGrotesk-Bold'
+          {!isLoading2 && (
+             <input className='font-family-SpaceGrotesk-Bold'
             type="text"
             value={searchTerm2}
             onBlur={fetchDataChoice2}
             onChange={(e) => setSearchTerm2(e.target.value)}
             placeholder="Type your choice..." />
-              
-              {!notFound2 && searchTerm2 && ( 
+            )}
+
+{isLoading2 && (
+                <div className="spinner">
+                <RotatingLines
+                  strokeColor="grey"
+                  strokeWidth="3"
+                  animationDuration="0.75"
+                  width="40"
+                  visible={true}
+                />
+                          </div>
+                  )}
+
+              {!notFound2 && searchTerm2 && !isLoading2 && ( 
            
            <select  className="form-control"   onChange={handleSearch2}> 
                {results2.map((item) => (

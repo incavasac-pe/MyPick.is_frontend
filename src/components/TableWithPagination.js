@@ -3,7 +3,7 @@ import { formatearTiempo } from '../utils';
 const apiUrl = process.env.URL_API; 
 const TableWithPagination = () => {
  
-console.log(apiUrl); 
+console.log("apiUrl",apiUrl); 
   
   const [data, setMyBookmark] = useState([]);
   useEffect(() => { 
