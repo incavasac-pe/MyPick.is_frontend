@@ -1,7 +1,9 @@
 import React, { useState,useEffect } from 'react'; 
 import { formatearTiempo } from '../utils'; 
+const apiUrl = process.env.URL_API; 
 const TableWithPagination = () => {
-
+ 
+console.log(apiUrl); 
   
   const [data, setMyBookmark] = useState([]);
   useEffect(() => { 
@@ -20,11 +22,7 @@ const TableWithPagination = () => {
       if(!data.error && data.data){     
         setMyBookmark(data.data);
        }
-    })
-    .catch(error => {
-      // Manejar cualquier error de la solicitud           
-     // toast.error("An error has occurred");     
-    });
+    }) 
   }
   }, []); 
   const [currentPage, setCurrentPage] = useState(1);

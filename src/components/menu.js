@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { openNav } from './Sidebar';
 import Buscador from './modal/Buscador';
 import LoginStatus from './user/LoginStatus';
-
+ 
 class Menu extends Component {
+    
     render() {
         return (
             <div className="row">

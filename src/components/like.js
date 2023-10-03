@@ -2,7 +2,8 @@ import React, {useState, useEffect} from 'react';
  
   const Like = (props) => {
     const { likes, id_pick } = props;
-
+   
+    const [activeLinkB, setactiveLinkB] = useState('');
     const [activeLink, setactiveLink] = useState('');
     const [pick_like, setpick_like] = useState('');
     const [email, setEmail] = useState(''); 
@@ -16,8 +17,29 @@ import React, {useState, useEffect} from 'react';
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);   
-      setEmail(parsedUser.email)      
-      }  
+       setEmail(parsedUser.email)      
+        
+      fetch(`http://localhost:3100/my_bookmarks?email=${parsedUser.email}`, {
+        method: 'GET',      
+        headers: {
+          'Content-Type': 'application/json'      
+        }
+      })
+      .then(response => response.json())
+      .then(data => { 
+        if(!data.error && data.data){     
+          
+          const valueId = data.data.map(item => item.id);
+          const exists = valueId.includes(id_pick);
+            if(exists){
+              setactiveLinkB('bookmark')
+            }else{
+              setactiveLinkB('')
+            } 
+         }
+      }) 
+    } 
+ 
       setpick_like(likes)
     //valida si ya le dio like este usuario al pick 
       const storedLiked = localStorage.getItem('liked');
@@ -25,8 +47,7 @@ import React, {useState, useEffect} from 'react';
       if (storedLiked == id_pick) { 
         setLiked(true);
         setactiveLink('heart')      
-      }
-   
+      } 
     }, [id_pick]);
  
     const handleClick = (link) => { 
@@ -40,7 +61,7 @@ import React, {useState, useEffect} from 'react';
 
       if(link === 'bookmark' && email!==''){
         fetchBookmark();    
-        setactiveLink(link)     
+        setactiveLinkB(link)     
       } 
     
     };
@@ -77,6 +98,8 @@ import React, {useState, useEffect} from 'react';
           }
         });
     }
+
+   
     return (
     <div className='like'>
           <a href='javascript:void(0);' className={activeLink === 'heart' ? 'activo' : ''} onClick={() => handleClick('heart')} >
@@ -87,7 +110,7 @@ import React, {useState, useEffect} from 'react';
             <i className="far fa-share-alt"></i>
             <p className='font-family-SpaceGrotesk-Light'>Share</p>
           </a>
-          <a href='javascript:void(0);' className={activeLink === 'bookmark' ? 'activo' : ''} onClick={() => handleClick('bookmark')}  data-toggle="modal" data-target="#login">
+          <a href='javascript:void(0);' className={activeLinkB === 'bookmark' ? 'activo' : ''} onClick={() => handleClick('bookmark')}  data-toggle="modal" data-target="#login">
             <i className="far fa-bookmark"></i>
             <p className='font-family-SpaceGrotesk-Light'>Bookmark</p>
           </a>
