@@ -35,7 +35,7 @@ const CreatePickImagenUpload = (props) => {
     if (searchTerm.length > 5 && searchTerm !=undefined ) {
       setIsLoading(true);
     console.log("se busca el producto en amazon",searchTerm) 
-   const url = `http://localhost:3100/list_products_api_externa?search=${searchTerm}`;
+   const url = `http://159.89.42.65:3100/list_products_api_externa?search=${searchTerm}`;
   
   fetch(url, {
     method: 'GET',
@@ -65,7 +65,7 @@ const CreatePickImagenUpload = (props) => {
   const fetchDataChoice2 =  () => {
     if (searchTerm2.length > 5 && searchTerm2 !=undefined ) {
       setIsLoading2(true); 
-   const url = `http://localhost:3100/list_products_api_externa?search=${searchTerm2}`;
+   const url = `http://159.89.42.65:3100/list_products_api_externa?search=${searchTerm2}`;
   
   fetch(url, {
     method: 'GET',
@@ -180,7 +180,7 @@ fetch(imageUrl)
     }; 
 
         if(image1 && image2){
-        fetch(`http://localhost:3100/register_picks`, requestOptions) 
+        fetch(`http://159.89.42.65:3100/register_picks`, requestOptions) 
               .then(response => {            
                 if (response.status===201){                   
                     toast.success('Created picks successfully', {

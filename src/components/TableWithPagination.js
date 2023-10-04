@@ -11,7 +11,7 @@ console.log("apiUrl",apiUrl);
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);    
-    fetch(`http://localhost:3100/my_bookmarks?email=${parsedUser.email}`, {
+    fetch(`http://159.89.42.65:3100/my_bookmarks?email=${parsedUser.email}`, {
       method: 'GET',      
       headers: {
         'Content-Type': 'application/json'      
@@ -65,8 +65,8 @@ console.log("apiUrl",apiUrl);
               <td>
                 <div className='table-img d-flex align-items-center justify-content-start'>
                     <div>
-                      <img src={`http://localhost:3100/see_photo?img=${row.photo1_name}`} alt={`${row.photo1_name}`} />
-                      <img src={`http://localhost:3100/see_photo?img=${row.photo2_name}`} alt={`${row.photo2_name}`} className='pc' />
+                      <img src={`http://159.89.42.65:3100/see_photo?img=${row.photo1_name}`} alt={`${row.photo1_name}`} />
+                      <img src={`http://159.89.42.65:3100/see_photo?img=${row.photo2_name}`} alt={`${row.photo2_name}`} className='pc' />
                     </div>                    
                     <div>
                     <span className='ml-3 d-block'>- {row.choice1_name}</span>
@@ -81,7 +81,7 @@ console.log("apiUrl",apiUrl);
               <td className='pc'> {formatearTiempo(row.dias)}</td>
               <td className='pc'>
                 <div className='table-img'>
-                <img src={`http://localhost:3100/see_photo?img=${row.selectd1 >= row.selectd2 ? row.photo1_name : row.photo2_name}`}/> 
+                <img src={`http://159.89.42.65:3100/see_photo?img=${row.selectd1 >= row.selectd2 ? row.photo1_name : row.photo2_name}`}/> 
                    <span className='ml-3'>{ row.selectd1 >= row.selectd2 ? row.choice1_name : row.choice2_name }</span>
                 </div>
                 

@@ -45,7 +45,7 @@ const LoginStatus = () => {
     if (!password.trim()) errors.password = 'Please enter your password'
 
     if (Object.keys(errors).length === 0) {
-        fetch('http://localhost:3100/login', {
+        fetch('http://159.89.42.65:3100/login', {
           method: 'POST',
           body: JSON.stringify({ email: email, password: password }),
           headers: {
@@ -64,9 +64,9 @@ const LoginStatus = () => {
             setShowModal(false);
                if (data.data.token) {             
                  setLoggedIn(true); 
-                 setUser({ name: data.data.user.full_name, photo: `http://localhost:3100/see_photo?img=${data.data.user.photo}` , email: data.data.user.email,token:data.data.token});                 
+                 setUser({ name: data.data.user.full_name, photo: `http://159.89.42.65:3100/see_photo?img=${data.data.user.photo}` , email: data.data.user.email,token:data.data.token});                 
                  localStorage.setItem('user', JSON.stringify({ name: data.data.user.full_name,  email: data.data.user.email,token:data.data.token,nick:data.data.user.username}));
-                 if(data.data.user.photo!=null)   localStorage.setItem('photo', JSON.stringify({ photo: `http://localhost:3100/see_photo?img=${data.data.user.photo}`}));
+                 if(data.data.user.photo!=null)   localStorage.setItem('photo', JSON.stringify({ photo: `http://159.89.42.65:3100/see_photo?img=${data.data.user.photo}`}));
                  sleep(4000);
                  window.location.reload()
                //  navigate('/MyProfile'); // Redirigir al usuario a la página de perfil
@@ -138,7 +138,7 @@ const LoginStatus = () => {
     if (!full_name.trim()) errors_re.full_name = 'Please enter your full name'
  
     if (Object.keys(errors_re).length === 0) {
-        fetch('http://localhost:3100/register', {
+        fetch('http://159.89.42.65:3100/register', {
           method: 'POST',
           body: JSON.stringify({ full_name: full_name, email: email, password: password, origin:'mipick' }),
           headers: {
@@ -160,7 +160,7 @@ const LoginStatus = () => {
                  setLoggedIn(true); 
                  setUser({ name: data.data.user.full_name,  email: data.data.user.email,token:data.data.token});
                  localStorage.setItem('user', JSON.stringify({ name: data.data.user.full_name, photo: require('../img/user.jpg'), email: data.data.user.email,token:data.data.token}));
-                 localStorage.setItem('photo', JSON.stringify({ photo: `http://localhost:3100/see_photo?img=${data.data.user.photo}`}));
+                 localStorage.setItem('photo', JSON.stringify({ photo: `http://159.89.42.65:3100/see_photo?img=${data.data.user.photo}`}));
                 //navigate('/MyProfile'); // Redirigir al usuario a la página de perfil
                 }  
            }
@@ -187,7 +187,7 @@ const LoginStatus = () => {
       errors_re.email_forgot = 'Please enter a valid email';       
     }
     if (Object.keys(errors_re).length === 0) {
-      fetch('http://localhost:3100/link_password', {
+      fetch('http://159.89.42.65:3100/link_password', {
         method: 'POST',
         body: JSON.stringify({ email: email_forgot }),
         headers: {
@@ -246,7 +246,7 @@ const LoginStatus = () => {
       localStorage.setItem('user', JSON.stringify({ name: response.name,  email: response.email,token:response.accessToken,nick:response.graphDomain}));
       localStorage.setItem('photo', JSON.stringify({ photo:response.picture.data.url}));
      
-      fetch(`http://localhost:3100/register `,   {
+      fetch(`http://159.89.42.65:3100/register `,   {
         method: 'POST', 
         body: JSON.stringify({ full_name: response.name, email:  response.email,password:'qwerty',origin:response.graphDomain }),
         headers: {
@@ -282,7 +282,7 @@ const LoginStatus = () => {
      localStorage.setItem('user', JSON.stringify({ name: decoded.name,  email: decoded.email,token:response,nick:decoded.given_name}));
      localStorage.setItem('photo', JSON.stringify({ photo: decoded.picture}));
     
-     fetch(`http://localhost:3100/register `,   {
+     fetch(`http://159.89.42.65:3100/register `,   {
        method: 'POST', 
        body: JSON.stringify({ full_name: decoded.name, email:  decoded.email,password:'qwerty',origin:'google' }),
        headers: {

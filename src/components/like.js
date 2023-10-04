@@ -19,7 +19,7 @@ import React, {useState, useEffect} from 'react';
       const parsedUser = JSON.parse(storedUser);   
        setEmail(parsedUser.email)      
         
-      fetch(`http://localhost:3100/my_bookmarks?email=${parsedUser.email}`, {
+      fetch(`http://159.89.42.65:3100/my_bookmarks?email=${parsedUser.email}`, {
         method: 'GET',      
         headers: {
           'Content-Type': 'application/json'      
@@ -67,7 +67,7 @@ import React, {useState, useEffect} from 'react';
     };
 
     const fetchLike = async () => {       
-      fetch(`http://localhost:3100/register_like`, {
+      fetch(`http://159.89.42.65:3100/register_like`, {
         method: 'POST', 
         body: JSON.stringify({ id_pick: id_pick }),
         headers: {
@@ -84,7 +84,7 @@ import React, {useState, useEffect} from 'react';
 
     
    const fetchBookmark = async () => {  
-      fetch(`http://localhost:3100/register_bookmarks`, {
+      fetch(`http://159.89.42.65:3100/register_bookmarks`, {
         method: 'POST',
         body: JSON.stringify({ id_pick: id_pick, email:email }),
         headers: {

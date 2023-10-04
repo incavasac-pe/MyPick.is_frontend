@@ -10,7 +10,7 @@ const CreatePick = () => {
  
 
   useEffect(() => {
-     fetch(`http://localhost:3100/list_category?limit=${100}`, {
+     fetch(`http://159.89.42.65:3100/list_category?limit=${100}`, {
         method: 'GET', 
         headers: {
           'Content-Type': 'application/json'      
@@ -30,38 +30,7 @@ const CreatePick = () => {
         console.error('Error:', error);
       });    
   }, []); 
-
-  
-  const fetchDataChoice = async (search) => {
-    console.log("se busca el producto",search)
-    const apiKey = 'YXV0aDB8NjRmYTJlMWFlZGExYWI1MDBmODA0NDU1fGZhM2E0YTIxODE';
-  const url = `https://api.app.outscraper.com/amazon/products?query=https://www.amazon.com/s?k=${search}&limit=1&async=false`;
-  
-  fetch(url, {
-    method: 'GET',
-    headers: {
-      'X-API-KEY': apiKey
-    }
-  })
-    .then(response => response.json())
-    .then(data => {
-      const nombreProducto = data[0][0].name;
-      const precioProducto = data[0][0].price;
-      const imagenProducto = data[0][0].image_1;
-      console.log("el nombre del productos es",nombreProducto);
-      console.log("el precio del productos es",precioProducto);
-      console.log("la imagen  del productos es",imagenProducto);
-      // Handle the response data here
-      console.log(data);
-    })
-    .catch(error => {
-      // Handle any errors that occurred during the fetch request
-      console.error(error);
-    });
-  }
-
-
-  const handleShowBox2 = () => {
+   const handleShowBox2 = () => {
     setShowBox1(false);
     setShowBox2(true);
   };

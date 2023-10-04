@@ -40,7 +40,7 @@ const  nextStep = () => {
         email = parsedUser.email 
       }
    
-      fetch(`http://localhost:3100/select_picks`, {
+      fetch(`http://159.89.42.65:3100/select_picks`, {
         method: 'POST', 
         body: JSON.stringify({ id_pick: id_pick, id_choice: id_choice,email:email }),
         headers: {
@@ -68,7 +68,7 @@ const  nextStep = () => {
   const fetchData = async () => {
     
     setMuestras(null)    
-    fetch(`http://localhost:3100/list_all_picks?limit=${1}`, {
+    fetch(`http://159.89.42.65:3100/list_all_picks?limit=${1}`, {
       method: 'GET', 
       headers: {
         'Content-Type': 'application/json'      
@@ -102,7 +102,7 @@ const  nextStep = () => {
                           className={`box-img ${imagenActiva === muestras?.[0]?.photo1_name ? 'activo' : ''}`}
                           onClick={() => handleClickImagen(muestras?.[0]?.id_choice1, muestras?.[0]?.photo1_name, muestras?.[0]?.choice1_name)}
                         >
-                          <img src={`http://localhost:3100/see_photo?img=${muestras?.[0]?.photo1_name}`} width={"282px"}  height={"282px"} alt="ciudad"  />
+                          <img src={`http://159.89.42.65:3100/see_photo?img=${muestras?.[0]?.photo1_name}`} width={"282px"}  height={"282px"} alt="ciudad"  />
                         </div>
                         <div className='nombre'>
                           <h3 className='text-white font-family-SpaceGrotesk-Bold'>{ muestras?.[0]?.choice1_name}</h3>
@@ -118,7 +118,7 @@ const  nextStep = () => {
                           className={`box-img ${imagenActiva === muestras?.[0]?.photo2_name ? 'activo' : ''}`}
                           onClick={() => handleClickImagen(muestras?.[0]?.id_choice2,  muestras?.[0]?.photo2_name, muestras?.[0]?.choice2_name)}
                         >
-                          <img src={`http://localhost:3100/see_photo?img=${muestras?.[0]?.photo2_name}`} width={"282px"}  height={"282px"} alt="ciudad" />
+                          <img src={`http://159.89.42.65:3100/see_photo?img=${muestras?.[0]?.photo2_name}`} width={"282px"}  height={"282px"} alt="ciudad" />
                         </div>
                         <div className='nombre'>
                           <h3 className='text-white font-family-SpaceGrotesk-Bold'>{ muestras?.[0]?.choice2_name}</h3>
@@ -127,7 +127,7 @@ const  nextStep = () => {
                     </div>
                     <div className='row'>
                       <div className='col-auto m-auto'>
-                       {muestras && (<Like likes={muestras?.[0]?.likes} id_pick={id_pick}  /> )} 
+                       { (<Like likes={muestras?.[0]?.likes ?? 0 } id_pick={id_pick}  /> )} 
                       </div>
                     </div>
                   </div>
@@ -141,11 +141,11 @@ const  nextStep = () => {
                       <div className='columna'>
                         <div className='box-img activo'>                      
                           {imagenActiva === muestras?.[0]?.photo1_name && (
-                            <img src={`http://localhost:3100/see_photo?img=${muestras?.[0]?.photo1_name}`} width={"282px"}  height={"282px"} alt="ciudad" onClick={nextStep}/>
+                            <img src={`http://159.89.42.65:3100/see_photo?img=${muestras?.[0]?.photo1_name}`} width={"282px"}  height={"282px"} alt="ciudad" onClick={nextStep}/>
                           )}
                           
                           {imagenActiva === muestras?.[0]?.photo2_name && (
-                            <img src={`http://localhost:3100/see_photo?img=${muestras?.[0]?.photo2_name}`}  width={"282px"}  height={"282px"}alt="ciudad" onClick={nextStep} />
+                            <img src={`http://159.89.42.65:3100/see_photo?img=${muestras?.[0]?.photo2_name}`}  width={"282px"}  height={"282px"}alt="ciudad" onClick={nextStep} />
                           )}
                         
                         </div>
