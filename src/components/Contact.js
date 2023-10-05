@@ -70,7 +70,7 @@ const Contact = () => {
        formDataSend.append("subject", `My Picks Contact Request`);
        formDataSend.append("to", "contactmypickdev.is@gmail.com");   
 
-        fetch(`http://159.89.42.65:3100/send_email_contact`, {
+        fetch(`https://159.89.42.65:3200/send_email_contact`, {
           method: 'POST', 
            body: formDataSend,          
         })

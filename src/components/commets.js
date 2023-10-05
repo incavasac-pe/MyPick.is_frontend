@@ -16,7 +16,7 @@ class Comments extends Component {
   }
 
   fetchDataComments = (id_pick) => {  
-        fetch(`http://159.89.42.65:3100/list_comments_bypicks?id_pick=${id_pick}`, {
+        fetch(`https://159.89.42.65:3200/list_comments_bypicks?id_pick=${id_pick}`, {
           method: 'GET', 
           headers: {
             'Content-Type': 'application/json'      
@@ -40,7 +40,7 @@ class Comments extends Component {
     if (storedUser) {
     const parsedUser = JSON.parse(storedUser);    
        
-    fetch(`http://159.89.42.65:3100/register_comments`, {
+    fetch(`https://159.89.42.65:3200/register_comments`, {
       method: 'POST', 
       body: JSON.stringify({ id_pick: id_pick, contenido: nuevoComentario, email:parsedUser.email }),
       headers: {
@@ -64,7 +64,7 @@ registerReply = (comentario_id,id_pick,nuevoComentario) => {
   if (storedUser) {
   const parsedUser = JSON.parse(storedUser);    
      
-  fetch(`http://159.89.42.65:3100/register_reply`, {
+  fetch(`https://159.89.42.65:3200/register_reply`, {
     method: 'POST', 
     body: JSON.stringify({ id_pick:id_pick, comentario_id: comentario_id, contenido: nuevoComentario, email:parsedUser.email }),
     headers: {
@@ -148,7 +148,7 @@ registerReply = (comentario_id,id_pick,nuevoComentario) => {
             <div className="box-comentario" key={comentario.id}>
               <div className="content">
                 <div className="avatar">
-             <img src={`http://159.89.42.65:3100/see_photo?img=${comentario.foto}`} alt="user" />
+             <img src={`https://159.89.42.65:3200/see_photo?img=${comentario.foto}`} alt="user" />
                 </div>
                 <div className="content-comment">
                   <div className="user">
@@ -175,7 +175,7 @@ registerReply = (comentario_id,id_pick,nuevoComentario) => {
                       {comentario.respuestas.map((respuesta) => (
                         <div key={respuesta.id} className="respuesta">
                           <div className="avatar">
-                          <img src={`http://159.89.42.65:3100/see_photo?img=${respuesta.foto}`}  alt="user" />
+                          <img src={`https://159.89.42.65:3200/see_photo?img=${respuesta.foto}`}  alt="user" />
                           </div>
                           <div className='content-comment'>
                             <h5>{respuesta.usuario}</h5>

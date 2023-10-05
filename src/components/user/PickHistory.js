@@ -8,7 +8,7 @@ const PickHistory = () => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);    
-    fetch(`http://159.89.42.65:3100/my_pick_vote?email=${parsedUser.email}`, {
+    fetch(`https://159.89.42.65:3200/my_pick_vote?email=${parsedUser.email}`, {
       method: 'GET',      
       headers: {
         'Content-Type': 'application/json'      
@@ -64,8 +64,8 @@ const PickHistory = () => {
               <td>
                 <div className='table-img d-flex align-items-center justify-content-start'>
                     <div>
-                  <img src={`http://159.89.42.65:3100/see_photo?img=${row.photo1_name}`} alt={`${row.photo1_name}`} />
-                  <img src={`http://159.89.42.65:3100/see_photo?img=${row.photo2_name}`} alt={`${row.photo2_name}`}  className='pc'/>
+                  <img src={`https://159.89.42.65:3200/see_photo?img=${row.photo1_name}`} alt={`${row.photo1_name}`} />
+                  <img src={`https://159.89.42.65:3200/see_photo?img=${row.photo2_name}`} alt={`${row.photo2_name}`}  className='pc'/>
                     </div>
                     <div>                      
                       <span className='ml-3 d-block'>-  {row.choice1_name}</span>
@@ -78,7 +78,7 @@ const PickHistory = () => {
               <td className='pc'>{formatearTiempo(row.dias)}</td>
               <td>
                 <div className='table-img d-flex align-items-center justify-content-start'>
-                <img src={`http://159.89.42.65:3100/see_photo?img=${row.selectd1 >= row.selectd2 ? row.photo1_name : row.photo2_name}`} alt="equipo" />
+                <img src={`https://159.89.42.65:3200/see_photo?img=${row.selectd1 >= row.selectd2 ? row.photo1_name : row.photo2_name}`} alt="equipo" />
                      <span className='ml-3'>{ row.selectd1 >= row.selectd2 ? row.choice1_name : row.choice2_name }</span>
                 </div>
                 

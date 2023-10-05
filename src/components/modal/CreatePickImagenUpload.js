@@ -34,7 +34,7 @@ const CreatePickImagenUpload = (props) => {
   const fetchDataChoice =  () => {
     if (searchTerm.length > 5 && searchTerm !=undefined ) {
       setIsLoading(true); 
-   const url = `http://159.89.42.65:3100/list_products_api_externa?search=${searchTerm}`;
+   const url = `https://159.89.42.65:3200/list_products_api_externa?search=${searchTerm}`;
   
   fetch(url, {
     method: 'GET',
@@ -64,7 +64,7 @@ const CreatePickImagenUpload = (props) => {
   const fetchDataChoice2 =  () => {
     if (searchTerm2.length > 5 && searchTerm2 !=undefined ) {
       setIsLoading2(true); 
-   const url = `http://159.89.42.65:3100/list_products_api_externa?search=${searchTerm2}`;
+   const url = `https://159.89.42.65:3200/list_products_api_externa?search=${searchTerm2}`;
   
   fetch(url, {
     method: 'GET',
@@ -179,7 +179,7 @@ fetch(imageUrl)
     }; 
 
         if(image1 && image2){
-        fetch(`http://159.89.42.65:3100/register_picks`, requestOptions) 
+        fetch(`https://159.89.42.65:3200/register_picks`, requestOptions) 
               .then(response => {            
                 if (response.status===201){                   
                     toast.success('Created picks successfully', {

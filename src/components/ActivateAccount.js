@@ -11,7 +11,7 @@ const ActivateAccount = () => {
   const token = searchParams.get('token');
  
   useEffect(() => {
-    fetch(`http://159.89.42.65:3100/activate_account?token=${token}`, {
+    fetch(`https://159.89.42.65:3200/activate_account?token=${token}`, {
       method: 'GET', 
       headers: {
         'Content-Type': 'application/json'      

@@ -15,7 +15,7 @@ const ResetPassword = () => {
   const [email, setEmail] = useState('');
 
   useEffect(() => { 
-    fetch(`http://159.89.42.65:3100/reset_password?token=${token}`, {
+    fetch(`https://159.89.42.65:3200/reset_password?token=${token}`, {
       method: 'GET', 
       headers: {
         'Content-Type': 'application/json'      
@@ -64,7 +64,7 @@ const ResetPassword = () => {
     if(newPassword!==newPasswordConfir)  errors.newPassword = 'Passwords do not match';       
    
     if (Object.keys(errors).length === 0) {
-      fetch('http://159.89.42.65:3100/change_password', {
+      fetch('https://159.89.42.65:3200/change_password', {
         method: 'POST',
         body: JSON.stringify({ email: email, new_password: newPassword }),
         headers: {

@@ -63,7 +63,7 @@ const MyProfile = () => {
     if(newPassword!== newPasswordConfir) errors.newPasswordConfir = 'Passwords do not match'
     
     if (Object.keys(errors).length === 0) {
-        fetch('http://159.89.42.65:3100/change_password', {
+        fetch('https://159.89.42.65:3200/change_password', {
           method: 'POST',
           body: JSON.stringify({ email: email, new_password: newPassword }),
           headers: {
@@ -105,7 +105,7 @@ const MyProfile = () => {
     if (!name.trim()) errors.name = 'Please enter your name'  
      
     if (Object.keys(errors).length === 0) {
-        fetch('http://159.89.42.65:3100/change_profile', {
+        fetch('https://159.89.42.65:3200/change_profile', {
           method: 'POST',
           body: JSON.stringify({ email: email, new_email:new_email, full_name: name }),
           headers: {
@@ -120,7 +120,7 @@ const MyProfile = () => {
             const storedUser = localStorage.getItem('user');
             if (storedUser) {    
                 localStorage.setItem('user', JSON.stringify({ name: data.data.user.full_name,  email: data.data.user.email, nick:data.data.user.username}));
-                if(data.data.user.photo!=null)   localStorage.setItem('photo', JSON.stringify({ photo: `http://159.89.42.65:3100/see_photo?img=${data.data.user.photo}`}));
+                if(data.data.user.photo!=null)   localStorage.setItem('photo', JSON.stringify({ photo: `https://159.89.42.65:3200/see_photo?img=${data.data.user.photo}`}));
                } 
                   
             setErrors({});                    
@@ -167,13 +167,13 @@ const MyProfile = () => {
       redirect: 'follow'
     };
         if(file){
-        fetch(`http://159.89.42.65:3100/change_photo?email=${email}`, requestOptions) 
+        fetch(`https://159.89.42.65:3200/change_photo?email=${email}`, requestOptions) 
               .then(response => {            
                 if (response.status===200){
                     const storedUserPhoto = localStorage.getItem('photo');
                       if (storedUserPhoto) { 
-                        localStorage.setItem('photo', JSON.stringify({ photo: `http://159.89.42.65:3100/see_photo?img=${file.name}`}));
-                        setSelectedFileNew(`http://159.89.42.65:3100/see_photo?img=${file.name}`)
+                        localStorage.setItem('photo', JSON.stringify({ photo: `https://159.89.42.65:3200/see_photo?img=${file.name}`}));
+                        setSelectedFileNew(`https://159.89.42.65:3200/see_photo?img=${file.name}`)
                       }
                     toast.success('Upload photo successfully', {
                       position: toast.POSITION.TOP_RIGHT

@@ -36,7 +36,7 @@ class TrendingTopics extends Component {
   };
   
   fetchDataTop3 = () => { 
-      fetch(`http://159.89.42.65:3100/list_trendingTopics`, {
+      fetch(`https://159.89.42.65:3200/list_trendingTopics`, {
         method: 'GET', 
         headers: {
           'Content-Type': 'application/json'      
@@ -51,7 +51,7 @@ class TrendingTopics extends Component {
 }
  
 fetchDataTopCategory = (id) => {  
-      fetch(`http://159.89.42.65:3100/list_trendingTopics_category?id_category=${id}`, {
+      fetch(`https://159.89.42.65:3200/list_trendingTopics_category?id_category=${id}`, {
         method: 'GET', 
         headers: {
           'Content-Type': 'application/json'      
@@ -74,7 +74,7 @@ fetchDataTopCategory = (id) => {
      
  
     if( muestras.length === 0){
-      fetch(`http://159.89.42.65:3100/list_category?limit=${100}`, {
+      fetch(`https://159.89.42.65:3200/list_category?limit=${100}`, {
         method: 'GET', 
         headers: {
           'Content-Type': 'application/json'      
@@ -147,7 +147,7 @@ fetchDataTopCategory = (id) => {
                        {top.category_name}
                       </h6>
                       <div className='box-tabs-img'>
-                      <img src={`http://159.89.42.65:3100/see_photo?img=${top.photo1_name}`} alt='icon' />
+                      <img src={`https://159.89.42.65:3200/see_photo?img=${top.photo1_name}`} alt='icon' />
                       </div>
                       <h2 className='font-family-SpaceGrotesk-Bold'>{top.trending_choice}</h2>
                       {/* <p className='text-grey font-family-SpaceGrotesk-Medium'>Soccer</p> */}
@@ -156,8 +156,8 @@ fetchDataTopCategory = (id) => {
                           <span className='text-morado font-family-SpaceGrotesk-Bold stats'>{top.pick_ranking } Picks</span>
                         </div>
                         <div className='box-equipos'>
-                        <img src={`http://159.89.42.65:3100/see_photo?img=${top.photo1_name}`} alt='icon' />
-                        <img src={`http://159.89.42.65:3100/see_photo?img=${top.photo2_name}`} alt='icon'  className='sobrepuesta'/>
+                        <img src={`https://159.89.42.65:3200/see_photo?img=${top.photo1_name}`} alt='icon' />
+                        <img src={`https://159.89.42.65:3200/see_photo?img=${top.photo2_name}`} alt='icon'  className='sobrepuesta'/>
                         </div>
                       </div>                      
                  </div>
@@ -178,7 +178,7 @@ fetchDataTopCategory = (id) => {
                         {top_by_cat.category_name}
                       </h6>
                       <div className='box-tabs-img'>
-                      <img src={`http://159.89.42.65:3100/see_photo?img=${top_by_cat.photo1_name}`} alt='icon' />
+                      <img src={`https://159.89.42.65:3200/see_photo?img=${top_by_cat.photo1_name}`} alt='icon' />
                       </div>
                       <h2 className='font-family-SpaceGrotesk-Bold'>{top_by_cat.trending_choice}</h2>          
                       <div className='box-tabs-footer'>                        
@@ -186,8 +186,8 @@ fetchDataTopCategory = (id) => {
                           <span className='text-morado font-family-SpaceGrotesk-Bold stats'>{top_by_cat.pick_ranking } Picks</span>
                         </div>
                         <div className='box-equipos'>
-                        <img src={`http://159.89.42.65:3100/see_photo?img=${top_by_cat.photo1_name}`} alt='icon' />
-                        <img src={`http://159.89.42.65:3100/see_photo?img=${top_by_cat.photo2_name}`} alt='icon'  className='sobrepuesta'/>
+                        <img src={`https://159.89.42.65:3200/see_photo?img=${top_by_cat.photo1_name}`} alt='icon' />
+                        <img src={`https://159.89.42.65:3200/see_photo?img=${top_by_cat.photo2_name}`} alt='icon'  className='sobrepuesta'/>
                         </div>
                       </div>                      
                  </div>
