@@ -1,4 +1,4 @@
-import React from 'react';
+import React,  {useState} from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import About from './components/About';
@@ -14,19 +14,26 @@ import ActivateAccount from './components/ActivateAccount';
 import ResetPassword from './components/ResetPassword';
 import Privacy from './components/Privacy';
 import Terms from './components/Terms';
-const App = () => { 
+const App = () => {
+  const [id, setIdcategory] = useState(''); 
+  const [name, setNamecategory] = useState(''); 
+  const handleMenuDataChange = (newMenuData) => { 
+    setIdcategory(newMenuData.id)
+    setNamecategory(newMenuData.name)
+  };
   return (
+    
     <Router>
       <div className="container-fluid">
         <header>
-          <Menu />
+          <Menu  onMenuDataChange={handleMenuDataChange}   />
         </header>
         <Sidebar />
         <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/TrendingTopics" element={<TrendingTopics />} />
-            <Route path="/MyBookmarks" element={<MyBookmarks />} />
-            <Route path="/MyPicks" element={<MyPicks />} />
+            <Route path="/" element={<Home idCat={id}/>} />
+            <Route path="/TrendingTopics" element={<TrendingTopics  idCat={id} name={name} />} />
+            <Route path="/MyBookmarks" element={<MyBookmarks idCat={id}  />} />
+            <Route path="/MyPicks" element={<MyPicks idCat={id} />} />
 
             <Route path="/about" element={<About />} />
             <Route path="/FAQs" element={<FAQs />} />

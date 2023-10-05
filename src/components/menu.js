@@ -4,8 +4,20 @@ import Buscador from './modal/Buscador';
 import LoginStatus from './user/LoginStatus';
  
 class Menu extends Component {
-    
+    constructor(props) {
+        super(props);
+        this.state = {
+          searchTerm: '',      
+        };        
+      }
+         
+    handleDataFromChild = (data) => { 
+        console.log("la data ",data)
+        this.setState({ searchTerm: data.name }); 
+        this.props.onMenuDataChange(data);
+      };
     render() {
+        const { searchTerm } = this.state;
         return (
             <div className="row">
                 <div className='col-xl-4 col-6'>
@@ -23,7 +35,7 @@ class Menu extends Component {
                     <div className='buscador pc' data-toggle="modal" data-target="#buscador">
                         <div className='align-items-start busca d-flex justify-content-between position-relative'>
                             <div className='text-left'><i className="fal fa-search"></i></div>
-                            <p className='mb-0 text-center'>Search Anything...</p>
+                            <p className='mb-0 text-center'> {searchTerm ?? 'Search Anything...'} </p>
                             <div className='text-right'><i className="fal fa-microphone"></i></div>
                         </div>
                     </div>                
@@ -31,7 +43,7 @@ class Menu extends Component {
                 <div className='col-xl-4 col-5 d-flex justify-content-center align-items-center'>
                     <LoginStatus />
                 </div>
-                <Buscador />
+                <Buscador onData={this.handleDataFromChild}/>
             </div>
             
         );

@@ -6,10 +6,9 @@ class Buscador extends Component {
     this.state = {
       searchTerm: '', // Almacena el término de búsqueda       
       resultados: [], // Resultados de búsqueda
-    };
-    
+    }; 
   }
-
+ 
   componentDidMount() {
     // Verificar si el navegador es compatible con la API Web Speech
     if ('webkitSpeechRecognition' in window) {
@@ -49,8 +48,7 @@ class Buscador extends Component {
     // Filtrar las muestras que coinciden con el término de búsqueda
     const resultados = muestras.filter((muestra) =>
       muestra.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
+    ); 
     this.setState({ searchTerm, resultados });
   };
 
@@ -68,9 +66,10 @@ class Buscador extends Component {
 
   handleClearSearch = () => {
     this.setState({ searchTerm: '', resultados: [] });
+    const data =  { id:'',name:''}
+    this.props.onData(data); 
   };
   
- 
 
   renderMuestras = () => {
     const { resultados, muestras } = this.state;
@@ -91,10 +90,14 @@ class Buscador extends Component {
         console.error('Error:', error);
       });
     }
- 
+    //buscar 
+    const handleTdClick = (id,name) => { 
+      this.setState({ searchTerm: name}); 
+      const data =  { id,name}
+      this.props.onData(data); 
+    }; 
     const muestrasMostradas = resultados.length > 0 ? resultados : muestras ;
-    
- 
+     
     if (!muestrasMostradas || muestrasMostradas.length === 0) {
       return <p>No se encontraron resultados.</p>;
     }
@@ -109,7 +112,7 @@ class Buscador extends Component {
           <tbody>
           {muestrasMostradas.map((muestra) => (
             <tr key={muestra.id}  > 
-              <td><span className='modal-titulo text-white'>{muestra.name}</span></td>
+              <td onClick={() => handleTdClick(muestra.id,muestra.name)}><span className='modal-titulo text-white'>{muestra.name}</span></td>
               <td align='right' className='text-morado'>
                 {/* <div className='align-items-center d-flex justify-content-end mt-2'>
                     <span className='mr-3 modal-picks'>{muestra.picks}</span>

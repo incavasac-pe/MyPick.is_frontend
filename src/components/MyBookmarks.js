@@ -3,10 +3,10 @@ import MenuFlotante from './MenuFlotante';
 import TableWithPagination from './TableWithPagination'; 
 import { checkAuth }  from '../AuthMiddleware'; 
  
-
  
-  const MyBookmarks = () => {
+  const MyBookmarks = (props) => {
     const [login, setlogin] = useState('');
+    const idCat = props.idCat; 
 
     useEffect(() => { 
       const isAuthenticated = checkAuth();
@@ -24,7 +24,7 @@ import { checkAuth }  from '../AuthMiddleware';
            
           </div>          
         </div>
-       {login && (<TableWithPagination />)}   
+       {login && (<TableWithPagination idCat={idCat}/>)}   
         <MenuFlotante />
       </div>
     );

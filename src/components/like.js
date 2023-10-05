@@ -6,14 +6,10 @@ import React, {useState, useEffect} from 'react';
     const [activeLinkB, setactiveLinkB] = useState('');
     const [activeLink, setactiveLink] = useState('');
     const [pick_like, setpick_like] = useState('');
-    const [email, setEmail] = useState(''); 
+    const [email, setEmail] = useState('');   
+    const [liked, setLiked] = useState(false); 
 
-
-    const [liked, setLiked] = useState(false);
-
-
-    useEffect(() => { 
-      
+    useEffect(() => {  
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);   

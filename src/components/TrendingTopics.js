@@ -10,16 +10,31 @@ class TrendingTopics extends Component {
       muestras: [],
       top3: [],
       top_category: [],
-    };
+      idCat:''
+    };    
+  }
+  
+  componentDidMount() {
+    this.setState({ idCat: this.props.idCat });  
+    if(this.props.name !='' ){
+      this.setState({ activeTab: this.props.name }); 
+    }
   }
 
-  changeTab = (tabName,id) => {
+  componentDidUpdate(prevProps) {
+    if (this.props.idCat !== prevProps.idCat) {
+      this.setState({ idCat: this.props.idCat }); 
+      this.changeTab(this.props.name,this.props.idCat)
+    }
+  }
+
+  changeTab = (tabName,id) => { 
     this.setState({ activeTab: tabName }); 
     if(id!==''){
       this.fetchDataTopCategory(id)
     }
   };
-
+  
   fetchDataTop3 = () => { 
       fetch(`http://159.89.42.65:3100/list_trendingTopics`, {
         method: 'GET', 
@@ -28,22 +43,14 @@ class TrendingTopics extends Component {
         }  
       })
       .then(response => response.json())
-      .then(data => { 
-        if(data.error){        
-          // toast.error(data.msg);     
-        } else {              
+      .then(data => {                    
             if (data.data) {    
-              this.setState({ top3: data.data }); // Actualizar el estado con los valores de data.data 
-              
-            }  
-        }
-      }).catch(error => {
-        // Manejar el error en caso de que ocurra
-        console.error('Error:', error);
-      });   
+              this.setState({ top3: data.data }); // Actualizar el estado con los valores de data.data               
+            }   
+      }) 
 }
  
-fetchDataTopCategory = (id) => { 
+fetchDataTopCategory = (id) => {  
       fetch(`http://159.89.42.65:3100/list_trendingTopics_category?id_category=${id}`, {
         method: 'GET', 
         headers: {
@@ -56,18 +63,15 @@ fetchDataTopCategory = (id) => {
           this.setState({ top_category:[] });  
         } else {              
             if (data.data) {    
-              this.setState({ top_category: data.data }); // Actualizar el estado con los valores de data.data 
-              
+              this.setState({ top_category: data.data }); // Actualizar el estado con los valores de data.data               
             }  
         }
-      }).catch(error => {
-        // Manejar el error en caso de que ocurra
-        console.error('Error:', error);
-      });   
+      })  
 }
 
   render() {
     const { activeTab,muestras,top3,top_category } = this.state;
+     
  
     if( muestras.length === 0){
       fetch(`http://159.89.42.65:3100/list_category?limit=${100}`, {
@@ -77,22 +81,14 @@ fetchDataTopCategory = (id) => {
         }  
       })
       .then(response => response.json())
-      .then(data => { 
-        if(data.error){        
-          // toast.error(data.msg);     
-        } else {              
+      .then(data => {                     
             if (data.data) {    
               this.setState({ muestras: data.data }); // Actualizar el estado con los valores de data.data 
-              this.fetchDataTop3()
-            }  
-        }
-      }).catch(error => {
-        // Manejar el error en caso de que ocurra
-        console.error('Error:', error);
-      });
+              this.fetchDataTop3() 
+            }   
+      }) 
     }
-    
-
+     
     if (muestras.length === 0) {
       return <p>No se encontraron resultados.</p>;   
     }

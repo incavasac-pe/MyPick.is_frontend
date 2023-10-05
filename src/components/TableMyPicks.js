@@ -1,14 +1,16 @@
 import React, { useState,useEffect } from 'react'; 
 import { formatearTiempo } from '../utils'; 
 
-const TableMyPicks = () => {
+const TableMyPicks = (props) => {
   const [data, setMyPick] = useState([]);
+  const idCat = props.idCat; 
+
   useEffect(() => { 
      
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);    
-    fetch(`http://159.89.42.65:3100/list_my_picks?email=${parsedUser.email}`, {
+    fetch(`http://159.89.42.65:3100/list_my_picks?email=${parsedUser.email}&id_category=${idCat}`, {
       method: 'GET',      
       headers: {
         'Content-Type': 'application/json'      
@@ -19,13 +21,10 @@ const TableMyPicks = () => {
       if(!data.error && data.data){     
         setMyPick(data.data);
        }
-    })
-    .catch(error => {
-      // Manejar cualquier error de la solicitud           
-     // toast.error("An error has occurred");     
-    });
+    }) 
   }
-  }, []); 
+  }, [idCat]); 
+
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -38,9 +37,7 @@ const TableMyPicks = () => {
     setCurrentPage(1);
   };
 
-  // Calcular el número total de páginas
-//   const totalPages = Math.ceil(data.length / rowsPerPage);
-
+  
   // Paginar los datos
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
@@ -81,8 +78,7 @@ const TableMyPicks = () => {
           
                     <img src={`http://159.89.42.65:3100/see_photo?img=${row.selectd1 >= row.selectd2 ? row.photo1_name : row.photo2_name}`} alt="equipo" />
                      <span className='ml-3'>{ row.selectd1 >= row.selectd2 ? row.choice1_name : row.choice2_name }</span>
-                </div>
-                
+                </div>                
               </td>              
             </tr>
           ))}

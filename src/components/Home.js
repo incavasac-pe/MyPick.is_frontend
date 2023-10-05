@@ -7,7 +7,8 @@ import AuthLogin from './modal/AuthLogin';
 import ModalRedes from './modal/ModalRedes';
 import { checkAuth }  from '../AuthMiddleware'; 
 
-const Home = () => {
+const Home = (props) => {
+  const idCat = props.idCat; 
 
   const [currentStep, setcurrentStep] = useState(1);
   const [imagenActiva, setimagenActiva] = useState('');  
@@ -15,8 +16,7 @@ const Home = () => {
   const [login, setlogin] = useState('');
   const [muestras, setMuestras] = useState(null);
   const [porciento, setPorcentaje] = useState(null); 
-  const [id_pick, setPick] = useState(''); 
-
+  const [id_pick, setPick] = useState('');  
  
 const  nextStep = () => { 
     const totalSteps = document.getElementsByClassName('step').length;
@@ -27,8 +27,7 @@ const  nextStep = () => {
   
  const goToFirstStep = () => {
   fetchData()
-  setcurrentStep(1)
-   
+  setcurrentStep(1)   
   };
  
  const handleClickImagen = (id_choice,imagen, texto) => { 
@@ -55,20 +54,18 @@ const  nextStep = () => {
           settextoActivo(texto)    
           setcurrentStep(2)   
         }
-      }) 
-   
+      })    
   };
 
   useEffect(() => { 
     const isAuthenticated = checkAuth();
     setlogin(isAuthenticated)    
     fetchData()
-  }, []);
+  }, [idCat]);
 
-  const fetchData = async () => {
-    
+  const fetchData = async () => {    
     setMuestras(null)    
-    fetch(`http://159.89.42.65:3100/list_all_picks?limit=${1}`, {
+    fetch(`http://159.89.42.65:3100/list_all_picks?limit=${1}&id_category=${idCat}`, {
       method: 'GET', 
       headers: {
         'Content-Type': 'application/json'      
@@ -80,9 +77,9 @@ const  nextStep = () => {
         setMuestras(data.data)  
         setPick(data.data?.[0]?.id)     
       }
-    })
-  
+    })  
   };
+
     return (
       <div>        
         <div className='container'>

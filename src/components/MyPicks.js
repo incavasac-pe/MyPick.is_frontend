@@ -4,8 +4,9 @@ import TableMyPicks from './TableMyPicks';
 import { checkAuth }  from '../AuthMiddleware'; 
 
 
-const MyPicks = () => {
+const MyPicks = (props) => {
   const [login, setlogin] = useState('');
+  const idCat = props.idCat; 
 
     useEffect(() => { 
       const isAuthenticated = checkAuth();
@@ -21,7 +22,7 @@ const MyPicks = () => {
             {!login && (<p className='text-grey descripcion'> To continue you must log in.</p>)}     
           </div>          
         </div>
-        {login && (<TableMyPicks />)}   
+        {login && (<TableMyPicks idCat={idCat} />)}   
         <MenuFlotante />
       </div>
     ); 

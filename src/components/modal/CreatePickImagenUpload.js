@@ -33,8 +33,7 @@ const CreatePickImagenUpload = (props) => {
   
   const fetchDataChoice =  () => {
     if (searchTerm.length > 5 && searchTerm !=undefined ) {
-      setIsLoading(true);
-    console.log("se busca el producto en amazon",searchTerm) 
+      setIsLoading(true); 
    const url = `http://159.89.42.65:3100/list_products_api_externa?search=${searchTerm}`;
   
   fetch(url, {

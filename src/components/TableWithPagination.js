@@ -1,17 +1,18 @@
 import React, { useState,useEffect } from 'react'; 
 import { formatearTiempo } from '../utils'; 
-const apiUrl = process.env.URL_API; 
-const TableWithPagination = () => {
  
-console.log("apiUrl",apiUrl); 
+const TableWithPagination = (props) => { 
   
   const [data, setMyBookmark] = useState([]);
+  const idCat = props.idCat; 
+ 
   useEffect(() => { 
      
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);    
-    fetch(`http://159.89.42.65:3100/my_bookmarks?email=${parsedUser.email}`, {
+
+    fetch(`http://159.89.42.65:3100/my_bookmarks?email=${parsedUser.email}&id_category=${idCat}`, {
       method: 'GET',      
       headers: {
         'Content-Type': 'application/json'      
@@ -21,10 +22,14 @@ console.log("apiUrl",apiUrl);
     .then(data => { 
       if(!data.error && data.data){     
         setMyBookmark(data.data);
+       }else{
+        setMyBookmark([])
        }
     }) 
   }
-  }, []); 
+  }, [idCat]); 
+  
+
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
