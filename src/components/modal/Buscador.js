@@ -74,7 +74,7 @@ class Buscador extends Component {
   renderMuestras = () => {
     const { resultados, muestras } = this.state;
      if(!muestras){
-      fetch(`httpss://159.89.42.65:3200/list_category?limit=${100}`, {
+      fetch(`https://159.89.42.65:3200/list_category?limit=${100}`, {
         method: 'GET', 
         headers: {
           'Content-Type': 'application/json'      
