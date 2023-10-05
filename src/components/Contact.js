@@ -98,30 +98,30 @@ const Contact = () => {
     const errors = {};
 
     if (!name.trim()) {
-      errors.name = 'Por favor, ingresa tu nombre completo.';
+      errors.name = 'Please enter your full name.';
       isValid = false;
     }
 
     if (!email.trim()) {
-      errors.email = 'Por favor, ingresa tu correo electrónico.';
+      errors.email = 'Please enter your email.';
       isValid = false;
     } else if (!isValidEmail(email)) {
-      errors.email = 'Por favor, ingresa un correo electrónico válido.';
+      errors.email = 'Please enter a valid email.';
       isValid = false;
     }
 
     if (!subject.trim()) {
-      errors.subject = 'Por favor, ingresa el asunto del mensaje.';
+      errors.subject = 'Please enter the subject of the message.';
       isValid = false;
     }
 
     if (!description.trim()) {
-      errors.description = 'Por favor, ingresa la descripción del mensaje.';
+      errors.description = 'Please enter the message description.';
       isValid = false;
     }
  
      if (!isChecked) {
-      errors.privacyPolicy = 'Debes aceptar las políticas de privacidad.';
+      errors.privacyPolicy = 'You must accept the privacy policies.';
       isValid = false;
     } 
 

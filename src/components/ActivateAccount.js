@@ -48,7 +48,7 @@ const ActivateAccount = () => {
         <div className="row">          
           <div className="col-md-6">      
             {/* Contenido de tu página */}
-          <h2>Token recibido: {token}</h2>     
+          <h3>Validating token</h3>     
           <ToastContainer position="top-center" autoClose={2000} closeOnClick theme="dark"/>   
           </div>         
         </div>
