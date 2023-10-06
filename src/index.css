@@ -877,20 +877,17 @@ header .buscador p{
   font-size: 15px;
   line-height: 22px;
 }
-.custom-control-label1 {
+.custom-control-label::before{
   background-color: transparent;
   border: 1px solid #757E95;
-  border-radius: 8px;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
+  border-radius: 8px; 
   -ms-border-radius: 8px;
   -o-border-radius: 8px;
 }
-.custom-control-input {
+.custom-control-input:checked~.custom-control-label::before{
   border-color: #8459DE;
   background-color: #8459DE;
 }
- 
 .S9gUrf-YoZ4jf, .S9gUrf-YoZ4jf *{
   margin: 0px 90px !important;
 }
