@@ -398,10 +398,9 @@ const LoginStatus = () => {
                         <div className='col-md-12 mt-4 mb-3 text-center'>
                             <h4 className='text-gris-claro title-or d-inline-block'>O R</h4>
                         </div>
-                        <div className='col-md-6'>
+                  
                           <GoogleOAuthProvider clientId="951089599558-ss3is472v1vb57vd3e9gmqt5aeq6ag89.apps.googleusercontent.com">
-                          <GoogleLogin
-                          size="large"
+                          <GoogleLogin                      
                           text='signin_with'  
                           locale="en"
                             onSuccess={credentialResponse => {
@@ -414,7 +413,7 @@ const LoginStatus = () => {
                           />;
                             
                             </GoogleOAuthProvider>;
-                          </div>
+                        
                    
                        {/*  {!loggedIn &&
                         <FacebookLogin
@@ -489,11 +488,9 @@ const LoginStatus = () => {
                         <div className='col-md-12 mt-4 mb-3 text-center'>
                             <h4 className='text-gris-claro title-or d-inline-block'>O R</h4>
                         </div>
-                        <div className='col-md-6'>
-                   
+               
                       <GoogleOAuthProvider clientId="951089599558-ss3is472v1vb57vd3e9gmqt5aeq6ag89.apps.googleusercontent.com">
-                        <GoogleLogin
-                          shape="rectangular"
+                        <GoogleLogin                          
                           text='signup_with'  
                           locale="en"
                           onSuccess={credentialResponse => {
@@ -506,7 +503,7 @@ const LoginStatus = () => {
                         />;
                           
                           </GoogleOAuthProvider>;
-                        </div>
+                    
                   {/*         {!loggedIn &&
                         <FacebookLogin
                           appId="172576561281270"
