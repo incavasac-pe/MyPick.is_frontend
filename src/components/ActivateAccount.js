@@ -2,7 +2,7 @@ import React, {  useEffect} from 'react';
 import { useLocation,useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
- 
+const API_BASE_URL = 'https://159.89.42.65:3200';
 const ActivateAccount = () => { 
    
   const location = useLocation();
@@ -11,7 +11,7 @@ const ActivateAccount = () => {
   const token = searchParams.get('token');
  
   useEffect(() => {
-    fetch(`https://159.89.42.65:3200/activate_account?token=${token}`, {
+    fetch(`${API_BASE_URL}/activate_account?token=${token}`, {
       method: 'GET', 
       headers: {
         'Content-Type': 'application/json'      
@@ -48,7 +48,7 @@ const ActivateAccount = () => {
         <div className="row">          
           <div className="col-md-6">      
             {/* Contenido de tu página */}
-          <h2>Token recibido: {token}</h2>     
+          <h3>Validating token</h3>     
           <ToastContainer position="top-center" autoClose={2000} closeOnClick theme="dark"/>   
           </div>         
         </div>

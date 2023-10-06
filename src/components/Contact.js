@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
+const API_BASE_URL = 'https://159.89.42.65:3200';
 const Contact = () => {
 
   const [formDataForm, setFormData] = useState({
@@ -7,6 +8,7 @@ const Contact = () => {
     email: '',
     subject: '',
     description: '', 
+    privacyPolicy: false,
   });
 
   const [formErrors, setFormErrors] = useState({
@@ -14,6 +16,7 @@ const Contact = () => {
     email: '',
     subject: '',
     description: '', 
+    privacyPolicy: '',
   });
   const [isChecked, setIsChecked] = useState(false);
   const [isDisable, setIsDisable] = useState(false);
@@ -36,9 +39,7 @@ const Contact = () => {
       return;
     }
     setIsDisable(true)
-    // Enviar el correo o realizar otras acciones con los datos del formulario
-    console.log('Formulario enviado:', formDataForm);
-
+   
     const html = `
 <!DOCTYPE html>
 <html>
@@ -70,7 +71,7 @@ const Contact = () => {
        formDataSend.append("subject", `My Picks Contact Request`);
        formDataSend.append("to", "contactmypickdev.is@gmail.com");   
 
-        fetch(`https://159.89.42.65:3200/send_email_contact`, {
+        fetch(`${API_BASE_URL}/send_email_contact`, {
           method: 'POST', 
            body: formDataSend,          
         })
@@ -93,35 +94,35 @@ const Contact = () => {
   };
 
   const validateForm = () => {
-    const { name, email, subject, description } = formDataForm;
+    const { name, email, subject, description  } = formDataForm;
     let isValid = true;
     const errors = {};
 
     if (!name.trim()) {
-      errors.name = 'Por favor, ingresa tu nombre completo.';
+      errors.name = 'Please enter your full name.';
       isValid = false;
     }
 
     if (!email.trim()) {
-      errors.email = 'Por favor, ingresa tu correo electrónico.';
+      errors.email = 'Please enter your email.';
       isValid = false;
     } else if (!isValidEmail(email)) {
-      errors.email = 'Por favor, ingresa un correo electrónico válido.';
+      errors.email = 'Please enter a valid email.';
       isValid = false;
     }
 
     if (!subject.trim()) {
-      errors.subject = 'Por favor, ingresa el asunto del mensaje.';
+      errors.subject = 'Please enter the subject of the message.';
       isValid = false;
     }
 
     if (!description.trim()) {
-      errors.description = 'Por favor, ingresa la descripción del mensaje.';
+      errors.description = 'Please enter the message description.';
       isValid = false;
     }
  
      if (!isChecked) {
-      errors.privacyPolicy = 'Debes aceptar las políticas de privacidad.';
+      errors.privacyPolicy = 'You must accept the privacy policies.';
       isValid = false;
     } 
 
@@ -231,24 +232,22 @@ const Contact = () => {
                 </div>
             
                 <div className="col-md-12">
-                  <div className="form-group form-check custom-control custom-checkbox">
-                    <input
-                      type="checkbox"
-                      className={`custom-control-input ${
-                        formErrors.privacyPolicy ? "is-invalid" : ""
-                      }`} 
-                      checked={isChecked}
-                      onChange={handleCheckboxChange}
-                    />
-                    <label className="font-family-SpaceGrotesk-Medium custom-control-label"  >
-                      I Agree To The <a href='#terminos' className='text-morado'>Terms And Conditions</a> and <a href='#politica' className='text-morado'>Privacy Policy</a>
+                <div class="form-group form-check custom-control">
+                    <label class="form-check-label">
+                      <input type="checkbox" className="form-check-input aaaa"    
+                         checked={isChecked}
+                      onChange={handleCheckboxChange}/> 
+                       <label className="font-family-SpaceGrotesk-Medium">
+                       I Agree To The <a href='#terminos' className='text-morado'>Terms And Conditions</a> and <a href='#politica' className='text-morado'>Privacy Policy</a>
                     </label>
                     {formErrors.privacyPolicy && (
                       <div className="invalid-feedback">
                         {formErrors.privacyPolicy}
                       </div>
                     )}
+                    </label>
                   </div>
+            
                 </div>
                 <div className="col-md-12">
                   <button type="submit" disabled={isDisable} className="btn btn-enviar font-family-SpaceGrotesk-Bold">

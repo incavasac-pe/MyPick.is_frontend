@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from 'react'; 
 import { formatearTiempo } from '../utils'; 
+const API_BASE_URL = 'https://159.89.42.65:3200';
 
 const TableMyPicks = (props) => {
   const [data, setMyPick] = useState([]);
@@ -10,7 +11,7 @@ const TableMyPicks = (props) => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);    
-    fetch(`https://159.89.42.65:3200/list_my_picks?email=${parsedUser.email}&id_category=${idCat}`, {
+    fetch(`${API_BASE_URL}/list_my_picks?email=${parsedUser.email}&id_category=${idCat}`, {
       method: 'GET',      
       headers: {
         'Content-Type': 'application/json'      
@@ -61,8 +62,8 @@ const TableMyPicks = (props) => {
               <td>
                 <div className='table-img d-flex align-items-center justify-content-start'>
                     <div>
-                      <img src={`https://159.89.42.65:3200/see_photo?img=${row.photo1_name}`} alt={`${row.photo1_name}`} />
-                      <img src={`https://159.89.42.65:3200/see_photo?img=${row.photo2_name}`} alt={`${row.photo2_name}`}  className='pc'/>
+                      <img src={`${API_BASE_URL}/see_photo?img=${row.photo1_name}`} alt={`${row.photo1_name}`} />
+                      <img src={`${API_BASE_URL}/see_photo?img=${row.photo2_name}`} alt={`${row.photo2_name}`}  className='pc'/>
                      </div>
                     <div>
                       <span className='ml-3 d-block'>- {row.choice1_name}</span>
@@ -76,7 +77,7 @@ const TableMyPicks = (props) => {
               <td>
                 <div className='table-img d-flex align-items-center justify-content-start'>
           
-                    <img src={`https://159.89.42.65:3200/see_photo?img=${row.selectd1 >= row.selectd2 ? row.photo1_name : row.photo2_name}`} alt="equipo" />
+                    <img src={`${API_BASE_URL}/see_photo?img=${row.selectd1 >= row.selectd2 ? row.photo1_name : row.photo2_name}`} alt="equipo" />
                      <span className='ml-3'>{ row.selectd1 >= row.selectd2 ? row.choice1_name : row.choice2_name }</span>
                 </div>                
               </td>              

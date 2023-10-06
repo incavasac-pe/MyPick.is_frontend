@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+const API_BASE_URL = 'https://159.89.42.65:3200';
 
 class Buscador extends Component {
   constructor(props) {
@@ -74,7 +75,7 @@ class Buscador extends Component {
   renderMuestras = () => {
     const { resultados, muestras } = this.state;
      if(!muestras){
-      fetch(`https://159.89.42.65:3200/list_category?limit=${100}`, {
+      fetch(`${API_BASE_URL}/list_category?limit=${100}`, {
         method: 'GET', 
         headers: {
           'Content-Type': 'application/json'      

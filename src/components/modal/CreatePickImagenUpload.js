@@ -3,6 +3,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import sleep from '@react-corekit/sleep'; 
 import {RotatingLines} from 'react-loader-spinner';
+const API_BASE_URL = 'https://159.89.42.65:3200';
 
 const CreatePickImagenUpload = (props) => {
   const [image1, setImage1] = useState(null);
@@ -16,7 +17,6 @@ const CreatePickImagenUpload = (props) => {
   const [photo2, setPhoto2] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoading2, setIsLoading2] = useState(false);
-
 
 
   const [product1, setProduct1] = useState(null);
@@ -34,7 +34,7 @@ const CreatePickImagenUpload = (props) => {
   const fetchDataChoice =  () => {
     if (searchTerm.length > 5 && searchTerm !=undefined ) {
       setIsLoading(true); 
-   const url = `https://159.89.42.65:3200/list_products_api_externa?search=${searchTerm}`;
+   const url = `${API_BASE_URL}/list_products_api_externa?search=${searchTerm}`;
   
   fetch(url, {
     method: 'GET',
@@ -64,7 +64,7 @@ const CreatePickImagenUpload = (props) => {
   const fetchDataChoice2 =  () => {
     if (searchTerm2.length > 5 && searchTerm2 !=undefined ) {
       setIsLoading2(true); 
-   const url = `https://159.89.42.65:3200/list_products_api_externa?search=${searchTerm2}`;
+   const url = `${API_BASE_URL}/list_products_api_externa?search=${searchTerm2}`;
   
   fetch(url, {
     method: 'GET',
@@ -179,7 +179,7 @@ fetch(imageUrl)
     }; 
 
         if(image1 && image2){
-        fetch(`https://159.89.42.65:3200/register_picks`, requestOptions) 
+        fetch(`${API_BASE_URL}/register_picks`, requestOptions) 
               .then(response => {            
                 if (response.status===201){                   
                     toast.success('Created picks successfully', {
