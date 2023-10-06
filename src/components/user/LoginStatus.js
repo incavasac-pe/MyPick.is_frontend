@@ -6,6 +6,7 @@ import sleep from '@react-corekit/sleep';
 import FacebookLogin from 'react-facebook-login';
 import { GoogleOAuthProvider ,GoogleLogin} from '@react-oauth/google'; 
 import jwt_decode from "jwt-decode";
+const API_BASE_URL = 'https://159.89.42.65:3200';
 
 const LoginStatus = () => { 
   const location = useLocation(); 
@@ -27,7 +28,7 @@ const LoginStatus = () => {
       setName (parsedUser.name)
       setEmail(parsedUser.email)
       setLoggedIn(true); 
-        setUser({ name: parsedUser.name, photo: parsedUserPhoto?.photo ?? 'user.jpg', email: parsedUser.email });
+        setUser({ name: parsedUser.name, photo: parsedUserPhoto?.photo ?? '', email: parsedUser.email });
     }
    
   }, [location.state]);
@@ -45,7 +46,7 @@ const LoginStatus = () => {
     if (!password.trim()) errors.password = 'Please enter your password'
 
     if (Object.keys(errors).length === 0) {
-        fetch('https://159.89.42.65:3200/login', {
+        fetch(`${API_BASE_URL}/login`, {
           method: 'POST',
           body: JSON.stringify({ email: email, password: password }),
           headers: {
@@ -64,12 +65,11 @@ const LoginStatus = () => {
             setShowModal(false);
                if (data.data.token) {             
                  setLoggedIn(true); 
-                 setUser({ name: data.data.user.full_name, photo: `https://159.89.42.65:3200/see_photo?img=${data.data.user.photo}` , email: data.data.user.email,token:data.data.token});                 
+                 setUser({ name: data.data.user.full_name, photo: `${API_BASE_URL}/see_photo?img=${data.data.user.photo}` , email: data.data.user.email,token:data.data.token});                 
                  localStorage.setItem('user', JSON.stringify({ name: data.data.user.full_name,  email: data.data.user.email,token:data.data.token,nick:data.data.user.username}));
-                 if(data.data.user.photo!=null)   localStorage.setItem('photo', JSON.stringify({ photo: `https://159.89.42.65:3200/see_photo?img=${data.data.user.photo}`}));
+                 if(data.data.user.photo!=null)   localStorage.setItem('photo', JSON.stringify({ photo: `${API_BASE_URL}/see_photo?img=${data.data.user.photo}`}));
                  sleep(4000);
                  window.location.reload()
-               //  navigate('/MyProfile'); // Redirigir al usuario a la página de perfil
                 }  
            }
         })
@@ -112,6 +112,9 @@ const LoginStatus = () => {
     // Lógica para cerrar sesión
     localStorage.removeItem('user');
      localStorage.removeItem('photo');
+     localStorage.removeItem('searchTerm');
+     localStorage.removeItem('idCat');
+     localStorage.removeItem('liked');
     setLoggedIn(false);
     setUser(null);
     navigate('/');
@@ -138,7 +141,7 @@ const LoginStatus = () => {
     if (!full_name.trim()) errors_re.full_name = 'Please enter your full name'
  
     if (Object.keys(errors_re).length === 0) {
-        fetch('https://159.89.42.65:3200/register', {
+        fetch(`${API_BASE_URL}/register`, {
           method: 'POST',
           body: JSON.stringify({ full_name: full_name, email: email, password: password, origin:'mipick' }),
           headers: {
@@ -160,8 +163,8 @@ const LoginStatus = () => {
                  setLoggedIn(true); 
                  setUser({ name: data.data.user.full_name,  email: data.data.user.email,token:data.data.token});
                  localStorage.setItem('user', JSON.stringify({ name: data.data.user.full_name, photo: require('../img/user.jpg'), email: data.data.user.email,token:data.data.token}));
-                 localStorage.setItem('photo', JSON.stringify({ photo: `https://159.89.42.65:3200/see_photo?img=${data.data.user.photo}`}));
-                //navigate('/MyProfile'); // Redirigir al usuario a la página de perfil
+                 localStorage.setItem('photo', JSON.stringify({ photo: `${API_BASE_URL}/see_photo?img=${data.data.user.photo}`}));
+               
                 }  
            }
         })
@@ -187,7 +190,7 @@ const LoginStatus = () => {
       errors_re.email_forgot = 'Please enter a valid email';       
     }
     if (Object.keys(errors_re).length === 0) {
-      fetch('https://159.89.42.65:3200/link_password', {
+      fetch(`${API_BASE_URL}/link_password`, {
         method: 'POST',
         body: JSON.stringify({ email: email_forgot }),
         headers: {
@@ -231,8 +234,7 @@ const LoginStatus = () => {
     return emailRegex.test(email);
   };
 
-  /*Facebook*/
-  
+  /*Facebook*/ 
 
   const responseFacebook = (response) => {     
     if(response.error) {
@@ -246,7 +248,7 @@ const LoginStatus = () => {
       localStorage.setItem('user', JSON.stringify({ name: response.name,  email: response.email,token:response.accessToken,nick:response.graphDomain}));
       localStorage.setItem('photo', JSON.stringify({ photo:response.picture.data.url}));
      
-      fetch(`https://159.89.42.65:3200/register `,   {
+      fetch(`${API_BASE_URL}/register`,   {
         method: 'POST', 
         body: JSON.stringify({ full_name: response.name, email:  response.email,password:'qwerty',origin:response.graphDomain }),
         headers: {
@@ -282,7 +284,7 @@ const LoginStatus = () => {
      localStorage.setItem('user', JSON.stringify({ name: decoded.name,  email: decoded.email,token:response,nick:decoded.given_name}));
      localStorage.setItem('photo', JSON.stringify({ photo: decoded.picture}));
     
-     fetch(`https://159.89.42.65:3200/register `,   {
+     fetch(`${API_BASE_URL}/register`,   {
        method: 'POST', 
        body: JSON.stringify({ full_name: decoded.name, email:  decoded.email,password:'qwerty',origin:'google' }),
        headers: {
@@ -316,7 +318,7 @@ const LoginStatus = () => {
                 <div className="d-inline-block dropdown">
                     <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" className="dropdown-toggle"> 
                         <span className='text-white mr-4 font-family-SpaceGrotesk-Bold'>{user.name}</span>              
-                         <img src={user.photo ?? 'user.jpg'} alt="User" /> 
+                         <img src={user.photo} alt="User" /> 
                     </button>
                     <div tabIndex={-1} role="menu" aria-hidden="true" className="dropdown-menu dropdown-menu-right" x-placement="bottom-end">
                         <ul className="nav flex-column">
@@ -396,19 +398,23 @@ const LoginStatus = () => {
                         <div className='col-md-12 mt-4 mb-3 text-center'>
                             <h4 className='text-gris-claro title-or d-inline-block'>O R</h4>
                         </div>
-                        <GoogleOAuthProvider clientId="951089599558-ss3is472v1vb57vd3e9gmqt5aeq6ag89.apps.googleusercontent.com">
-                        <GoogleLogin
-                         buttonText='Sign In with Google'  
-                          onSuccess={credentialResponse => {
-                            responseGoogle(credentialResponse.credential)
-                      
-                          }}
-                          onError={() => {
-                            console.log('Login Failed');
-                          }}
-                        />;
-                          
-                          </GoogleOAuthProvider>;
+                        <div>
+                          <GoogleOAuthProvider clientId="951089599558-ss3is472v1vb57vd3e9gmqt5aeq6ag89.apps.googleusercontent.com">
+                          <GoogleLogin
+                          size="large"
+                          text='signin_with'  
+                          locale="en"
+                            onSuccess={credentialResponse => {
+                              responseGoogle(credentialResponse.credential)
+                        
+                            }}
+                            onError={() => {
+                              console.log('Login Failed');
+                            }}
+                          />;
+                            
+                            </GoogleOAuthProvider>;
+                          </div>
                    
                        {/*  {!loggedIn &&
                         <FacebookLogin
@@ -484,13 +490,12 @@ const LoginStatus = () => {
                             <h4 className='text-gris-claro title-or d-inline-block'>O R</h4>
                         </div>
                         <div className='col-md-6'>
-                          {/*   <button className='btn-redes font-family-SpaceGrotesk-Bold' type='button'>
-                              <img src={require('../img/gmail.png')} alt='gmail' className='mr-2' />
-                              Continue with Google
-                            </button> */}
+                   
                       <GoogleOAuthProvider clientId="951089599558-ss3is472v1vb57vd3e9gmqt5aeq6ag89.apps.googleusercontent.com">
                         <GoogleLogin
-                         buttonText='Sign In with Google'  
+                          shape="rectangular"
+                          text='signup_with'  
+                          locale="en"
                           onSuccess={credentialResponse => {
                             responseGoogle(credentialResponse.credential)
                       

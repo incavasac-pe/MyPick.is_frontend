@@ -3,6 +3,8 @@ import { useLocation,useNavigate  } from 'react-router-dom';
 import PickHistory from './PickHistory';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+const API_BASE_URL = 'https://159.89.42.65:3200';
+
 
 const MyProfile = () => {
   const location = useLocation();
@@ -63,7 +65,7 @@ const MyProfile = () => {
     if(newPassword!== newPasswordConfir) errors.newPasswordConfir = 'Passwords do not match'
     
     if (Object.keys(errors).length === 0) {
-        fetch('https://159.89.42.65:3200/change_password', {
+        fetch(`${API_BASE_URL}/change_password`, {
           method: 'POST',
           body: JSON.stringify({ email: email, new_password: newPassword }),
           headers: {
@@ -105,7 +107,7 @@ const MyProfile = () => {
     if (!name.trim()) errors.name = 'Please enter your name'  
      
     if (Object.keys(errors).length === 0) {
-        fetch('https://159.89.42.65:3200/change_profile', {
+        fetch(`${API_BASE_URL}/change_profile`, {
           method: 'POST',
           body: JSON.stringify({ email: email, new_email:new_email, full_name: name }),
           headers: {
@@ -120,7 +122,7 @@ const MyProfile = () => {
             const storedUser = localStorage.getItem('user');
             if (storedUser) {    
                 localStorage.setItem('user', JSON.stringify({ name: data.data.user.full_name,  email: data.data.user.email, nick:data.data.user.username}));
-                if(data.data.user.photo!=null)   localStorage.setItem('photo', JSON.stringify({ photo: `https://159.89.42.65:3200/see_photo?img=${data.data.user.photo}`}));
+                if(data.data.user.photo!=null)   localStorage.setItem('photo', JSON.stringify({ photo: `${API_BASE_URL}/see_photo?img=${data.data.user.photo}`}));
                } 
                   
             setErrors({});                    
@@ -151,7 +153,7 @@ const MyProfile = () => {
   }; 
   const [selectedFileNew, setSelectedFileNew] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [defaultImage] = useState('user.jpg');
+  const [defaultImage] = useState();
 
   const handleFileSelect = (event) => {
     event.preventDefault();
@@ -167,13 +169,13 @@ const MyProfile = () => {
       redirect: 'follow'
     };
         if(file){
-        fetch(`https://159.89.42.65:3200/change_photo?email=${email}`, requestOptions) 
+        fetch(`${API_BASE_URL}/change_photo?email=${email}`, requestOptions) 
               .then(response => {            
                 if (response.status===200){
                     const storedUserPhoto = localStorage.getItem('photo');
                       if (storedUserPhoto) { 
-                        localStorage.setItem('photo', JSON.stringify({ photo: `https://159.89.42.65:3200/see_photo?img=${file.name}`}));
-                        setSelectedFileNew(`https://159.89.42.65:3200/see_photo?img=${file.name}`)
+                        localStorage.setItem('photo', JSON.stringify({ photo: `${API_BASE_URL}/see_photo?img=${file.name}`}));
+                        setSelectedFileNew(`${API_BASE_URL}/see_photo?img=${file.name}`)
                       }
                     toast.success('Upload photo successfully', {
                       position: toast.POSITION.TOP_RIGHT

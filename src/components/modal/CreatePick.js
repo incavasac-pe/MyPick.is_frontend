@@ -1,6 +1,7 @@
 import React, { useState ,useEffect} from 'react';
 import CreatePickImagenUpload from './CreatePickImagenUpload';
- 
+const API_BASE_URL = 'https://159.89.42.65:3200';
+
 const CreatePick = () => {
 
   const [showBox1, setShowBox1] = useState(true);
@@ -10,7 +11,7 @@ const CreatePick = () => {
  
 
   useEffect(() => {
-     fetch(`https://159.89.42.65:3200/list_category?limit=${100}`, {
+     fetch(`${API_BASE_URL}/list_category?limit=${100}`, {
         method: 'GET', 
         headers: {
           'Content-Type': 'application/json'      
@@ -91,9 +92,7 @@ const CreatePick = () => {
                     Craft your very own picks and share it with your friends!
                 </p>
             </div>
-
-            <div className='col-md-12'><CreatePickImagenUpload topics={selectedOptionTopic}/></div>
-               
+            <div className='col-md-12'><CreatePickImagenUpload topics={selectedOptionTopic}/></div>               
         </div>
       )}
     </div>

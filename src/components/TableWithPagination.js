@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from 'react'; 
 import { formatearTiempo } from '../utils'; 
- 
+const API_BASE_URL = 'https://159.89.42.65:3200';
+
 const TableWithPagination = (props) => { 
   
   const [data, setMyBookmark] = useState([]);
@@ -12,7 +13,7 @@ const TableWithPagination = (props) => {
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);    
 
-    fetch(`https://159.89.42.65:3200/my_bookmarks?email=${parsedUser.email}&id_category=${idCat}`, {
+    fetch(`${API_BASE_URL}/my_bookmarks?email=${parsedUser.email}&id_category=${idCat}`, {
       method: 'GET',      
       headers: {
         'Content-Type': 'application/json'      
@@ -42,9 +43,7 @@ const TableWithPagination = (props) => {
     setCurrentPage(1);
   };
 
-  // Calcular el número total de páginas
-//   const totalPages = Math.ceil(data.length / rowsPerPage);
-
+  
   // Paginar los datos
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
@@ -70,8 +69,8 @@ const TableWithPagination = (props) => {
               <td>
                 <div className='table-img d-flex align-items-center justify-content-start'>
                     <div>
-                      <img src={`https://159.89.42.65:3200/see_photo?img=${row.photo1_name}`} alt={`${row.photo1_name}`} />
-                      <img src={`https://159.89.42.65:3200/see_photo?img=${row.photo2_name}`} alt={`${row.photo2_name}`} className='pc' />
+                      <img src={`${API_BASE_URL}/see_photo?img=${row.photo1_name}`} alt={`${row.photo1_name}`} />
+                      <img src={`${API_BASE_URL}/see_photo?img=${row.photo2_name}`} alt={`${row.photo2_name}`} className='pc' />
                     </div>                    
                     <div>
                     <span className='ml-3 d-block'>- {row.choice1_name}</span>
@@ -86,17 +85,12 @@ const TableWithPagination = (props) => {
               <td className='pc'> {formatearTiempo(row.dias)}</td>
               <td className='pc'>
                 <div className='table-img'>
-                <img src={`https://159.89.42.65:3200/see_photo?img=${row.selectd1 >= row.selectd2 ? row.photo1_name : row.photo2_name}`}/> 
+                <img src={`${API_BASE_URL}/see_photo?img=${row.selectd1 >= row.selectd2 ? row.photo1_name : row.photo2_name}`}/> 
                    <span className='ml-3'>{ row.selectd1 >= row.selectd2 ? row.choice1_name : row.choice2_name }</span>
                 </div>
                 
               </td>
-            {/*   <td>
-                <div className='table-img'>
-                    <img src={require('./img/washinton.jpg')} alt="equipo2" />
-                    <span className='ml-3'>{row.myPick}</span>
-                </div>
-              </td> */}
+           
             </tr>
           ))}
         </tbody>

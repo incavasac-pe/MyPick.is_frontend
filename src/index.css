@@ -877,7 +877,7 @@ header .buscador p{
   font-size: 15px;
   line-height: 22px;
 }
-.custom-control-label::before{
+.custom-control-label1 {
   background-color: transparent;
   border: 1px solid #757E95;
   border-radius: 8px;
@@ -886,11 +886,14 @@ header .buscador p{
   -ms-border-radius: 8px;
   -o-border-radius: 8px;
 }
-.custom-control-input:checked~.custom-control-label::before{
+.custom-control-input {
   border-color: #8459DE;
   background-color: #8459DE;
 }
-
+ 
+.S9gUrf-YoZ4jf, .S9gUrf-YoZ4jf *{
+  margin: 0px 90px !important;
+}
 /* page contacto */
 .box-contacto{
   background-color: #1B161E;

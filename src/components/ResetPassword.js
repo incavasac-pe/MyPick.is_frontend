@@ -3,6 +3,7 @@ import { useLocation,useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import sleep from '@react-corekit/sleep';
+const API_BASE_URL = 'https://159.89.42.65:3200';
 
 const ResetPassword = () => {    
   const location = useLocation();
@@ -15,7 +16,7 @@ const ResetPassword = () => {
   const [email, setEmail] = useState('');
 
   useEffect(() => { 
-    fetch(`https://159.89.42.65:3200/reset_password?token=${token}`, {
+    fetch(`${API_BASE_URL}/reset_password?token=${token}`, {
       method: 'GET', 
       headers: {
         'Content-Type': 'application/json'      
@@ -64,7 +65,7 @@ const ResetPassword = () => {
     if(newPassword!==newPasswordConfir)  errors.newPassword = 'Passwords do not match';       
    
     if (Object.keys(errors).length === 0) {
-      fetch('https://159.89.42.65:3200/change_password', {
+      fetch(`${API_BASE_URL}/change_password`, {
         method: 'POST',
         body: JSON.stringify({ email: email, new_password: newPassword }),
         headers: {
