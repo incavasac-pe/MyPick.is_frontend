@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-//const API_BASE_URL = 'https://159.89.42.65:3200';
-const API_BASE_URL = 'http://compartepantalla.com:3200';
+const API_BASE_URL = 'https://mypick.is/api';
+
 class Buscador extends Component {
   constructor(props) {
     super(props);

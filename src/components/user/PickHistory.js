@@ -1,6 +1,6 @@
 import React, { useState ,useEffect} from 'react';
 import { formatearTiempo } from '../../utils';  
-const API_BASE_URL = 'https://159.89.42.65:3200';
+const API_BASE_URL = 'https://mypick.is/api';
 
 const PickHistory = () => {
   const [data, setMyPickHistory] = useState([]);

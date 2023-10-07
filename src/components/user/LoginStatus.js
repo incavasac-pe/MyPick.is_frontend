@@ -6,7 +6,7 @@ import sleep from '@react-corekit/sleep';
 import FacebookLogin from 'react-facebook-login';
 import { GoogleOAuthProvider ,GoogleLogin} from '@react-oauth/google'; 
 import jwt_decode from "jwt-decode";
-const API_BASE_URL = 'https://159.89.42.65:3200';
+const API_BASE_URL = 'https://mypick.is/api';
 
 const LoginStatus = () => { 
   const location = useLocation(); 

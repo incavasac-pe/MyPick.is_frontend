@@ -3,7 +3,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import sleep from '@react-corekit/sleep'; 
 import {RotatingLines} from 'react-loader-spinner';
-const API_BASE_URL = 'https://159.89.42.65:3200';
+const API_BASE_URL = 'https://mypick.is/api';
 
 const CreatePickImagenUpload = (props) => {
   const [image1, setImage1] = useState(null);
