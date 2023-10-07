@@ -6,7 +6,7 @@ import CreatePick from './modal/CreatePick';
 import AuthLogin from './modal/AuthLogin'; 
 import ModalRedes from './modal/ModalRedes';
 import { checkAuth }  from '../AuthMiddleware'; 
-const API_BASE_URL = 'https://159.89.42.65:3200';
+const API_BASE_URL = 'https://mypick.is/api';
 const Home = (props) => {
   const idCat = props.idCat; 
 

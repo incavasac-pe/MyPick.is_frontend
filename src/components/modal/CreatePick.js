@@ -1,6 +1,6 @@
 import React, { useState ,useEffect} from 'react';
 import CreatePickImagenUpload from './CreatePickImagenUpload';
-const API_BASE_URL = 'https://159.89.42.65:3200';
+const API_BASE_URL = 'https://mypick.is/api';
 
 const CreatePick = () => {
 

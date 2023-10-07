@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MenuFlotante from './MenuFlotante';
 import { Link } from 'react-router-dom';
-const API_BASE_URL = 'https://159.89.42.65:3200';
+const API_BASE_URL = 'https://mypick.is/api';
 
 class TrendingTopics extends Component {
   constructor(props) {
