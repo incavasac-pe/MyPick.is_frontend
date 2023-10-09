@@ -82,7 +82,7 @@ class Comments extends Component {
 
     registerLikeComments = async (comentario_id, id_pick) => {
         try {
-            const response = await fetch(`${API_BASE_URL}/register_like_comments`, {
+             await fetch(`${API_BASE_URL}/register_like_comments`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -92,8 +92,7 @@ class Comments extends Component {
                 )
             });
 
-            const data = await response.json();
-            return data;
+            this.fetchDataComments(id_pick)
         } catch (error) {
             console.error('Error al registrar el like del comentario:', error);
             throw error;
