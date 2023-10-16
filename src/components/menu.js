@@ -21,12 +21,14 @@ class Menu extends Component {
         return (
             <div className="row">
                 <div className='col-xl-4 col-6'>
-                    <a href="/">
-                        <img src={require('./img/logo.png')} alt="logo" />
-                    </a>
-                    <button type="button" className='btnmenu' style={{ fontSize: '30px', cursor: 'pointer' }} onClick={openNav}>
+                <button type="button" className='btnmenu' style={{ fontSize: '30px', cursor: 'pointer' }} onClick={openNav}>
                         <i className="fas fa-grip-lines text-white"></i>
                     </button>
+                    <a href="/">
+                        <img src={require('./img/logo.png')} alt="logo" className='logo-side' /> 
+                    </a>  
+                     <b className="text-white mr-4 font-family-SpaceGrotesk-Bold title-logo" >MyPick.Is</b>
+                  
                 </div>
                 <div className='align-items-center col-1 col-xl-4 d-flex justify-content-center p-movil'>
                     <div className='movil' data-toggle="modal" data-target="#buscador">

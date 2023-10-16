@@ -153,7 +153,7 @@ const MyProfile = () => {
   }; 
   const [selectedFileNew, setSelectedFileNew] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [defaultImage] = useState();
+ 
 
   const handleFileSelect = (event) => {
     event.preventDefault();
@@ -172,17 +172,17 @@ const MyProfile = () => {
         fetch(`${API_BASE_URL}/change_photo?email=${email}`, requestOptions) 
               .then(response => {            
                 if (response.status===200){
-                    const storedUserPhoto = localStorage.getItem('photo');
-                      if (storedUserPhoto) { 
-                        localStorage.setItem('photo', JSON.stringify({ photo: `${API_BASE_URL}/see_photo?img=${file.name}`}));
+                        localStorage.setItem('photo', JSON.stringify({ photo: `${API_BASE_URL}/see_photo?img=${file.name}`}));                      
+             
                         setSelectedFileNew(`${API_BASE_URL}/see_photo?img=${file.name}`)
-                      }
+                    
                     toast.success('Upload photo successfully', {
                       position: toast.POSITION.TOP_RIGHT
                   });
+                  window.location.reload()
                 }
               }) 
-              window.location.reload()
+           
         .catch(() => {
           // Manejar cualquier error de la solicitud           
           toast.error("An error has occurred upload");     
@@ -300,7 +300,7 @@ const MyProfile = () => {
                     {selectedFile ? (
                       <p className='text-gris-claro mb-0'>{selectedFile.name}</p>
                     ) : (
-                      <p className='text-gris-claro mb-0'>{defaultImage}</p>
+                      <p className='text-gris-claro mb-0'></p>
                     )}
                   </div>
                 </div>
@@ -309,7 +309,7 @@ const MyProfile = () => {
                     {selectedFileNew ? (
                       <img src={selectedFileNew} alt="Vista previa" />
                     ) : (
-                      <img src={defaultImage} alt="Imagen por defecto" />
+                      <img src="" alt="Imagen por defecto" />
                     )}
                   </div>
                 </div>

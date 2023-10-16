@@ -49,7 +49,7 @@ const PickHistory = () => {
             <th>PICK NAME</th>
             <th>CATEGORY</th>
             <th className='pc'>NO OF PICKS</th>
-            <th className='pc'>DATE PICKED</th>
+            <th className='pc'>TIME OF PICK</th>
             <th>MOST PICKED</th>    
           </tr>
         </thead>        

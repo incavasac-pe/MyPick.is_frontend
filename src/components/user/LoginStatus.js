@@ -321,10 +321,7 @@ const LoginStatus = () => {
                          <img src={user.photo} alt="User" /> 
                     </button>
                     <div tabIndex={-1} role="menu" aria-hidden="true" className="dropdown-menu dropdown-menu-right" x-placement="bottom-end">
-                        <ul className="nav flex-column">
-                        <li className="nav-item">
-                            <a className="dropdown-item" href="Javascript:void(0)">{user.email}</a>
-                        </li>
+                        <ul className="nav flex-column">                        
                         <li className="nav-item">
                             <a className="dropdown-item" href="Javascript:void(0)" onClick={handleEditProfile}>My profile</a>
                         </li>
@@ -442,8 +439,8 @@ const LoginStatus = () => {
                     <div className='row'>
                         <div className='col-md-12 position-relative'>
                           <h3 className='font-family-SpaceGrotesk-Bold text-white'>
-                            <button onClick={() => mostrarCuadro('cuadro1')} className='btn-back'><i className="far fa-arrow-left"></i></button>
-                              Get your free account
+                            <button onClick={() => mostrarCuadro('cuadro1')} className='btn-back'></button>
+                          Get your free account
                           </h3>
                             <button type="button" className="close cerrar-modal" data-dismiss="modal">&times;</button>
                         </div>

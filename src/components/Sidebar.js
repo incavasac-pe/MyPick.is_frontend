@@ -13,10 +13,12 @@ const Sidebar = () => {
   return (
     <div className="sidebar" id="mySidenav">
       <div className="position-relative">
-        <img src={require('./img/logo.png')} alt="logo" />
+       
         <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>
           &times;
         </a>
+        <img src={require('./img/logo.png')} alt="logo"  className='logo-side'/>
+         <b className="text-white mr-4 font-family-SpaceGrotesk-Bold title-logo" >MyPick.Is</b>
       </div>
       <ul>
         <li>
