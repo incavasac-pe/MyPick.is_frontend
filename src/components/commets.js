@@ -295,7 +295,7 @@ class Comments extends Component {
                         <button className='btn-login'
                             onClick={
                                 this.agregarComentario
-                        }>comment</button>
+                        }>Comment</button>
                     </div>
                 </div>
             </div>

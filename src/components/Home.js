@@ -165,7 +165,7 @@ const  nextStep = () => {
                     <div className='row'>
                       <div className='col-md-12 mb-4'>
                         <h1 className='text-center text-white titulo font-family-SpaceGrotesk-Light'>
-                          What others picked and commented
+                        Picks and comments from others
                         </h1>
                       </div>
                     </div>

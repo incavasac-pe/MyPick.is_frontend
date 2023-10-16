@@ -154,11 +154,21 @@ header .buscador p{
 .sidebar .closebtn {
   position: absolute;
   top: -5px;
-  right: 25px;
+  left:  5px;
   font-size: 36px;
-  margin-left: 50px;
+   
 }
-
+ 
+.logo-side{
+  width: 74px;
+  height: 74px; 
+  position: relative;
+  left: 40px;
+}
+.title-logo{
+  position: relative;
+  left: 45px;
+}
 .menu .active{
   background-color: #8459DE !important;
   color: #fff !important;

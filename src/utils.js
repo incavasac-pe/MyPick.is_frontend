@@ -17,7 +17,7 @@ export function formatearTiempo(valor) {
   }
 
   if (minutos > 0) {
-    resultado += `${minutos} minutes${minutos > 1 ? 's' : ''}`;
+    resultado += `${minutos} minutes${minutos > 1 ? '' : ''}`;
   }
 
   return resultado.trim();
