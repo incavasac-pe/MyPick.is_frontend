@@ -12,7 +12,7 @@
             </div>
             <div className="col-md-12 text-center">
               <p className="font-family-SpaceGrotesk-Medium">
-               To continue you must log in
+               Sorry, to continue, you must login.
               </p>             
             </div>
           </div>        
