@@ -20,7 +20,7 @@ import { checkAuth }  from '../AuthMiddleware';
           <div className='col-md-12 text-center'>
             <h1 className='text-white titulo font-family-SpaceGrotesk-Light'>My Bookmarks</h1>
             <p className='text-grey descripcion'>Showing all the picks you’ve saved so far.</p>
-            {!login && (<p className='text-grey descripcion'> To continue you must log in.</p>)}     
+            {!login && (<p className='text-grey descripcion'> Sorry, to continue, you must login.</p>)}     
            
           </div>          
         </div>

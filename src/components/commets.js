@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { checkAuth }  from '../AuthMiddleware'; 
 
-const API_BASE_URL = 'https://mypick.is/api';
+const API_BASE_URL = process.env.REACT_APP_URL_API
 
 
 class Comments extends Component {
