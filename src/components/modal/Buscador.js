@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-const API_BASE_URL = 'https://mypick.is/api';
+const API_BASE_URL = process.env.REACT_APP_URL_API
 
 class Buscador extends Component {
   constructor(props) {

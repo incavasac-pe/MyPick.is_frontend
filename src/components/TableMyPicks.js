@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react'; 
 import { formatearTiempo } from '../utils'; 
-const API_BASE_URL = 'https://mypick.is/api';
+const API_BASE_URL = process.env.REACT_APP_URL_API
 
 const TableMyPicks = (props) => {
   const [data, setMyPick] = useState([]);

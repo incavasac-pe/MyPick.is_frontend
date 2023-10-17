@@ -19,7 +19,7 @@ const MyPicks = (props) => {
           <div className='col-md-12 text-center'>
             <h1 className='text-white titulo font-family-SpaceGrotesk-Light'>My Picks</h1>
             <p className='text-grey descripcion'>Showing all the picks you’ve created so far.</p>
-            {!login && (<p className='text-grey descripcion'> To continue you must log in.</p>)}     
+            {!login && (<p className='text-grey descripcion'> Sorry, to continue, you must login.</p>)}     
           </div>          
         </div>
         {login && (<TableMyPicks idCat={idCat} />)}   

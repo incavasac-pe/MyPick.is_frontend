@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'; 
-const API_BASE_URL = 'https://mypick.is/api';
+const API_BASE_URL = process.env.REACT_APP_URL_API
 
   const Like = (props) => {
     const { likes, id_pick } = props;

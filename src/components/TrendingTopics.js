@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MenuFlotante from './MenuFlotante';
-import { Link } from 'react-router-dom';
-const API_BASE_URL = 'https://mypick.is/api';
+import { Link } from 'react-router-dom'; 
+const API_BASE_URL = process.env.REACT_APP_URL_API
 
 class TrendingTopics extends Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class TrendingTopics extends Component {
     }
   }
 
-  changeTab = (tabName,id) => { 
+  changeTab = (tabName,id) => {  
     this.setState({ activeTab: tabName }); 
     if(id!==''){
       this.fetchDataTopCategory(id)
@@ -37,7 +37,7 @@ class TrendingTopics extends Component {
   };
   
   fetchDataTop3 = () => { 
-      fetch(`${API_BASE_URL}/list_trendingTopics`, {
+      fetch( `${API_BASE_URL}/list_trendingTopics`, {
         method: 'GET', 
         headers: {
           'Content-Type': 'application/json'      
@@ -74,7 +74,7 @@ fetchDataTopCategory = (id) => {
     const { activeTab,muestras,top3,top_category } = this.state; 
  
     if( muestras.length === 0){
-      fetch(`${API_BASE_URL}/list_category?limit=${100}`, {
+      fetch(`${API_BASE_URL}/list_category_with_trendingTopics`, {
         method: 'GET', 
         headers: {
           'Content-Type': 'application/json'      
@@ -82,13 +82,12 @@ fetchDataTopCategory = (id) => {
       })
       .then(response => response.json())
       .then(data => {                     
-            if (data.data) {    
+            if (data.data) {  
               this.setState({ muestras: data.data }); // Actualizar el estado con los valores de data.data 
               this.fetchDataTop3() 
             }   
       }) 
     }
-     
     if (muestras.length === 0) {
       return <p>No se encontraron resultados.</p>;   
     }
@@ -114,26 +113,17 @@ fetchDataTopCategory = (id) => {
           </li>
         {muestras.map(category => (
           <>          
-         <li className="nav-item"  key={category.id}>
+         <li className="nav-item"  key={category.id_category}>
               <Link
                 to="#"
-                className={`nav-link ${activeTab === category.name ? 'active' : ''}`} 
-                onClick={() => this.changeTab(category.name,category.id)}
+                className={`nav-link ${activeTab === category.category_name ? 'active' : ''}`} 
+                onClick={() => this.changeTab(category.category_name,category.id_category)}
               >
-              {category.name}
+              {category.category_name}
               </Link>
             </li>            
            </>
-            ))}
-           {/*   <li className="nav-item">
-              <Link
-                to="#"
-                className={`nav-link ${activeTab === 'More' ? 'active' : ''}`}
-               onClick={() => this.changeTab('More')}
-              >
-                More...
-              </Link>
-            </li> */}
+            ))}       
         </ul>
 
         <div className="tab-content">
@@ -167,7 +157,7 @@ fetchDataTopCategory = (id) => {
           </div>
         {muestras.map(category => (
           <>  
-          <div className={`tab-pane ${activeTab === category.name  ? 'active' : ''}`} id="top-trending">         
+          <div className={`tab-pane ${activeTab === category.category_name  ? 'active' : ''}`} id="top-trending">         
             <div className='row'>
             {top_category.map(top_by_cat => (
               <div className='col-md-4 mb-3'>
@@ -195,11 +185,7 @@ fetchDataTopCategory = (id) => {
            
             </div>
           </div>
-          </> ))}
-         
-         {/*  <div className={`tab-pane ${activeTab === 'More' ? 'active' : ''}`} id="more">
-            Contenido de More
-          </div> */}
+          </> ))} 
         </div>
       </div>
       <MenuFlotante />

@@ -2,7 +2,7 @@ import React, {  useEffect} from 'react';
 import { useLocation,useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-const API_BASE_URL = 'https://mypick.is/api';
+const API_BASE_URL = process.env.REACT_APP_URL_API
 const ActivateAccount = () => { 
    
   const location = useLocation();
