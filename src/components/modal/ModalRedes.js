@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import twitter from '../img/x-corp-logo.png'
 class ModalRedes extends Component {
     render() {
         return (
@@ -17,8 +17,8 @@ class ModalRedes extends Component {
                 </div>
                 <div className='col-md-12 d-flex align-items-center justify-content-around mb-3 font-family-SpaceGrotesk-Bold'>
                     <a href='https://twitter.com/mypick_is' target="_blank" className='redes'>
-                        <span className='d-block twitter mb-2'><i class="fab fa-twitter"></i></span>
-                        Twitter
+                        <span className='d-block twitter mb-2'><img className="logo-twitter" src={twitter} width={"17px"} ></img></span>
+                        X
                     </a>                 
                     <a href='https://www.reddit.com/r/Mypicks/' target="_blank" className='redes'>
                         <span className='d-block reddit mb-2'><i class="fab fa-reddit-alien"></i></span>

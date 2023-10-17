@@ -229,7 +229,7 @@ const MyProfile = () => {
                       <tr>
                         <td className='text-gris-claro font-family-Inter-SemiBold'>Name</td>
                         <td className='font-family-Inter-Medium'>
-                          {name} <span className='text-gris-claro'>{nick}</span>
+                          {name} 
                         </td>
                       </tr>
                       <tr>

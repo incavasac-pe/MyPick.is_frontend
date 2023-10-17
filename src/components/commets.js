@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
+import { checkAuth }  from '../AuthMiddleware'; 
+
 const API_BASE_URL = 'https://mypick.is/api';
+
 
 class Comments extends Component {
 
@@ -12,7 +15,8 @@ class Comments extends Component {
             nuevoComentario: '',
             nuevaRespuesta: '',
             mostrarRespuestas: {},
-            mostrarFormularioRespuesta: {}
+            mostrarFormularioRespuesta: {},
+            login:true
         };
     }
 
@@ -36,7 +40,7 @@ class Comments extends Component {
     registerComments = (nuevoComentario) => {
         const {id_pick} = this.state;
         const storedUser = localStorage.getItem('user');
-        if (storedUser) {
+   
             const parsedUser = JSON.parse(storedUser);
 
             fetch(`${API_BASE_URL}/register_comments`, {
@@ -50,17 +54,15 @@ class Comments extends Component {
             }).then(response => response.json()).then(data => {
                 if (data.data) {
                     this.setState({comentarios: data.data}); // Actualizar el estado con los valores de data.data
-                }
-
-            })
-        }
+                } 
+            }) 
     }
 
 
     registerReply = (comentario_id, id_pick, nuevoComentario) => {
 
         const storedUser = localStorage.getItem('user');
-        if (storedUser) {
+      
             const parsedUser = JSON.parse(storedUser);
 
             fetch(`${API_BASE_URL}/register_reply`, {
@@ -77,7 +79,7 @@ class Comments extends Component {
                 }
 
             })
-        }
+       
     }
 
     registerLikeComments = async (comentario_id, id_pick) => {
@@ -104,9 +106,13 @@ class Comments extends Component {
     };
 
     agregarComentario = () => {
-        const {nuevoComentario} = this.state;
-        this.registerComments(nuevoComentario)
-        this.setState({nuevoComentario: ''});
+        const isAuthenticated = checkAuth();    
+        this.setState({login: isAuthenticated});
+        if(isAuthenticated){
+            const {nuevoComentario} = this.state;
+            this.registerComments(nuevoComentario)
+            this.setState({nuevoComentario: ''});
+         }
     };
 
     toggleMostrarRespuestas = (id) => {
@@ -133,10 +139,12 @@ class Comments extends Component {
 
     agregarRespuesta = (id) => {
         const {nuevaRespuesta, id_pick} = this.state;
-
-        this.registerReply(id, id_pick, nuevaRespuesta)
-        this.setState({nuevaRespuesta: ''});
-
+        const isAuthenticated = checkAuth();    
+        this.setState({login: isAuthenticated});
+        if(isAuthenticated){
+            this.registerReply(id, id_pick, nuevaRespuesta)
+            this.setState({nuevaRespuesta: ''});
+         }  
     };
     agregarLikesComments = (id) => {
         const {id_pick} = this.state;
@@ -151,7 +159,8 @@ class Comments extends Component {
             mostrarRespuestas,
             mostrarFormularioRespuesta,
             id_pick,
-            flag
+            flag,
+            login
         } = this.state;
         if (comentarios.length === 0 && id_pick && flag === 1) {
             this.fetchDataComments(id_pick)
@@ -264,6 +273,11 @@ class Comments extends Component {
                                                     this.handleChangeNuevaRespuesta
                                                 }
                                                 placeholder=""/>
+                                                 {!login && (
+                                                    <div className="comments_login">
+                                                   Sorry, to continue, you must login.
+                                                    </div>
+                                                )} 
                                             <div className='text-right mt-3 mb-3'>
                                                 <button className="login mr-3"
                                                     onClick={
@@ -291,13 +305,19 @@ class Comments extends Component {
                             this.handleChangeNuevoComentario
                         }
                         placeholder="Leave a comment..."/>
+                            {!login && (
+                                <div className="comments_login">
+                               Sorry, to continue, you must login.
+                                </div>
+                            )}  
                     <div className='text-right'>
                         <button className='btn-login'
                             onClick={
                                 this.agregarComentario
                         }>Comment</button>
                     </div>
-                </div>
+                
+                </div>  
             </div>
         );
     }

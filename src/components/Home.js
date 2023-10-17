@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import MenuFlotante from './MenuFlotante';
 import Like from './like';
-import Commets from './commets';
+import Comments from './commets';
 import CreatePick from './modal/CreatePick';
 import AuthLogin from './modal/AuthLogin'; 
 import ModalRedes from './modal/ModalRedes';
@@ -210,7 +210,7 @@ const  nextStep = () => {
                       </div>
                     </div>
                     <div className='pc'>
-                      <Commets  id_pick={id_pick}/>
+                      <Comments  id_pick={id_pick}/>
                     </div>               
                   </div>
                       )}
@@ -224,7 +224,7 @@ const  nextStep = () => {
               <div class="modal-content">              
                 <div class="modal-body p-0">
                   <div className='cuadro'>
-                    <Commets />
+                    <Comments />
                   </div>
                 </div>
               </div>
@@ -268,7 +268,7 @@ const  nextStep = () => {
                   <div class="modal-body p-0">
                     <div className='cuadro'>
                       <div className='box-cuadro-modal'>                                    
-                        < AuthLogin  label={'Information'} />                       
+                        < AuthLogin  label={'Bookmark'} />                       
                       </div>
                     </div>
                   </div>

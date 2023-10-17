@@ -1376,7 +1376,7 @@ ul{
   line-height: 2;
 }
 .redes span.twitter{
-  background-color: #55acee;
+  background-color: #eef1f3;
 }
 .redes span.whatsapp{
   background-color: #1bd741;
@@ -1395,6 +1395,17 @@ ul{
   padding: 8px 8px;
   font-size: 20px;
 }
+.logo-twitter{
+  vertical-align:inherit !important;
+}
+.comments_login{ 
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: .875em;
+    color: #dc3545;
+}
+  
+
 @media screen and (max-height: 450px) {
   .sidebar {padding-top: 15px;}
   .sidebar a {font-size: 18px;}
@@ -1410,6 +1421,9 @@ ul{
   .btn-login{
     padding: 7px;
     font-size: 14px;
+  }
+  .title-logo{
+   display: none;
   }
   .p-movil{
     padding: 0;
