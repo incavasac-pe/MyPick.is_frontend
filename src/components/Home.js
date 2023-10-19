@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import MenuFlotante from './MenuFlotante';
 import Like from './like';
-import Comments from './commets';
 import CreatePick from './modal/CreatePick';
 import AuthLogin from './modal/AuthLogin'; 
 import ModalRedes from './modal/ModalRedes';
 import { checkAuth }  from '../AuthMiddleware'; 
 const API_BASE_URL = process.env.REACT_APP_URL_API
 const Home = (props) => {
+  
   const idCat = props.idCat; 
 
   const [currentStep, setcurrentStep] = useState(1);
@@ -17,6 +17,15 @@ const Home = (props) => {
   const [muestras, setMuestras] = useState(null);
   const [porciento, setPorcentaje] = useState(null); 
   const [id_pick, setPick] = useState('');  
+
+
+  const [comentarios, setCommentarios] = useState([]);    
+  const [nuevoComentario, setnuevoComentario] = useState('');   
+  const [nuevaRespuesta, setnuevaRespuesta] = useState('');    
+  const [mostrarRespuestas, setmostrarRespuestas] = useState({});   
+  const [mostrarFormularioRespuesta, setmostrarFormularioRespuesta] = useState({}); 
+  
+  
  
 const  nextStep = () => { 
     const totalSteps = document.getElementsByClassName('step').length;
@@ -52,7 +61,8 @@ const  nextStep = () => {
           setPorcentaje(data.data) 
           setimagenActiva(imagen)
           settextoActivo(texto)    
-          setcurrentStep(2)   
+          setcurrentStep(2)  
+          fetchDataComments(id_pick)
         }
       })    
   };
@@ -78,7 +88,127 @@ const  nextStep = () => {
         setPick(data.data?.[0]?.id)     
       }
     })  
-  };
+  }; 
+ 
+
+  const fetchDataComments = (id_pick) => { 
+    fetch(`${API_BASE_URL}/list_comments_bypicks?id_pick=${id_pick}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(response => response.json()).then(data => {
+        if (data.error) {
+          setCommentarios([]) 
+        } else {
+            if (data.data) {
+              setCommentarios(data.data) 
+            }
+        }
+    })
+}
+
+const registerComments = (nuevoComentario) => { 
+    const storedUser = localStorage.getItem('user'); 
+        const parsedUser = JSON.parse(storedUser);
+
+        fetch(`${API_BASE_URL}/register_comments`, {
+            method: 'POST',
+            body: JSON.stringify(
+                {id_pick: id_pick, contenido: nuevoComentario, email: parsedUser.email}
+            ),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json()).then(data => {
+            if (data.data) {
+              setCommentarios(data.data) 
+            } 
+        }) 
+}
+
+
+const registerReply = (comentario_id, id_pick, nuevoComentario) => { 
+    const storedUser = localStorage.getItem('user'); 
+        const parsedUser = JSON.parse(storedUser); 
+        fetch(`${API_BASE_URL}/register_reply`, {
+            method: 'POST',
+            body: JSON.stringify(
+                {id_pick: id_pick, comentario_id: comentario_id, contenido: nuevoComentario, email: parsedUser.email}
+            ),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json()).then(data => {
+            if (data.data) {
+              setCommentarios(data.data) 
+            } 
+        })
+   
+}
+
+const registerLikeComments = async (comentario_id, id_pick) => {
+    try {
+        const storedUser = localStorage.getItem('user');
+  
+        const parsedUser = JSON.parse(storedUser);
+         await fetch(`${API_BASE_URL}/register_like_comments`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+                {id_pick: id_pick, comentario_id: comentario_id, email: parsedUser.email}
+            )
+        });
+
+         fetchDataComments(id_pick)
+    } catch (error) {
+        console.error('Error al registrar el like del comentario:', error);
+        throw error;
+    }
+}; 
+
+const handleChangeNuevoComentario = (event) => {
+  setnuevoComentario(event.target.value) 
+};
+
+const agregarComentario = () => {    
+    if(login){
+       registerComments(nuevoComentario)
+       setnuevoComentario('')
+     }
+};
+const toggleMostrarRespuestas = (id) => {
+  setmostrarRespuestas((prevState) => ({
+    ...prevState,
+    [id]: !prevState[id]
+  }));
+};
+
+
+const toggleMostrarFormularioRespuesta = (id) => {
+  setmostrarFormularioRespuesta((prevState) => ({
+    ...prevState,
+    [id]: !prevState[id]
+  }));
+}; 
+
+const handleChangeNuevaRespuesta = (event) => {
+  setnuevaRespuesta(event.target.value)
+};
+
+const agregarRespuesta = (id) => {
+    if(login){
+       registerReply(id, id_pick, nuevaRespuesta)
+        setnuevaRespuesta('')
+     }  
+};
+const agregarLikesComments = (id) => {
+  if(login){
+    registerLikeComments(id, id_pick)
+  }
+};
 
     return (
       <div>        
@@ -210,7 +340,160 @@ const  nextStep = () => {
                       </div>
                     </div>
                     <div className='pc'>
-                      <Comments  id_pick={id_pick}/>
+                   
+                    <div className="wrapper">
+                   <div className="comment">
+                    <div className="commet-title">
+                        <h3 className="text-white font-family-SpaceGrotesk-Bold">Comments  
+                        </h3>
+                        <button type="button" class="close cerrar-modal movil" data-dismiss="modal">
+                            &times;
+                        </button>
+                    </div>
+
+                    {
+                    comentarios.map((comentario) => (
+                        <div className="box-comentario"
+                            key={
+                                comentario.id
+                        }>
+                            <div className="content">
+                                <div className="avatar">
+                                    <img src={
+                                            `${API_BASE_URL}/see_photo?img=${
+                                                comentario.foto
+                                            }`
+                                        }
+                                        alt="user"/>
+                                </div>
+                                <div className="content-comment">
+                                    <div className="user">
+                                        <h5>{
+                                            comentario.usuario
+                                        }</h5>
+                                        <span className="is-mute">
+                                            {
+                                            comentario.fecha
+                                        }</span>
+                                    </div>
+                                    <p>{
+                                        comentario.contenido
+                                    }</p>
+                                    <div className="content-footer">
+                                        <button className="btn btn-outline"
+                                            onClick={
+                                                () => agregarLikesComments(comentario.id)
+                                        }>
+                                            <i className="fas fa-heart"></i>
+                                            {
+                                            comentario.likes +' ' ?? '0 ' 
+                                        }
+                                             Likes
+                                        </button>
+                                        <button className="btn"
+                                            onClick={
+                                                () => toggleMostrarFormularioRespuesta(comentario.id)
+                                        }>
+                                            <i class="fas fa-reply"></i>
+                                            Reply
+                                        </button>
+                                        {
+                                        comentario.respuestas.length > 0 && (
+                                            <button className="btn"
+                                                onClick={
+                                                    () => toggleMostrarRespuestas(comentario.id)
+                                            }>
+                                                {
+                                                mostrarRespuestas[comentario.id] ? 'Hide Replies -' : 'Show Replies +'
+                                            } </button>
+                                        )
+                                    } </div>
+
+                                    {
+                                    mostrarRespuestas[comentario.id] && comentario.respuestas.length > 0 && (
+                                        <div className='mt-3 mb-3'>
+                                            {
+                                            comentario.respuestas.map((respuesta) => (
+                                                <div key={
+                                                        respuesta.id
+                                                    }
+                                                    className="respuesta">
+                                                    <div className="avatar">
+                                                        <img src={
+                                                                `${API_BASE_URL}/see_photo?img=${
+                                                                    respuesta.foto
+                                                                }`
+                                                            }
+                                                            alt="user"/>
+                                                    </div>
+                                                    <div className='content-comment'>
+                                                        <h5>{
+                                                            respuesta.usuario
+                                                        }</h5>
+                                                        <p>{
+                                                            respuesta.contenido
+                                                        }</p>
+                                                    </div>
+                                                </div>
+                                            ))
+                                        } </div>
+                                    )
+                                }
+
+                                    {
+                                    mostrarFormularioRespuesta[comentario.id] && (
+                                        <div className="nueva-respuesta">
+                                            <textarea value={nuevaRespuesta}
+                                                onChange={
+                                                    handleChangeNuevaRespuesta
+                                                }
+                                                placeholder=""/>
+                                                 {!login && (
+                                                    <div className="comments_login">
+                                                   Sorry, to continue, you must login.
+                                                    </div>
+                                                )} 
+                                            <div className='text-right mt-3 mb-3'>
+                                                <button className="login mr-3"
+                                                    onClick={
+                                                        () => toggleMostrarFormularioRespuesta(comentario.id)
+                                                }>
+                                                    Cancel
+                                                </button>
+                                                <button className='login'
+                                                    onClick={
+                                                        () => agregarRespuesta(comentario.id)
+                                                }>Reply</button>
+                                            </div>
+                                        </div>
+                                    )
+                                } </div>
+                            </div>
+                            <div className="footer"></div>
+                        </div>
+                    ))
+                } </div>
+
+                <div className="box-comentario mt-4">
+                    <textarea value={nuevoComentario}
+                        onChange={
+                            handleChangeNuevoComentario
+                        }
+                        placeholder="Leave a comment..."/>
+                            {!login && (
+                                <div className="comments_login">
+                               Sorry, to continue, you must login.
+                                </div>
+                            )}  
+                    <div className='text-right'>
+                        <button className='btn-login'
+                            onClick={
+                                agregarComentario
+                        }>Comment</button>
+                    </div>
+                
+                </div>  
+            </div>
                     </div>               
                   </div>
                       )}
@@ -224,7 +507,159 @@ const  nextStep = () => {
               <div class="modal-content">              
                 <div class="modal-body p-0">
                   <div className='cuadro'>
-                    <Comments />
+                  <div className="wrapper">
+                   <div className="comment">
+                    <div className="commet-title">
+                        <h3 className="text-white font-family-SpaceGrotesk-Bold">Comments  
+                        </h3>
+                        <button type="button" class="close cerrar-modal movil" data-dismiss="modal">
+                            &times;
+                        </button>
+                    </div>
+
+                    {
+                    comentarios.map((comentario) => (
+                        <div className="box-comentario"
+                            key={
+                                comentario.id
+                        }>
+                            <div className="content">
+                                <div className="avatar">
+                                    <img src={
+                                            `${API_BASE_URL}/see_photo?img=${
+                                                comentario.foto
+                                            }`
+                                        }
+                                        alt="user"/>
+                                </div>
+                                <div className="content-comment">
+                                    <div className="user">
+                                        <h5>{
+                                            comentario.usuario
+                                        }</h5>
+                                        <span className="is-mute">
+                                            {
+                                            comentario.fecha
+                                        }</span>
+                                    </div>
+                                    <p>{
+                                        comentario.contenido
+                                    }</p>
+                                    <div className="content-footer">
+                                        <button className="btn btn-outline"
+                                            onClick={
+                                                () => agregarLikesComments(comentario.id)
+                                        }>
+                                            <i className="fas fa-heart"></i>
+                                            {
+                                            comentario.likes +' ' ?? '0 ' 
+                                        }
+                                             Likes
+                                        </button>
+                                        <button className="btn"
+                                            onClick={
+                                                () => toggleMostrarFormularioRespuesta(comentario.id)
+                                        }>
+                                            <i class="fas fa-reply"></i>
+                                            Reply
+                                        </button>
+                                        {
+                                        comentario.respuestas.length > 0 && (
+                                            <button className="btn"
+                                                onClick={
+                                                    () => toggleMostrarRespuestas(comentario.id)
+                                            }>
+                                                {
+                                                mostrarRespuestas[comentario.id] ? 'Hide Replies -' : 'Show Replies +'
+                                            } </button>
+                                        )
+                                    } </div>
+
+                                    {
+                                    mostrarRespuestas[comentario.id] && comentario.respuestas.length > 0 && (
+                                        <div className='mt-3 mb-3'>
+                                            {
+                                            comentario.respuestas.map((respuesta) => (
+                                                <div key={
+                                                        respuesta.id
+                                                    }
+                                                    className="respuesta">
+                                                    <div className="avatar">
+                                                        <img src={
+                                                                `${API_BASE_URL}/see_photo?img=${
+                                                                    respuesta.foto
+                                                                }`
+                                                            }
+                                                            alt="user"/>
+                                                    </div>
+                                                    <div className='content-comment'>
+                                                        <h5>{
+                                                            respuesta.usuario
+                                                        }</h5>
+                                                        <p>{
+                                                            respuesta.contenido
+                                                        }</p>
+                                                    </div>
+                                                </div>
+                                            ))
+                                        } </div>
+                                    )
+                                }
+
+                                    {
+                                    mostrarFormularioRespuesta[comentario.id] && (
+                                        <div className="nueva-respuesta">
+                                            <textarea value={nuevaRespuesta}
+                                                onChange={
+                                                    handleChangeNuevaRespuesta
+                                                }
+                                                placeholder=""/>
+                                                 {!login && (
+                                                    <div className="comments_login">
+                                                   Sorry, to continue, you must login.
+                                                    </div>
+                                                )} 
+                                            <div className='text-right mt-3 mb-3'>
+                                                <button className="login mr-3"
+                                                    onClick={
+                                                        () => toggleMostrarFormularioRespuesta(comentario.id)
+                                                }>
+                                                    Cancel
+                                                </button>
+                                                <button className='login'
+                                                    onClick={
+                                                        () => agregarRespuesta(comentario.id)
+                                                }>Reply</button>
+                                            </div>
+                                        </div>
+                                    )
+                                } </div>
+                            </div>
+                            <div className="footer"></div>
+                        </div>
+                    ))
+                } </div>
+
+                <div className="box-comentario mt-4">
+                    <textarea value={nuevoComentario}
+                        onChange={
+                            handleChangeNuevoComentario
+                        }
+                        placeholder="Leave a comment..."/>
+                            {!login && (
+                                <div className="comments_login">
+                               Sorry, to continue, you must login.
+                                </div>
+                            )}  
+                    <div className='text-right'>
+                        <button className='btn-login'
+                            onClick={
+                                agregarComentario
+                        }>Comment</button>
+                    </div>
+                
+                </div>  
+            </div>
                   </div>
                 </div>
               </div>

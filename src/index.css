@@ -160,8 +160,8 @@ header .buscador p{
 }
  
 .logo-side{
-  width: 74px;
-  height: 74px; 
+  width: 64px;
+  height: 64px; 
   position: relative;
   left: 40px;
 }
@@ -1516,7 +1516,7 @@ ul{
     display: block;
   }
   .trending .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link{
-    padding: 0;
+    padding: 5px;
     font-size: 14px;
   }
   .Bookmarks .table-bordered td, .Bookmarks .table-bordered th{

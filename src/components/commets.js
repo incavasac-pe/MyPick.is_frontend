@@ -9,7 +9,7 @@ class Comments extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            comentarios: [],
+            comentarios:[],
             flag: 1,
             id_pick: props.id_pick,
             nuevoComentario: '',
@@ -18,9 +18,17 @@ class Comments extends Component {
             mostrarFormularioRespuesta: {},
             login:true
         };
+        console.log("id_pick ",props.id_pick) 
     }
 
+    componentDidMount() {
+        this.setState({ id_pick: this.props.id_pick }); 
+        this.fetchDataComments(this.props.id_pick)
+      }
+     
+
     fetchDataComments = (id_pick) => {
+        console.log("buscar comentarios del id_pick ",id_pick)
         fetch(`${API_BASE_URL}/list_comments_bypicks?id_pick=${id_pick}`, {
             method: 'GET',
             headers: {
@@ -84,13 +92,16 @@ class Comments extends Component {
 
     registerLikeComments = async (comentario_id, id_pick) => {
         try {
+            const storedUser = localStorage.getItem('user');
+      
+            const parsedUser = JSON.parse(storedUser);
              await fetch(`${API_BASE_URL}/register_like_comments`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(
-                    {id_pick: id_pick, comentario_id: comentario_id}
+                    {id_pick: id_pick, comentario_id: comentario_id, email: parsedUser.email}
                 )
             });
 
@@ -163,13 +174,13 @@ class Comments extends Component {
             login
         } = this.state;
         if (comentarios.length === 0 && id_pick && flag === 1) {
-            this.fetchDataComments(id_pick)
+           // this.fetchDataComments(id_pick)
         }
         return (
             <div className="wrapper">
                 <div className="comment">
                     <div className="commet-title">
-                        <h3 className="text-white font-family-SpaceGrotesk-Bold">Comments
+                        <h3 className="text-white font-family-SpaceGrotesk-Bold">Comments 
                         </h3>
                         <button type="button" class="close cerrar-modal movil" data-dismiss="modal">
                             &times;

@@ -117,7 +117,7 @@ const LoginStatus = () => {
      localStorage.removeItem('liked');
     setLoggedIn(false);
     setUser(null);
-    navigate('/');
+    window.location.reload()
   };
 
   const handleEditProfile = () => {
