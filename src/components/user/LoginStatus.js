@@ -61,8 +61,11 @@ const LoginStatus = () => {
                // Lógica para iniciar sesión      
             setErrors({});
             setEmail('');
-            setPassword('');             
-            setShowModal(false);
+            setPassword('');  
+            if(data.data.user.status!='A'){
+              toast.error('Your account is not active');        
+            }else{
+              setShowModal(false);   
                if (data.data.token) {             
                  setLoggedIn(true); 
                  setUser({ name: data.data.user.full_name, photo: `${API_BASE_URL}/see_photo?img=${data.data.user.photo}` , email: data.data.user.email,token:data.data.token});                 
@@ -70,7 +73,8 @@ const LoginStatus = () => {
                  if(data.data.user.photo!=null)   localStorage.setItem('photo', JSON.stringify({ photo: `${API_BASE_URL}/see_photo?img=${data.data.user.photo}`}));
                  sleep(4000);
                  window.location.reload()
-                }  
+                } 
+               }
            }
         })
         .catch(error => {
@@ -127,8 +131,7 @@ const LoginStatus = () => {
   };
    
   const handleRegister = (e) => {
-    e.preventDefault();
-    //llamar al servicio de login
+    e.preventDefault(); 
   
     setErrors({});
     const errors_re = {};
@@ -152,20 +155,17 @@ const LoginStatus = () => {
         .then(data => { 
           if(data.error){        
               toast.error(data.msg);
-          } else {     
-               // Lógica para iniciar sesión      
+          } else {      
             setErrors({});
             setName('');
             setEmail('');
-            setPassword('');             
-            setShowModal(false);
-               if (data.data.token) {             
-                 setLoggedIn(true); 
-                 setUser({ name: data.data.user.full_name,  email: data.data.user.email,token:data.data.token});
-                 localStorage.setItem('user', JSON.stringify({ name: data.data.user.full_name, photo: require('../img/user.jpg'), email: data.data.user.email,token:data.data.token}));
-                 localStorage.setItem('photo', JSON.stringify({ photo: `${API_BASE_URL}/see_photo?img=${data.data.user.photo}`}));
-               
-                }  
+            setPassword('');  
+         
+              toast.success('An email was sent to you to continue with account activation.', {
+                position: toast.POSITION.TOP_RIGHT
+            });
+            sleep(4000);
+            window.location.reload()
            }
         })
         .catch(error => {
