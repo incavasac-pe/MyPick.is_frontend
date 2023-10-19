@@ -24,16 +24,12 @@ const ActivateAccount = () => {
       } else {     
            // Lógica para iniciar sesión     
            if (data.data.token) {   
-            localStorage.setItem('user', JSON.stringify({ name: data.data.user.full_name, email: data.data.user.email,token:data.data.token}));
-            navigate('/MyProfile'); // Redirigir al usuario a la página de perfil   
+            localStorage.setItem('user', JSON.stringify({ name: data.data.user.full_name, email: data.data.user.email,token:data.data.token}));        
+            navigate('/MyProfile'); // Redirigir al usuario a la página de perfil         
           }  
        }
     })
-    .catch(error => {
-      // Manejar cualquier error de la solicitud           
-      toast.error("An error has occurred");  
-     // navigate('/'); // Redirigir al usuario a la página de home  
-    });    
+       
   }, [navigate,token]); 
     return (
       <div className="container contenido about">
