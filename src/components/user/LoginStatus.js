@@ -117,8 +117,7 @@ const LoginStatus = () => {
     localStorage.removeItem('user');
      localStorage.removeItem('photo');
      localStorage.removeItem('searchTerm');
-     localStorage.removeItem('idCat');
-     localStorage.removeItem('liked');
+     localStorage.removeItem('idCat'); 
     setLoggedIn(false);
     setUser(null);
     window.location.reload()

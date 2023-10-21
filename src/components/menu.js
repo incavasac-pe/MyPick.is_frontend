@@ -11,8 +11,7 @@ class Menu extends Component {
         };        
       }
          
-    handleDataFromChild = (data) => { 
-        console.log("la data ",data)
+    handleDataFromChild = (data) => {  
         this.setState({ searchTerm: data.name }); 
         this.props.onMenuDataChange(data);
       };
