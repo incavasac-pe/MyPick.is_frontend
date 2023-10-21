@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import twitter from '../img/x-corp-logo.png'
+
+const urlToShare = 'https://www.mypick.is/';
+const urlToShareEndFace = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(urlToShare)}`;  
+const urlToShareEndReddit = `https://www.reddit.com/submit?url=${encodeURIComponent(urlToShare)}`;  
+const urlToShareEndTwitter = `https://twitter.com/intent/tweet?url=${encodeURIComponent(urlToShare)}"`;  
+
 class ModalRedes extends Component {
+    
     render() {
         return (
             <div className='row'>
@@ -16,15 +23,15 @@ class ModalRedes extends Component {
                     </p>
                 </div>
                 <div className='col-md-12 d-flex align-items-center justify-content-around mb-3 font-family-SpaceGrotesk-Bold'>
-                    <a href='https://twitter.com/mypick_is' target="_blank" className='redes'>
+                    <a href={urlToShareEndTwitter}target="_blank" className='redes'>
                         <span className='d-block twitter mb-2'><img className="logo-twitter" src={twitter} width={"17px"} ></img></span>
                         X
                     </a>                 
-                    <a href='https://www.reddit.com/r/Mypicks/' target="_blank" className='redes'>
+                    <a href={urlToShareEndReddit} target="_blank" className='redes'>
                         <span className='d-block reddit mb-2'><i class="fab fa-reddit-alien"></i></span>
                         Reddit
-                    </a>
-                    <a href='https://www.facebook.com/MyPick.Is/' target="_blank" className='redes'>
+                    </a> 
+                    <a href={urlToShareEndFace} target="_blank" className='redes'>
                         <span className='d-block facebook mb-2'><i class="fab fa-facebook-f"></i></span>
                         Facebook
                     </a>

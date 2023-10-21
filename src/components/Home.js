@@ -4,7 +4,8 @@ import Like from './like';
 import CreatePick from './modal/CreatePick';
 import AuthLogin from './modal/AuthLogin'; 
 import ModalRedes from './modal/ModalRedes';
-import { checkAuth }  from '../AuthMiddleware'; 
+import { checkAuth }  from '../AuthMiddleware';  
+
 const API_BASE_URL = process.env.REACT_APP_URL_API
 const Home = (props) => {
   
@@ -17,17 +18,28 @@ const Home = (props) => {
   const [muestras, setMuestras] = useState(null);
   const [porciento, setPorcentaje] = useState(null); 
   const [id_pick, setPick] = useState('');  
-
+  const [ip, setIp] = useState('');
+  const [y_nLikes, sety_nLikes] = useState(false);
+  const [email, setEmail] = useState('');  
 
   const [comentarios, setCommentarios] = useState([]);    
   const [nuevoComentario, setnuevoComentario] = useState('');   
   const [nuevaRespuesta, setnuevaRespuesta] = useState('');    
   const [mostrarRespuestas, setmostrarRespuestas] = useState({});   
   const [mostrarFormularioRespuesta, setmostrarFormularioRespuesta] = useState({}); 
-  
-  
+   
+  const fetchIp = async () => {       
+    fetch(`https://api.ipify.org?format=json`, {
+      method: 'GET',       
+    })
+    .then(response => response.json())
+    .then(data => {  
+      setIp(data.ip)
+      fetchData(data.ip)
+    })    
+  };
  
-const  nextStep = () => { 
+  const  nextStep = () => { 
     const totalSteps = document.getElementsByClassName('step').length;
     if (currentStep < totalSteps) {
       setcurrentStep(  currentStep + 1 )    
@@ -35,7 +47,7 @@ const  nextStep = () => {
   };
   
  const goToFirstStep = () => {
-  fetchData()
+  fetchData(ip)
   setcurrentStep(1)   
   };
  
@@ -70,12 +82,20 @@ const  nextStep = () => {
   useEffect(() => { 
     const isAuthenticated = checkAuth();
     setlogin(isAuthenticated)    
-    fetchData()
+    
+    fetchIp();
+
   }, [idCat]);
 
-  const fetchData = async () => {    
+  const fetchData = async (ip) => {    
     setMuestras(null)    
-    fetch(`${API_BASE_URL}/list_all_picks?limit=${1}&id_category=${idCat}`, {
+    let email
+    const storedUser = localStorage.getItem('user'); 
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);     
+      email = parsedUser.email 
+    }
+    fetch(`${API_BASE_URL}/list_all_picks?limit=${1}&id_category=${idCat}&ip_maq=${ip}&email=${email}`, {
       method: 'GET', 
       headers: {
         'Content-Type': 'application/json'      
@@ -86,6 +106,7 @@ const  nextStep = () => {
       if(!data.error && data.data){   
         setMuestras(data.data)  
         setPick(data.data?.[0]?.id)     
+        sety_nLikes(data.other)
       }
     })  
   }; 
@@ -254,7 +275,7 @@ const agregarLikesComments = (id) => {
                     </div>
                     <div className='row'>
                       <div className='col-auto m-auto'>
-                       { (<Like likes={muestras?.[0]?.likes ?? 0 } id_pick={id_pick}  /> )} 
+                       { (<Like likes={muestras?.[0]?.likes ?? 0 } id_pick={id_pick} y_nLikes={y_nLikes} /> )} 
                       </div>
                     </div>
                   </div>
