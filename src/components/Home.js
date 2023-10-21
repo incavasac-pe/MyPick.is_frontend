@@ -4,8 +4,8 @@ import Like from './like';
 import CreatePick from './modal/CreatePick';
 import AuthLogin from './modal/AuthLogin'; 
 import ModalRedes from './modal/ModalRedes';
-import { checkAuth }  from '../AuthMiddleware'; 
-import { Parser } from 'react-facebook';
+import { checkAuth }  from '../AuthMiddleware';  
+
 const API_BASE_URL = process.env.REACT_APP_URL_API
 const Home = (props) => {
   
@@ -47,7 +47,7 @@ const Home = (props) => {
   };
   
  const goToFirstStep = () => {
-  fetchData(ip,email)
+  fetchData(ip)
   setcurrentStep(1)   
   };
  

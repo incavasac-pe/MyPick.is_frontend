@@ -4,7 +4,7 @@ import twitter from '../img/x-corp-logo.png'
 const urlToShare = 'https://www.mypick.is/';
 const urlToShareEndFace = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(urlToShare)}`;  
 const urlToShareEndReddit = `https://www.reddit.com/submit?url=${encodeURIComponent(urlToShare)}`;  
-const urlToShareEndTwitter = `https://www.reddit.com/submit?url=${encodeURIComponent(urlToShare)}`;  
+const urlToShareEndTwitter = `https://twitter.com/intent/tweet?url=${encodeURIComponent(urlToShare)}"`;  
 
 class ModalRedes extends Component {
     
@@ -23,7 +23,7 @@ class ModalRedes extends Component {
                     </p>
                 </div>
                 <div className='col-md-12 d-flex align-items-center justify-content-around mb-3 font-family-SpaceGrotesk-Bold'>
-                    <a href='https://twitter.com/mypick_is' target="_blank" className='redes'>
+                    <a href={urlToShareEndTwitter}target="_blank" className='redes'>
                         <span className='d-block twitter mb-2'><img className="logo-twitter" src={twitter} width={"17px"} ></img></span>
                         X
                     </a>                 
