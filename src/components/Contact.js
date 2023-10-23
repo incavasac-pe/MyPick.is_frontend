@@ -238,7 +238,7 @@ const Contact = () => {
                          checked={isChecked}
                       onChange={handleCheckboxChange}/> 
                        <label className="font-family-SpaceGrotesk-Medium">
-                       I Agree To The <a href='#terminos' className='text-morado'>Terms And Conditions</a> and <a href='#politica' className='text-morado'>Privacy Policy</a>
+                       I Agree To The <a href='https://www.mypick.is/terms' className='text-morado'>Terms And Conditions</a> and <a href='https://www.mypick.is/privacy' className='text-morado'>Privacy Policy</a>
                     </label>
                     {formErrors.privacyPolicy && (
                       <div className="invalid-feedback">
