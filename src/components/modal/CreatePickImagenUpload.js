@@ -17,6 +17,8 @@ const CreatePickImagenUpload = (props) => {
   const [photo2, setPhoto2] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoading2, setIsLoading2] = useState(false);
+  const [url1, setUrl1] = useState('www');
+  const [url2, setUrl2] = useState('www');
 
 
   const [product1, setProduct1] = useState(null);
@@ -45,8 +47,7 @@ const CreatePickImagenUpload = (props) => {
     .then(response => response.json())
     .then(data => {
       if (data.data) {        
-        const resp = data?.data
-       
+        const resp = data?.data       
         setProduct1(resp)
         setResults(resp); 
         setNotFound(false); 
@@ -171,6 +172,9 @@ fetch(imageUrl)
    formdata.append('photo2', photo2, text2);
     formdata.append("email", email);
     formdata.append('photo1', photo1, text1);
+
+    formdata.append("ulr_choice1", url1);
+    formdata.append("ulr_choice2", url2); 
     
     var requestOptions = {
       method: 'POST',
@@ -211,13 +215,13 @@ fetch(imageUrl)
  
    const filteredResults = results.filter((item) =>
       item.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    ); 
  
 const imagenProducto = filteredResults[0]?.imageUrls[0] 
     if (filteredResults.length > 0) { 
       ImageDownloader(imagenProducto,'1')
       getImageName(imagenProducto,'1')
-   
+      setUrl1(filteredResults[0]?.url)
     } else {
        setNotFound(true);
     }  
@@ -228,13 +232,12 @@ const imagenProducto = filteredResults[0]?.imageUrls[0]
     setSearchTerm2(searchTerm2); 
     const filteredResults2 = results2.filter((item) =>
       item.title.toLowerCase().includes(searchTerm2.toLowerCase())
-    );
-
+    ); 
     const imagenProducto2 = filteredResults2[0]?.imageUrls[0] 
     if (filteredResults2.length > 0) { 
       ImageDownloader(imagenProducto2,'2')
       getImageName(imagenProducto2,'2')
-   
+      setUrl2(filteredResults2[0]?.url)
     } else {
       setNotFound2(true);
     }  

@@ -19,8 +19,7 @@ const Home = (props) => {
   const [porciento, setPorcentaje] = useState(null); 
   const [id_pick, setPick] = useState('');  
   const [ip, setIp] = useState('');
-  const [y_nLikes, sety_nLikes] = useState(false);
-  const [email, setEmail] = useState('');  
+  const [y_nLikes, sety_nLikes] = useState(false); 
 
   const [comentarios, setCommentarios] = useState([]);    
   const [nuevoComentario, setnuevoComentario] = useState('');   
@@ -230,7 +229,6 @@ const agregarLikesComments = (id) => {
     registerLikeComments(id, id_pick)
   }
 };
-
     return (
       <div>        
         <div className='container'>
@@ -252,8 +250,8 @@ const agregarLikesComments = (id) => {
                         >
                           <img src={`${API_BASE_URL}/see_photo?img=${muestras?.[0]?.photo1_name}`} width={"282px"}  height={"282px"} alt="ciudad"  />
                         </div>
-                        <div className='nombre'>
-                          <h3 className='text-white font-family-SpaceGrotesk-Bold'>{ muestras?.[0]?.choice1_name}</h3>
+                        <div className='nombre link_url' style={{ cursor: 'pointer' }}>
+                           <a className='text-white font-family-SpaceGrotesk-Bold'  href={muestras?.[0]?.url_choice1} target="_blank">{ muestras?.[0]?.choice1_name}</a>
                         </div>
                       </div>
                       <div className='columna-refresh'>
@@ -268,8 +266,9 @@ const agregarLikesComments = (id) => {
                         >
                           <img src={`${API_BASE_URL}/see_photo?img=${muestras?.[0]?.photo2_name}`} width={"282px"}  height={"282px"} alt="ciudad" />
                         </div>
-                        <div className='nombre'>
-                          <h3 className='text-white font-family-SpaceGrotesk-Bold'>{ muestras?.[0]?.choice2_name}</h3>
+                        
+                        <div className='nombre link_url' style={{ cursor: 'pointer' }}>
+                           <a className='text-white font-family-SpaceGrotesk-Bold'  href={muestras?.[0]?.url_choice2} target="_blank">{ muestras?.[0]?.choice2_name}</a>
                         </div>
                       </div>
                     </div>

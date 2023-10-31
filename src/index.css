@@ -313,7 +313,10 @@ header .buscador p{
 .step.current {
   display: block;
 }
-
+.link_url {    font-size: 18px;
+  text-align: center;
+  margin-top: 24px;
+}
 .like{
   border: 1px solid #242C36;
   margin-top: 37px;
