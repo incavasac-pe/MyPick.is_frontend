@@ -32,6 +32,7 @@ const App = () => {
         <Sidebar />
         <Routes>
             {/*<Route path="/" element={<Home idCat={id}/>} />*/}
+            {/*<Route path="/" element={<Home idCat={id}/>} />*/}
             <Route path="/" element={<Home1 idCat={id}/>} />
             <Route path="/TrendingTopics" element={<TrendingTopics  idCat={id} name={name} />} />
             <Route path="/MyBookmarks" element={<MyBookmarks idCat={id}  />} />
