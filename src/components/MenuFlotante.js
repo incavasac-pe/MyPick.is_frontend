@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 class MenuFlotante extends Component {
     render() {
         return (
-            <nav className='menu'>
+            <nav className='menu d-none'>
                 <ul className='pc menu-float'>
                     <li>
                         <NavLink exact to="/" activeclassname="active" className="nav-link-no-marker">

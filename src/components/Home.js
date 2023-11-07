@@ -94,7 +94,7 @@ const Home = (props) => {
       const parsedUser = JSON.parse(storedUser);     
       email = parsedUser.email 
     }
-    fetch(`${API_BASE_URL}/list_all_picks?limit=${1}&id_category=${idCat}&ip_maq=${ip}&email=${email}`, {
+    fetch(`${API_BASE_URL}/list_all_picks?limit=${1}&id_category=&ip_maq=${ip}&email=${email}`, {
       method: 'GET', 
       headers: {
         'Content-Type': 'application/json'      
@@ -296,11 +296,14 @@ const agregarLikesComments = (id) => {
                           )}
                         
                         </div>
-                        <div className='nombre'>
+                        <div className='nombre text-center'>
                           <h3 className='text-white font-family-SpaceGrotesk-Bold'>
                           I'm on team
                           <span className='text-morado'> {textoActivo} </span>
                           </h3>
+                            <a href="#" className='text-morado d-inline-block font-family-SpaceGrotesk-Bold animate__heartBeat' onClick={nextStep}>Continue
+                                <i className="fas fa-angle-double-right ml-2 arrow-top"></i>
+                            </a>
                         </div>
                       </div>
                     </div>
@@ -521,7 +524,7 @@ const agregarLikesComments = (id) => {
               </div>
             </div>
           </div>
-          <MenuFlotante />
+          {/*<MenuFlotante />*/}
           <div class="modal fade" id="comentarios">
             <div class="modal-dialog modal-dialog-centered modal-md">
               <div class="modal-content">              

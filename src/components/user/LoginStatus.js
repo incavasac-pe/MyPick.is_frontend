@@ -308,7 +308,7 @@ const LoginStatus = () => {
  }
   return (
     <div>
-      <nav className='text-right'>
+      <nav>
         <ul>
           <li>
             {loggedIn ? (
@@ -334,7 +334,7 @@ const LoginStatus = () => {
                 
             ) : (
               // Mostrar botón de inicio de sesión si no ha iniciado sesión
-              <button data-toggle="modal" data-target="#ModaLogin"  onClick={handleButtonClick}  className='btn-login font-family-SpaceGrotesk-Bold'>Sign In / Sign up</button>
+              <button data-toggle="modal" data-target="#ModaLogin"  onClick={handleButtonClick}  className='btn-login font-family-SpaceGrotesk-Bold solo-login'>Sign In / Sign up</button>
             )}
           </li>
         </ul>

@@ -46,11 +46,11 @@ const PickHistory = () => {
       <table className="table table-striped table-bordered">
         <thead>
           <tr>
-            <th>PICK NAME</th>
+            <th>COMPARISON</th>
             <th>CATEGORY</th>
             <th className='pc'>NO OF PICKS</th>
             <th className='pc'>TIME OF PICK</th>
-            <th>MOST PICKED</th>    
+            <th>CONSENSUS</th>
           </tr>
         </thead>        
         <tbody className='text-white'>

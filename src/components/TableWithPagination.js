@@ -59,7 +59,7 @@ const TableWithPagination = (props) => {
             <th>CATEGORY</th>
             <th className='pc'>NO. OF PICKS</th>
             <th className='pc'>TIME OF PICK</th>
-            <th className='pc'>MOST PICKED</th>
+            <th className='pc'>CONSENSUS</th>
            {/*  <th>MY PICK</th> */}
           </tr>
         </thead>

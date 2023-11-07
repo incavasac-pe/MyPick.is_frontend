@@ -1,6 +1,7 @@
 import React,  {useState} from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
+import Home1 from './components/Home1';
 import About from './components/About';
 import Contact from './components/Contact';
 import Sidebar from './components/Sidebar';
@@ -30,7 +31,8 @@ const App = () => {
         </header>
         <Sidebar />
         <Routes>
-            <Route path="/" element={<Home idCat={id}/>} />
+            {/*<Route path="/" element={<Home idCat={id}/>} />*/}
+            <Route path="/" element={<Home1 idCat={id}/>} />
             <Route path="/TrendingTopics" element={<TrendingTopics  idCat={id} name={name} />} />
             <Route path="/MyBookmarks" element={<MyBookmarks idCat={id}  />} />
             <Route path="/MyPicks" element={<MyPicks idCat={id} />} />
