@@ -13,7 +13,7 @@ const MyProfile = () => {
   const [name, setName] = useState('');
   const [new_email, setEmailNew] = useState('');  
   const [email, setEmail] = useState('');  
-  const [nick, setNick] = useState('');
+ 
   const [errors, setErrors] = useState({});
   
   useEffect(() => { 
@@ -35,8 +35,7 @@ const MyProfile = () => {
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);     
       setName (parsedUser.name)
-      setEmail(parsedUser.email)
-      setNick(parsedUser.nick)
+      setEmail(parsedUser.email) 
     }else{
       navigate('/'); // Redirigir al usuario a la página de home
      }

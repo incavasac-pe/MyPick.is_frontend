@@ -1,4 +1,7 @@
- const AuthLogin =  (props) => {
+import LoginStatus from "../user/LoginStatus";
+import React from "react";
+
+const AuthLogin =  (props) => {
   const { label } = props;
   return (
     <div>     
@@ -12,8 +15,10 @@
             </div>
             <div className="col-md-12 text-center">
               <p className="font-family-SpaceGrotesk-Medium">
-               Sorry, to continue, you must login.
-              </p>             
+                Sorry, to continue, you must login. </p>
+              <p className='claseabrir text-center'>
+                <LoginStatus/>
+              </p>
             </div>
           </div>        
         </div> 

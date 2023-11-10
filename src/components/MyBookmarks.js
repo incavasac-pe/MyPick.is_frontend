@@ -1,7 +1,8 @@
 import React, { useState,useEffect } from 'react';
 import MenuFlotante from './MenuFlotante';
 import TableWithPagination from './TableWithPagination'; 
-import { checkAuth }  from '../AuthMiddleware'; 
+import { checkAuth }  from '../AuthMiddleware';
+import LoginStatus from './user/LoginStatus';
  
  
   const MyBookmarks = (props) => {
@@ -20,8 +21,13 @@ import { checkAuth }  from '../AuthMiddleware';
           <div className='col-md-12 text-center'>
             <h1 className='text-white titulo font-family-SpaceGrotesk-Light'>My Bookmarks</h1>
             <p className='text-grey descripcion'>Showing all the picks you’ve saved so far.</p>
-            {!login && (<p className='text-grey descripcion'> Sorry, to continue, you must login.</p>)}     
-           
+            {!login && (<p className='text-grey descripcion'>
+              Sorry, to continue, you must Login:
+            </p>)}
+            <p className='claseabrir text-center'>
+              <LoginStatus/>
+            </p>
+
           </div>          
         </div>
        {login && (<TableWithPagination idCat={idCat}/>)}   

@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import MenuFlotante from './MenuFlotante';
 import Like from './like';
 import CreatePick from './modal/CreatePick';
 import AuthLogin from './modal/AuthLogin'; 
@@ -7,10 +6,8 @@ import ModalRedes from './modal/ModalRedes';
 import { checkAuth }  from '../AuthMiddleware';  
 
 const API_BASE_URL = process.env.REACT_APP_URL_API
-const Home = (props) => {
-  
-  const idCat = props.idCat; 
-
+const Home = (props) => { 
+  const idCat = props.idCat;  
   const [currentStep, setcurrentStep] = useState(1);
   const [imagenActiva, setimagenActiva] = useState('');  
   const [textoActivo, settextoActivo] = useState('');  
@@ -34,20 +31,55 @@ const Home = (props) => {
     .then(response => response.json())
     .then(data => {  
       setIp(data.ip)
+    
+      const cat = localStorage.getItem('idCatg');     
+     if(!props.origin || parseInt(cat, 10)!== idCat){ 
       fetchData(data.ip)
+    }
+     else{
+
+      const storedPick = localStorage.getItem('pick');
+      const parsePick = JSON.parse(storedPick);  
+      setMuestras(parsePick)  
+ 
+      setPick(localStorage.getItem("id_pick"))     
+      sety_nLikes(localStorage.getItem("y_nLikes")) 
+
+      const step = localStorage.getItem('step'); 
+      setcurrentStep(parseInt(step, 10));
+
+      if(step=='2' || step=='3'){  
+          const storedPorce = localStorage.getItem('porcentaje');
+          const parsePorc = JSON.parse(storedPorce); 
+          setPorcentaje(parsePorc)
+          setimagenActiva(localStorage.getItem('imagen'))  
+          settextoActivo(localStorage.getItem('textoActivo'))  
+          fetchDataComments(localStorage.getItem("id_pick")) 
+      }  
+      
+     }
     })    
   };
  
   const  nextStep = () => { 
-    const totalSteps = document.getElementsByClassName('step').length;
+    const totalSteps = document.getElementsByClassName('step').length; 
     if (currentStep < totalSteps) {
-      setcurrentStep(  currentStep + 1 )    
-    } 
+      setcurrentStep(  currentStep + 1 )  
+      
+      localStorage.setItem("step",currentStep + 1 ) 
+    } else{
+      if (currentStep < 3) {
+        setcurrentStep(  currentStep + 1 )   
+        localStorage.setItem("step",currentStep + 1 ) 
+      } 
+    }
+    
   };
   
  const goToFirstStep = () => {
   fetchData(ip)
   setcurrentStep(1)   
+ 
   };
  
  const handleClickImagen = (id_choice,imagen, texto) => { 
@@ -68,7 +100,11 @@ const Home = (props) => {
       })
       .then(response => response.json())
       .then(data => { 
-        if(!data.error && data.data){  
+        if(!data.error && data.data){ 
+          localStorage.setItem("step",2) 
+          localStorage.setItem("porcentaje",JSON.stringify(data.data) )
+          localStorage.setItem("imagen",imagen) 
+          localStorage.setItem("textoActivo",texto) 
           setPorcentaje(data.data) 
           setimagenActiva(imagen)
           settextoActivo(texto)    
@@ -105,7 +141,14 @@ const Home = (props) => {
       if(!data.error && data.data){   
         setMuestras(data.data)  
         setPick(data.data?.[0]?.id)     
-        sety_nLikes(data.other)
+        sety_nLikes(data.other) 
+
+        localStorage.setItem("pick",JSON.stringify(data.data) )
+        localStorage.setItem("id_pick",data.data?.[0]?.id )
+        localStorage.setItem("y_nLikes",data.other)
+        localStorage.setItem("step",1)
+       if(idCat) localStorage.setItem("idCatg",idCat) 
+       
       }
     })  
   }; 
@@ -296,11 +339,11 @@ const agregarLikesComments = (id) => {
                           )}
                         
                         </div>
-                        <div className='nombre'>
+                        <div className='nombre text-center'>
                           <h3 className='text-white font-family-SpaceGrotesk-Bold'>
                           I'm on team
                           <span className='text-morado'> {textoActivo} </span>
-                          </h3>
+                          </h3>                      
                         </div>
                       </div>
                     </div>
@@ -521,7 +564,7 @@ const agregarLikesComments = (id) => {
               </div>
             </div>
           </div>
-          <MenuFlotante />
+          {/*<MenuFlotante />*/}
           <div class="modal fade" id="comentarios">
             <div class="modal-dialog modal-dialog-centered modal-md">
               <div class="modal-content">              

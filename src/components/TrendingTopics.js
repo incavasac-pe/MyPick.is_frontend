@@ -64,7 +64,8 @@ fetchDataTopCategory = (id) => {
           this.setState({ top_category:[] });  
         } else {              
             if (data.data) {    
-              this.setState({ top_category: data.data }); // Actualizar el estado con los valores de data.data               
+              this.setState({ top_category: data.data }); // Actualizar el estado con los valores de data.data    
+              this.changeTab(data.data[0]?.category_name,'')          
             }  
         }
       })  
@@ -77,15 +78,16 @@ fetchDataTopCategory = (id) => {
       fetch(`${API_BASE_URL}/list_category_with_trendingTopics`, {
         method: 'GET', 
         headers: {
-          'Content-Type': 'application/json'      
+          'Content-Type': 'application/json'       
         }  
       })
       .then(response => response.json())
       .then(data => {                     
             if (data.data) {  
               this.setState({ muestras: data.data }); // Actualizar el estado con los valores de data.data 
-              this.fetchDataTop3() 
-            }   
+              this.fetchDataTop3();
+              this.changeTab('Top Trending','')
+            }    
       }) 
     }
     if (muestras.length === 0) {

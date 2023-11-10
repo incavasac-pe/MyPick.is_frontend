@@ -1,6 +1,7 @@
 import React,  {useState} from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
+import Home1 from './components/Home1';
 import About from './components/About';
 import Contact from './components/Contact';
 import Sidebar from './components/Sidebar';
@@ -16,10 +17,12 @@ import Privacy from './components/Privacy';
 import Terms from './components/Terms';
 const App = () => {
   const [id, setIdcategory] = useState(''); 
-  const [name, setNamecategory] = useState(''); 
+  const [name, setNamecategory] = useState('');  
+
   const handleMenuDataChange = (newMenuData) => { 
     setIdcategory(newMenuData.id)
-    setNamecategory(newMenuData.name)
+    setNamecategory(newMenuData.name) 
+    
   };
   return (
     
@@ -29,8 +32,8 @@ const App = () => {
           <Menu  onMenuDataChange={handleMenuDataChange}   />
         </header>
         <Sidebar />
-        <Routes>
-            <Route path="/" element={<Home idCat={id}/>} />
+        <Routes> 
+            <Route path="/" element={<Home1 idCat={id}  />} />
             <Route path="/TrendingTopics" element={<TrendingTopics  idCat={id} name={name} />} />
             <Route path="/MyBookmarks" element={<MyBookmarks idCat={id}  />} />
             <Route path="/MyPicks" element={<MyPicks idCat={id} />} />
