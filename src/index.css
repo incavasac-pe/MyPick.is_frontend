@@ -320,7 +320,9 @@ header .buscador p{
 .claseabrir .solo-login{
   /*display: none;*/
 }
-
+.claseabrir .user-profile{
+  display: none;
+}
 #stepWizard .box-flex{
   display: flex;
   align-items: center;
