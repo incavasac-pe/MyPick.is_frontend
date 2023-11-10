@@ -27,8 +27,7 @@ class Comments extends Component {
       }
      
 
-    fetchDataComments = (id_pick) => {
-        console.log("buscar comentarios del id_pick ",id_pick)
+    fetchDataComments = (id_pick) => { 
         fetch(`${API_BASE_URL}/list_comments_bypicks?id_pick=${id_pick}`, {
             method: 'GET',
             headers: {
