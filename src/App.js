@@ -15,6 +15,7 @@ import ActivateAccount from './components/ActivateAccount';
 import ResetPassword from './components/ResetPassword';
 import Privacy from './components/Privacy';
 import Terms from './components/Terms';
+import SearchResults from "./components/SearchResults";
 const App = () => {
   const [id, setIdcategory] = useState(''); 
   const [name, setNamecategory] = useState('');  
@@ -34,6 +35,7 @@ const App = () => {
         <Sidebar />
         <Routes> 
             <Route path="/" element={<Home1 idCat={id}  />} />
+            <Route path="/SearchResults" element={<SearchResults idCat={id}  />} />
             <Route path="/TrendingTopics" element={<TrendingTopics  idCat={id} name={name} />} />
             <Route path="/MyBookmarks" element={<MyBookmarks idCat={id}  />} />
             <Route path="/MyPicks" element={<MyPicks idCat={id} />} />

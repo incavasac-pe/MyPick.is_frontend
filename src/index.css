@@ -760,6 +760,7 @@ header .buscador p{
 .text-gris-claro{
   color: #757E95;
 }
+
 .page-link:focus,
 .form-control:focus {
   box-shadow: none;

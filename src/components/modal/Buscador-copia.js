@@ -50,7 +50,7 @@ class Buscador extends Component {
     // Filtrar las muestras que coinciden con el término de búsqueda
     const resultados = muestras.filter((muestra) =>
       muestra.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    ); 
     this.setState({ searchTerm, resultados });
   };
 
@@ -69,17 +69,17 @@ class Buscador extends Component {
   handleClearSearch = () => {
     this.setState({ searchTerm: '', resultados: [] });
     const data =  { id:'',name:''}
-    this.props.onData(data);
+    this.props.onData(data); 
   };
-
+  
     removeModalBackdropClass = () => {
       const element = document.getElementById('buscador');
       element.style.display = 'none';
-      const body = document.body;
-
+      const body = document.body; 
+    
     const modalBackdrop = document.querySelector('.modal-backdrop');
     if (modalBackdrop) {
-      body.classList.remove('modal-open');
+      body.classList.remove('modal-open');   
       modalBackdrop.classList.remove('modal-backdrop','fade', 'show');
     }
   };
@@ -88,36 +88,36 @@ class Buscador extends Component {
     const { resultados, muestras } = this.state;
      if(!muestras){
       fetch(`${API_BASE_URL}/list_category?limit=${100}`, {
-        method: 'GET',
+        method: 'GET', 
         headers: {
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json'      
+        }  
       })
       .then(response => response.json())
-      .then(data => {
-        if(!data.error && data.data){
-            this.setState({ muestras: data.data });
-          }
+      .then(data => { 
+        if(!data.error && data.data){  
+            this.setState({ muestras: data.data }); 
+          }   
       }).catch(error => {
         // Manejar el error en caso de que ocurra
         console.error('Error:', error);
       });
     }
-    //buscar
-    const handleTdClick = (id,name) => {
-      this.setState({ searchTerm: name});
+    //buscar 
+    const handleTdClick = (id,name) => { 
+      this.setState({ searchTerm: name}); 
       const data =  { id,name}
-      this.props.onData(data);
+      this.props.onData(data); 
       this.removeModalBackdropClass()
-    };
+    }; 
     const muestrasMostradas = resultados.length > 0 ? resultados : muestras ;
-
+     
     if (!muestrasMostradas || muestrasMostradas.length === 0) {
       return <p>No se encontraron resultados.</p>;
     }
 
-
-
+ 
+  
     return (
       <table className="table table-busqueda table-borderless">
         <thead>
@@ -125,10 +125,10 @@ class Buscador extends Component {
             <th colSpan={2} className='table-titulo'>Top Topics</th>
           </tr>
         </thead>
-     {  muestrasMostradas &&
+     {  muestrasMostradas && 
           <tbody>
           {muestrasMostradas.map((muestra) => (
-            <tr key={muestra.id}  >
+            <tr key={muestra.id}  > 
               <td onClick={() => handleTdClick(muestra.id,muestra.name)}><span className='modal-titulo text-white'>{muestra.name}</span></td>
               <td align='right' className='text-morado'>
                 {/* <div className='align-items-center d-flex justify-content-end mt-2'>
@@ -139,33 +139,52 @@ class Buscador extends Component {
               </td>
             </tr>
           ))}
-        </tbody>}
+        </tbody>} 
       </table>
     );
   };
   
   render() {
     const { searchTerm, resultados } = this.state;
+    const showClearButton = searchTerm !== '' || resultados.length > 0;
 
     return (
-
-        <div className="form-group w-100 pc">
-          <div className='buscador'>
-            <div className='align-items-start busca d-flex justify-content-between position-relative'>
-              <div className='text-left'>
-                <button id="voiceButton" className="btn btn-search">
-                  <i className="fal fa-microphone"></i>
-                </button>
-              </div>
-              <input type="text" className="form-control input-search" placeholder="Search Anything..." />
-              <div className='text-right'>
-                <button type="button" className="btn btn-cleaner">
-                  <i className="fal fa-search"></i>
-                </button>
+ 
+      <div className="modal fade" id="buscador">
+        <div className="modal-dialog modal-lg">
+          <div className="modal-content">
+            <div className="modal-body">
+              <button type="button" className="close cerrar" data-dismiss="modal" >
+              <i className="far fa-times"></i>
+              </button>
+              <div className="row">
+                <div className="col-md-12 p-0">
+                  <div className="form-group">
+                    <div className='buscador'>
+                      <div className='align-items-start busca d-flex justify-content-between position-relative'>
+                        <div className='text-left'>
+                          <button id="voiceButton" className="btn btn-search">
+                            <i className="fal fa-microphone"></i>
+                          </button>
+                        </div>
+                        <input type="text" className="form-control input-search" placeholder="Search Anything..." value={searchTerm} onChange={this.handleInputChange} />
+                        <div className='text-right'>
+                          {showClearButton && (
+                            <button type="button" className="btn btn-cleaner" onClick={this.handleClearSearch}>
+                              <i className="far fa-times"></i>
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className='box-resultados'>{this.renderMuestras()}</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
    
     );
   }
