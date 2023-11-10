@@ -5,8 +5,7 @@ import TrendingTopics from "./TrendingTopics";
 import MyBookmarks from "./MyBookmarks";
 import MyPicks from "./MyPicks";
 
-const Home1 = (props) => {
-    console.log("home111111",props)
+const Home1 = (props) => { 
     const id = props.idCat;  
     const [activeTab, setActiveTab] = useState(1);
     const [origin, setOrigin] = useState(false);
