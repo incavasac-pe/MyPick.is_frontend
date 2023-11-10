@@ -343,7 +343,10 @@ const agregarLikesComments = (id) => {
                           <h3 className='text-white font-family-SpaceGrotesk-Bold'>
                           I'm on team
                           <span className='text-morado'> {textoActivo} </span>
-                          </h3>                      
+                          </h3>
+                          <a href="#" onClick={nextStep} className='text-morado d-inline-block font-family-SpaceGrotesk-Bold animate__heartBeat'>
+                            Continue  <i class="fas fa-chevron-double-right arrow-top"></i>
+                          </a>                      
                         </div>
                       </div>
                     </div>
