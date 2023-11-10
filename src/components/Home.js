@@ -139,6 +139,7 @@ const Home = (props) => {
     .then(response => response.json())
     .then(data => { 
       if(!data.error && data.data){   
+        setcurrentStep(1)  
         setMuestras(data.data)  
         setPick(data.data?.[0]?.id)     
         sety_nLikes(data.other) 
