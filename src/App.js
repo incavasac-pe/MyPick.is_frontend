@@ -17,10 +17,12 @@ import Privacy from './components/Privacy';
 import Terms from './components/Terms';
 const App = () => {
   const [id, setIdcategory] = useState(''); 
-  const [name, setNamecategory] = useState(''); 
+  const [name, setNamecategory] = useState('');  
+  
   const handleMenuDataChange = (newMenuData) => { 
     setIdcategory(newMenuData.id)
-    setNamecategory(newMenuData.name)
+    setNamecategory(newMenuData.name) 
+    
   };
   return (
     
@@ -33,7 +35,7 @@ const App = () => {
         <Routes>
             {/*<Route path="/" element={<Home idCat={id}/>} />*/}
             {/*<Route path="/" element={<Home idCat={id}/>} />*/}
-            <Route path="/" element={<Home1 idCat={id}/>} />
+            <Route path="/" element={<Home1 idCat={id}  />} />
             <Route path="/TrendingTopics" element={<TrendingTopics  idCat={id} name={name} />} />
             <Route path="/MyBookmarks" element={<MyBookmarks idCat={id}  />} />
             <Route path="/MyPicks" element={<MyPicks idCat={id} />} />

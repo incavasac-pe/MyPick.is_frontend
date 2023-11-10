@@ -8,9 +8,9 @@ class Menu extends Component {
         super(props);
         this.state = {
           searchTerm: '',      
-        };        
+        };       
       }
-         
+        
     handleDataFromChild = (data) => {  
         this.setState({ searchTerm: data.name }); 
         this.props.onMenuDataChange(data);

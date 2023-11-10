@@ -1647,3 +1647,6 @@ ul{
       margin: 1.75rem auto;
   }
 }
+.claseabrir .user-profile{
+  display: none;
+}

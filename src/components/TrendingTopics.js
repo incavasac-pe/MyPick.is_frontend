@@ -64,7 +64,8 @@ fetchDataTopCategory = (id) => {
           this.setState({ top_category:[] });  
         } else {              
             if (data.data) {    
-              this.setState({ top_category: data.data }); // Actualizar el estado con los valores de data.data               
+              this.setState({ top_category: data.data }); // Actualizar el estado con los valores de data.data    
+              this.changeTab(data.data[0]?.category_name,'')          
             }  
         }
       })  
