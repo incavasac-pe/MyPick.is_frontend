@@ -5,13 +5,18 @@ import TrendingTopics from "./TrendingTopics";
 import MyBookmarks from "./MyBookmarks";
 import MyPicks from "./MyPicks";
 
-const Home1 = () => {
+const Home1 = (props) => {
+    console.log("home111111",props)
+    const id = props.idCat;  
     const [activeTab, setActiveTab] = useState(1);
+    const [origin, setOrigin] = useState(false);
+  
 
     const handleTabClick = (tabNumber) => {
         setActiveTab(tabNumber);
+        setOrigin(true)
     };
-
+  
     return (
         <div>
 
@@ -52,22 +57,22 @@ const Home1 = () => {
             <div>
                 {activeTab === 1 &&
                 <div>
-                    <Home/>
+                    <Home origin={origin} idCat={id}  />
                 </div>
                 }
                 {activeTab === 2 &&
                 <div>
-                    <TrendingTopics/>
+                    <TrendingTopics idCat={id}/>
                 </div>
                 }
                 {activeTab === 3 &&
                 <div>
-                    <MyBookmarks/>
+                    <MyBookmarks idCat={id}/>
                 </div>
                 }
                 {activeTab === 4 &&
                 <div>
-                    <MyPicks/>
+                    <MyPicks idCat={id}/>
                 </div>
                 }
             </div>

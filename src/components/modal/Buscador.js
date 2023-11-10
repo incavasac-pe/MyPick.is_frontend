@@ -6,10 +6,11 @@ class Buscador extends Component {
     super(props);
     this.state = {
       searchTerm: '', // Almacena el término de búsqueda       
-      resultados: [], // Resultados de búsqueda
+      resultados: [], // Resultados de búsqueda    
     }; 
-  }
- 
+   
+  }  
+  
   componentDidMount() {
     // Verificar si el navegador es compatible con la API Web Speech
     if ('webkitSpeechRecognition' in window) {
@@ -71,6 +72,17 @@ class Buscador extends Component {
     this.props.onData(data); 
   };
   
+    removeModalBackdropClass = () => {
+      const element = document.getElementById('buscador');
+      element.style.display = 'none';
+      const body = document.body; 
+    
+    const modalBackdrop = document.querySelector('.modal-backdrop');
+    if (modalBackdrop) {
+      body.classList.remove('modal-open');   
+      modalBackdrop.classList.remove('modal-backdrop','fade', 'show');
+    }
+  };
 
   renderMuestras = () => {
     const { resultados, muestras } = this.state;
@@ -96,12 +108,16 @@ class Buscador extends Component {
       this.setState({ searchTerm: name}); 
       const data =  { id,name}
       this.props.onData(data); 
+      this.removeModalBackdropClass()
     }; 
     const muestrasMostradas = resultados.length > 0 ? resultados : muestras ;
      
     if (!muestrasMostradas || muestrasMostradas.length === 0) {
       return <p>No se encontraron resultados.</p>;
     }
+
+ 
+  
     return (
       <table className="table table-busqueda table-borderless">
         <thead>
@@ -127,17 +143,18 @@ class Buscador extends Component {
       </table>
     );
   };
-
+  
   render() {
     const { searchTerm, resultados } = this.state;
     const showClearButton = searchTerm !== '' || resultados.length > 0;
 
     return (
+ 
       <div className="modal fade" id="buscador">
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">
-              <button type="button" className="close cerrar" data-dismiss="modal">
+              <button type="button" className="close cerrar" data-dismiss="modal" >
               <i className="far fa-times"></i>
               </button>
               <div className="row">
@@ -168,6 +185,7 @@ class Buscador extends Component {
           </div>
         </div>
       </div>
+   
     );
   }
 }
