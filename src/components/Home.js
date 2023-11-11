@@ -292,7 +292,7 @@ const agregarLikesComments = (id) => {
                           <img src={`${API_BASE_URL}/see_photo?img=${muestras?.[0]?.photo1_name}`} width={"282px"}  height={"282px"} alt="ciudad"  />
                         </div>
                         <div className='nombre link_url' style={{ cursor: 'pointer' }}>
-                           <a className='text-white font-family-SpaceGrotesk-Bold'  href={muestras?.[0]?.url_choice1} target="_blank">{ muestras?.[0]?.choice1_name}</a>
+                           <a className='text-white font-family-SpaceGrotesk-Bold'  href={muestras?.[0]?.url_choice1+'&tag=plsq-20'} target="_blank">{ muestras?.[0]?.choice1_name}</a>
                         </div>
                       </div>
                       <div className='columna-refresh'>
@@ -309,7 +309,7 @@ const agregarLikesComments = (id) => {
                         </div>
                         
                         <div className='nombre link_url' style={{ cursor: 'pointer' }}>
-                           <a className='text-white font-family-SpaceGrotesk-Bold'  href={muestras?.[0]?.url_choice2} target="_blank">{ muestras?.[0]?.choice2_name}</a>
+                           <a className='text-white font-family-SpaceGrotesk-Bold'  href={muestras?.[0]?.url_choice2+'&tag=plsq-20'} target="_blank">{ muestras?.[0]?.choice2_name}</a>
                         </div>
                       </div>
                     </div>
