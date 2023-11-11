@@ -126,7 +126,6 @@ const LoginStatus = () => {
   const handleEditProfile = () => {
     // Lógica para editar perfil
     navigate('/MyProfile');
-    console.log('Editar perfil');
   };
    
   const handleRegister = (e) => {

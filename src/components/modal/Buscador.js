@@ -1,17 +1,11 @@
-import React, { Component } from 'react';
-const API_BASE_URL = process.env.REACT_APP_URL_API
-
-class Buscador extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      searchTerm: '', // Almacena el término de búsqueda       
-      resultados: [], // Resultados de búsqueda    
-    }; 
-   
-  }  
+import React, { useEffect ,useState} from 'react';
+import { useNavigate  } from 'react-router-dom';
+ 
+const Buscador = (props) => {
+  const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState('');
+  useEffect(() => {
   
-  componentDidMount() {
     // Verificar si el navegador es compatible con la API Web Speech
     if ('webkitSpeechRecognition' in window) {
       const recognition = new window.webkitSpeechRecognition();
@@ -23,7 +17,7 @@ class Buscador extends Component {
       // Evento que se ejecuta cuando se detecta la voz del usuario
       recognition.onresult = (event) => {
         const transcript = event.results[0][0].transcript;
-        this.handleVoiceSearch(transcript);
+        handleVoiceSearch(transcript);
       };
 
       // Evento que se ejecuta cuando se produce un error en el reconocimiento de voz
@@ -41,114 +35,24 @@ class Buscador extends Component {
     } else {
       console.log('El navegador no es compatible con la API Web Speech');
     }
-  }
-
-  handleInputChange = (event) => {
-    const searchTerm = event.target.value;
-    const { muestras } = this.state;
-
-    // Filtrar las muestras que coinciden con el término de búsqueda
-    const resultados = muestras.filter((muestra) =>
-      muestra.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    this.setState({ searchTerm, resultados });
-  };
-
-  handleVoiceSearch = (transcript) => {
-    
-    const { muestras } = this.state;
-
-    // Filtrar las muestras que coinciden con el término de búsqueda por voz
-    const resultados = muestras.filter((muestra) =>
-      muestra.name.toLowerCase().includes(transcript.toLowerCase())
-    );
-
-    this.setState({ searchTerm: transcript, resultados });
-  };
-
-  handleClearSearch = () => {
-    this.setState({ searchTerm: '', resultados: [] });
-    const data =  { id:'',name:''}
-    this.props.onData(data);
-  };
-
-    removeModalBackdropClass = () => {
-      const element = document.getElementById('buscador');
-      element.style.display = 'none';
-      const body = document.body;
-
-    const modalBackdrop = document.querySelector('.modal-backdrop');
-    if (modalBackdrop) {
-      body.classList.remove('modal-open');
-      modalBackdrop.classList.remove('modal-backdrop','fade', 'show');
-    }
-  };
-
-  renderMuestras = () => {
-    const { resultados, muestras } = this.state;
-     if(!muestras){
-      fetch(`${API_BASE_URL}/list_category?limit=${100}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(response => response.json())
-      .then(data => {
-        if(!data.error && data.data){
-            this.setState({ muestras: data.data });
-          }
-      }).catch(error => {
-        // Manejar el error en caso de que ocurra
-        console.error('Error:', error);
-      });
-    }
-    //buscar
-    const handleTdClick = (id,name) => {
-      this.setState({ searchTerm: name});
-      const data =  { id,name}
-      this.props.onData(data);
-      this.removeModalBackdropClass()
+  }, []);
+ 
+    const handleInputChange = (event) => {
+      const searchTermV = event.target.value; 
+      setSearchTerm(searchTermV) 
     };
-    const muestrasMostradas = resultados.length > 0 ? resultados : muestras ;
 
-    if (!muestrasMostradas || muestrasMostradas.length === 0) {
-      return <p>No se encontraron resultados.</p>;
-    }
+    const handleSearchChange = () => {       
+      const data =  { searchTerm}  
+      props.onData(data);
+      navigate('/SearchResults'); // Redirigir al usuario a la página de perfil   
+    };
 
-
-
-    return (
-      <table className="table table-busqueda table-borderless">
-        <thead>
-          <tr>
-            <th colSpan={2} className='table-titulo'>Top Topics</th>
-          </tr>
-        </thead>
-     {  muestrasMostradas &&
-          <tbody>
-          {muestrasMostradas.map((muestra) => (
-            <tr key={muestra.id}  >
-              <td onClick={() => handleTdClick(muestra.id,muestra.name)}><span className='modal-titulo text-white'>{muestra.name}</span></td>
-              <td align='right' className='text-morado'>
-                {/* <div className='align-items-center d-flex justify-content-end mt-2'>
-                    <span className='mr-3 modal-picks'>{muestra.picks}</span>
-                    <img src= {muestra.imagen1} alt={muestra.name}  className='img-busqueda-small'/>
-                    <img src= {muestra.imagen2} alt={muestra.name} className='img-busqueda-small sobrepuesta pc'/>
-                </div> */}
-              </td>
-            </tr>
-          ))}
-        </tbody>}
-      </table>
-    );
-  };
-  
-  render() {
-    const { searchTerm, resultados } = this.state;
+    const handleVoiceSearch = (transcript) => { 
+      setSearchTerm(transcript)  
+    };
 
     return (
-
         <div className="form-group w-100 pc">
           <div className='buscador'>
             <div className='align-items-start busca d-flex justify-content-between position-relative'>
@@ -156,10 +60,11 @@ class Buscador extends Component {
                 <button id="voiceButton" className="btn btn-search">
                   <i className="fal fa-microphone"></i>
                 </button>
-              </div>
-              <input type="text" className="form-control input-search" placeholder="Search Anything..." />
+              </div> 
+              <input type="text" className="form-control input-search" placeholder="Search Anything..."  value={searchTerm} onChange={handleInputChange} />
+
               <div className='text-right'>
-                <button type="button" className="btn btn-cleaner">
+                <button type="button" className="btn btn-cleaner" onClick={handleSearchChange} >
                   <i className="fal fa-search"></i>
                 </button>
               </div>
@@ -169,6 +74,6 @@ class Buscador extends Component {
    
     );
   }
-}
+ 
 
 export default Buscador;

@@ -56,7 +56,7 @@ const Home1 = (props) => {
             <div>
                 {activeTab === 1 &&
                 <div>
-                    <Home origin={origin} idCat={id}  />
+                    <Home origin={origin}   />
                 </div>
                 }
                 {activeTab === 2 &&

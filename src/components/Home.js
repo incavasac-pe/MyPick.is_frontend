@@ -31,9 +31,8 @@ const Home = (props) => {
     .then(response => response.json())
     .then(data => {  
       setIp(data.ip)
-    
-      const cat = localStorage.getItem('idCatg');     
-     if(!props.origin || parseInt(cat, 10)!== idCat){ 
+      
+     if(!props.origin){ 
       fetchData(data.ip)
     }
      else{
@@ -120,7 +119,7 @@ const Home = (props) => {
     
     fetchIp();
 
-  }, [idCat]);
+  }, []);
 
   const fetchData = async (ip) => {    
     setMuestras(null)    
@@ -130,7 +129,7 @@ const Home = (props) => {
       const parsedUser = JSON.parse(storedUser);     
       email = parsedUser.email 
     }
-    fetch(`${API_BASE_URL}/list_all_picks?limit=${1}&id_category=${idCat}&ip_maq=${ip}&email=${email}`, {
+    fetch(`${API_BASE_URL}/list_all_picks?limit=${1}&ip_maq=${ip}&email=${email}`, {
       method: 'GET', 
       headers: {
         'Content-Type': 'application/json'      
@@ -148,8 +147,6 @@ const Home = (props) => {
         localStorage.setItem("id_pick",data.data?.[0]?.id )
         localStorage.setItem("y_nLikes",data.other)
         localStorage.setItem("step",1)
-       if(idCat) localStorage.setItem("idCatg",idCat) 
-       
       }
     })  
   }; 

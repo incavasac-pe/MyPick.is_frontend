@@ -1,21 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
+const API_BASE_URL = process.env.REACT_APP_URL_API 
 
-const data = [
-    { id: 1, pickName: 'Planet Earth', category: 'Nature', numOfPicks: '2.5K Picks', datePicked: '5m Ago', mostPicked: 'Flowers' },
-    { id: 2, pickName: 'Premier League', category: 'Soccer', numOfPicks: '2.5K Picks', datePicked: '14m Ago', mostPicked: 'PSG' },
-    { id: 3, pickName: 'Champions League', category: 'Soccer', numOfPicks: '8.5K Picks', datePicked: '52m Ago', mostPicked: 'Liverpool' },
-    { id: 4, pickName: 'Nature', category: 'Nature', numOfPicks: '9.5K Picks', datePicked: '5m Ago', mostPicked: 'Flowers' },
-    { id: 5, pickName: 'Musicians', category: 'Music', numOfPicks: '6.5K Picks', datePicked: '56m Ago', mostPicked: 'Otro' },
-    { id: 6, pickName: 'Coffee', category: 'Snacks', numOfPicks: '9K Picks', datePicked: '50m Ago', mostPicked: 'Otros' },
-];
-
-const SearchResults = () => {
+const SearchResults = (props) => { 
     const [currentPage, setCurrentPage] = useState(1);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [data, setSearch] = useState([]);
+
+    useEffect(() => {     
+        if(props.search!='') {
+        fetch(`${API_BASE_URL}/list_all_picks_search?search=${props.search}`, {
+          method: 'GET',      
+          headers: {
+            'Content-Type': 'application/json'      
+          }
+        })
+        .then(response => response.json())
+        .then(data => { 
+          if(!data.error && data.data){     
+            setSearch(data.data);
+            setCurrentPage(1);
+           }else{
+            setSearch([])
+           }
+        }) 
+    }else {
+        setSearch([])
+    }
+      }, [props.search]); 
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
-    };
+    }; 
 
     const handleRowsPerPageChange = (event) => {
         setRowsPerPage(Number(event.target.value));
@@ -55,21 +70,21 @@ const SearchResults = () => {
                                         <td>
                                             <div className='table-img d-flex align-items-center justify-content-start'>
                                                 <div>
-                                                    <img src={require('./img/paris.jpg')} alt="equipo"/>
-                                                    <img src={require('./img/washinton.jpg')} alt="Imagen 2" className='pc'/>
+                                                <img src={`${API_BASE_URL}/see_photo?img=${row.photo1_name}`} alt={`${row.photo1_name}`} />
+                                                <img src={`${API_BASE_URL}/see_photo?img=${row.photo2_name}`} alt={`${row.photo2_name}`}  className='pc'/>
                                                 </div>
                                                 <div>
-                                                    <span className='ml-3 d-block'>- {row.datePicked}</span>
-                                                    <span className='ml-3 d-block'>- {row.mostPicked}</span>
+                                                <span className='ml-3 d-block'>- {row.choice1_name}</span>
+                                                <span className='ml-3 d-block'>- {row.choice2_name}</span>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>{row.category}</td>
-                                        <td className='pc'>{row.numOfPicks}</td>
+                                        <td className='pc'>{row.pick_ranking ?? '0'} Picks</td>
                                         <td>
                                             <div className='table-img d-flex align-items-center justify-content-start'>
-                                                <img src={require('./img/paris.jpg')} alt="equipo"/>
-                                                <span className='ml-3'>{row.mostPicked}</span>
+                                            <img src={`${API_BASE_URL}/see_photo?img=${row.selectd1 >= row.selectd2 ? row.photo1_name : row.photo2_name}`} alt="equipo" />
+                                            <span className='ml-3'>{ row.selectd1 >= row.selectd2 ? row.choice1_name : row.choice2_name }</span>
                                             </div>
 
                                         </td>
