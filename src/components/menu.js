@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { openNav } from './Sidebar';
 import Buscador from './modal/Buscador';
 import LoginStatus from './user/LoginStatus';
+
  
 class Menu extends Component {
     constructor(props) {
@@ -14,6 +15,7 @@ class Menu extends Component {
     handleDataFromChild = (data) => {  
         this.setState({ searchTerm: data.name }); 
         this.props.onMenuDataChange(data);
+        
       };
     render() {
         const { searchTerm } = this.state;
@@ -33,18 +35,18 @@ class Menu extends Component {
                     <div className='movil' data-toggle="modal" data-target="#buscador">
                         <div className='text-center buscador_movil'><i className="fal fa-search"></i></div>
                     </div>
-                    <div className='buscador pc' data-toggle="modal" data-target="#buscador">
+                    <div className='buscador pc d-none' data-toggle="modal" data-target="#buscador">
                         <div className='align-items-start busca d-flex justify-content-between position-relative'>
                             <div className='text-left'><i className="fal fa-search"></i></div>
                             <p className='mb-0 text-center'> {searchTerm ?? 'Search Anything...'} </p>
                             <div className='text-right'><i className="fal fa-microphone"></i></div>
                         </div>
-                    </div>                
+                    </div>
+                    <Buscador onData={this.handleDataFromChild}/>
                 </div>
                 <div className='col-xl-4 col-5 d-flex justify-content-center align-items-center'>
                     <LoginStatus />
                 </div>
-                <Buscador onData={this.handleDataFromChild}/>
             </div>
             
         );

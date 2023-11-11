@@ -31,9 +31,8 @@ const Home = (props) => {
     .then(response => response.json())
     .then(data => {  
       setIp(data.ip)
-    
-      const cat = localStorage.getItem('idCatg');     
-     if(!props.origin || parseInt(cat, 10)!== idCat){ 
+      
+     if(!props.origin){ 
       fetchData(data.ip)
     }
      else{
@@ -120,7 +119,7 @@ const Home = (props) => {
     
     fetchIp();
 
-  }, [idCat]);
+  }, []);
 
   const fetchData = async (ip) => {    
     setMuestras(null)    
@@ -130,7 +129,7 @@ const Home = (props) => {
       const parsedUser = JSON.parse(storedUser);     
       email = parsedUser.email 
     }
-    fetch(`${API_BASE_URL}/list_all_picks?limit=${1}&id_category=${idCat}&ip_maq=${ip}&email=${email}`, {
+    fetch(`${API_BASE_URL}/list_all_picks?limit=${1}&ip_maq=${ip}&email=${email}`, {
       method: 'GET', 
       headers: {
         'Content-Type': 'application/json'      
@@ -148,8 +147,6 @@ const Home = (props) => {
         localStorage.setItem("id_pick",data.data?.[0]?.id )
         localStorage.setItem("y_nLikes",data.other)
         localStorage.setItem("step",1)
-       if(idCat) localStorage.setItem("idCatg",idCat) 
-       
       }
     })  
   }; 
@@ -295,7 +292,7 @@ const agregarLikesComments = (id) => {
                           <img src={`${API_BASE_URL}/see_photo?img=${muestras?.[0]?.photo1_name}`} width={"282px"}  height={"282px"} alt="ciudad"  />
                         </div>
                         <div className='nombre link_url' style={{ cursor: 'pointer' }}>
-                           <a className='text-white font-family-SpaceGrotesk-Bold'  href={muestras?.[0]?.url_choice1} target="_blank">{ muestras?.[0]?.choice1_name}</a>
+                           <a className='text-white font-family-SpaceGrotesk-Bold'  href={muestras?.[0]?.url_choice1+'&tag=plsq-20'} target="_blank">{ muestras?.[0]?.choice1_name}</a>
                         </div>
                       </div>
                       <div className='columna-refresh'>
@@ -312,7 +309,7 @@ const agregarLikesComments = (id) => {
                         </div>
                         
                         <div className='nombre link_url' style={{ cursor: 'pointer' }}>
-                           <a className='text-white font-family-SpaceGrotesk-Bold'  href={muestras?.[0]?.url_choice2} target="_blank">{ muestras?.[0]?.choice2_name}</a>
+                           <a className='text-white font-family-SpaceGrotesk-Bold'  href={muestras?.[0]?.url_choice2+'&tag=plsq-20'} target="_blank">{ muestras?.[0]?.choice2_name}</a>
                         </div>
                       </div>
                     </div>
