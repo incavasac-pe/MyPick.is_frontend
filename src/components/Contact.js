@@ -18,11 +18,10 @@ const Contact = () => {
     description: '', 
     privacyPolicy: '',
   });
+    const [isDisable, setIsDisable] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
  
-  
-  
-
+   
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;  
     const fieldValue = type === 'checkbox' ? checked : value;
