@@ -1,7 +1,6 @@
 import React, { useState,useEffect,useRef  } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import sleep from '@react-corekit/sleep'; 
+import 'react-toastify/dist/ReactToastify.css'; 
 import {RotatingLines} from 'react-loader-spinner';
 const API_BASE_URL = process.env.REACT_APP_URL_API
 
@@ -187,10 +186,13 @@ fetch(imageUrl)
               .then(response => {            
                 if (response.status===201){                   
                     toast.success('Created picks successfully', {
-                      position: toast.POSITION.TOP_RIGHT
-                  });
-                  sleep(4000);
-                  window.location.reload()
+                      position: toast.POSITION.TOP_RIGHT,autoClose:3000
+                  }); 
+                   
+              setTimeout(() => {     
+                window.location.reload()           
+              },3000);   
+                
                 } 
               })  
              

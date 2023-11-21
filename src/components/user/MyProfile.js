@@ -8,15 +8,17 @@ const API_BASE_URL = process.env.REACT_APP_URL_API
 
 const MyProfile = () => {
   const location = useLocation();
-  const navigate = useNavigate(); // Hook de navegación
+  const navigate = useNavigate(); // Hook de navegación 
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState('');
   const [new_email, setEmailNew] = useState('');  
-  const [email, setEmail] = useState('');  
- 
+  const [email, setEmail] = useState('');    
   const [errors, setErrors] = useState({});
   
-  useEffect(() => { 
+  useEffect(() => {  
+    if (location.pathname === '/activate') {
+      window.location.reload();
+    }
     const body = document.body; 
     if (location.state && location.state.modalOpen) {
       body.classList.add('modal-open'); 
@@ -35,11 +37,14 @@ const MyProfile = () => {
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);     
       setName (parsedUser.name)
-      setEmail(parsedUser.email) 
+      setEmail(parsedUser.email)      
+     
     }else{
       navigate('/'); // Redirigir al usuario a la página de home
      }
-  }, [navigate,location.state]);
+    
+
+  }, [navigate,location.state,location.pathname]);
  
   const removeModalBackdropClass = () => {
     const modalBackdrop = document.querySelector('.modal-backdrop');

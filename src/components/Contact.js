@@ -19,7 +19,9 @@ const Contact = () => {
     privacyPolicy: '',
   });
   const [isChecked, setIsChecked] = useState(false);
-  const [isDisable, setIsDisable] = useState(false);
+ 
+  
+  
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;  
