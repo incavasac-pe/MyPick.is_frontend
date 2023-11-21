@@ -11,6 +11,7 @@ const Home = (props) => {
   const [currentStep, setcurrentStep] = useState(1);
   const [imagenActiva, setimagenActiva] = useState('');  
   const [textoActivo, settextoActivo] = useState('');  
+  const [urlActivo, seturlActivo] = useState('');  
   const [login, setlogin] = useState('');
   const [muestras, setMuestras] = useState(null);
   const [porciento, setPorcentaje] = useState(null); 
@@ -53,6 +54,7 @@ const Home = (props) => {
           setPorcentaje(parsePorc)
           setimagenActiva(localStorage.getItem('imagen'))  
           settextoActivo(localStorage.getItem('textoActivo'))  
+          seturlActivo(localStorage.getItem('urlActivo'))
           fetchDataComments(localStorage.getItem("id_pick")) 
       }  
       
@@ -81,7 +83,7 @@ const Home = (props) => {
  
   };
  
- const handleClickImagen = (id_choice,imagen, texto) => { 
+ const handleClickImagen = (id_choice,imagen, texto,url) => { 
  
       const storedUser = localStorage.getItem('user');
       let email = 'default@test.com';
@@ -104,10 +106,12 @@ const Home = (props) => {
           localStorage.setItem("porcentaje",JSON.stringify(data.data) )
           localStorage.setItem("imagen",imagen) 
           localStorage.setItem("textoActivo",texto) 
+          localStorage.setItem("urlActivo",url) 
           setPorcentaje(data.data) 
           setimagenActiva(imagen)
           settextoActivo(texto)    
-          setcurrentStep(2)  
+          seturlActivo(url)
+          setcurrentStep(2)   
           fetchDataComments(id_pick)
         }
       })    
@@ -129,7 +133,7 @@ const Home = (props) => {
       const parsedUser = JSON.parse(storedUser);     
       email = parsedUser.email 
     }
-    fetch(`${API_BASE_URL}/list_all_picks?limit=${1}&ip_maq=${ip}&email=${email}`, {
+    fetch(`${API_BASE_URL}/list_all_picks?limit=${1}&ip_maq=${ip}&email=${email}&id_pick=${id_pick}`, {
       method: 'GET', 
       headers: {
         'Content-Type': 'application/json'      
@@ -287,12 +291,14 @@ const agregarLikesComments = (id) => {
                       <div className='columna'>
                         <div
                           className={`box-img ${imagenActiva === muestras?.[0]?.photo1_name ? 'activo' : ''}`}
-                          onClick={() => handleClickImagen(muestras?.[0]?.id_choice1, muestras?.[0]?.photo1_name, muestras?.[0]?.choice1_name)}
+                          onClick={() => handleClickImagen(muestras?.[0]?.id_choice1, muestras?.[0]?.photo1_name, muestras?.[0]?.choice1_name,muestras?.[0]?.url_choice1)}
                         >
                           <img src={`${API_BASE_URL}/see_photo?img=${muestras?.[0]?.photo1_name}`} width={"282px"}  height={"282px"} alt="ciudad"  />
                         </div>
                         <div className='nombre link_url' style={{ cursor: 'pointer' }}>
-                           <a className='text-white font-family-SpaceGrotesk-Bold'  href={muestras?.[0]?.url_choice1+'&tag=plsq-20'} target="_blank">{ muestras?.[0]?.choice1_name}</a>
+                           <a className='text-white font-family-SpaceGrotesk-Bold' href={muestras?.[0]?.url_choice1+'&tag=plsq-20'} target="_blank">
+                {muestras?.[0]?.choice1_name.length > 70 ? `${muestras?.[0]?.choice1_name.substring(0, 70)}...` : muestras?.[0]?.choice1_name}
+              </a>
                         </div>
                       </div>
                       <div className='columna-refresh'>
@@ -303,14 +309,16 @@ const agregarLikesComments = (id) => {
                       <div className='columna'>
                         <div
                           className={`box-img ${imagenActiva === muestras?.[0]?.photo2_name ? 'activo' : ''}`}
-                          onClick={() => handleClickImagen(muestras?.[0]?.id_choice2,  muestras?.[0]?.photo2_name, muestras?.[0]?.choice2_name)}
+                          onClick={() => handleClickImagen(muestras?.[0]?.id_choice2,  muestras?.[0]?.photo2_name, muestras?.[0]?.choice2_name,muestras?.[0]?.url_choice2)}
                         >
                           <img src={`${API_BASE_URL}/see_photo?img=${muestras?.[0]?.photo2_name}`} width={"282px"}  height={"282px"} alt="ciudad" />
                         </div>
                         
                         <div className='nombre link_url' style={{ cursor: 'pointer' }}>
-                           <a className='text-white font-family-SpaceGrotesk-Bold'  href={muestras?.[0]?.url_choice2+'&tag=plsq-20'} target="_blank">{ muestras?.[0]?.choice2_name}</a>
-                        </div>
+                        <a className='text-white font-family-SpaceGrotesk-Bold' href={muestras?.[0]?.url_choice2+'&tag=plsq-20'} target="_blank">
+                            {muestras?.[0]?.choice2_name.length > 70 ? `${muestras?.[0]?.choice2_name.substring(0, 70)}...` : muestras?.[0]?.choice2_name}
+                          </a>
+                           </div>
                       </div>
                     </div>
                     <div className='row'>
@@ -339,8 +347,11 @@ const agregarLikesComments = (id) => {
                         </div>
                         <div className='nombre text-center'>
                           <h3 className='text-white font-family-SpaceGrotesk-Bold'>
-                          I'm on team
-                          <span className='text-morado'> {textoActivo} </span>
+                              I'm on team 
+                              <span className='text-morado'>   
+                              <a className='text-white font-family-SpaceGrotesk-Bold' href={urlActivo} target="_blank">
+                              &nbsp;{textoActivo.length > 70 ? `${textoActivo.substring(0, 70)}... ` : textoActivo}
+                              </a></span>
                           </h3>
                           <a href="#" onClick={nextStep} className='text-morado d-inline-block font-family-SpaceGrotesk-Bold animate__heartBeat'>
                             Continue  <i class="fas fa-chevron-double-right arrow-top"></i>
@@ -375,7 +386,8 @@ const agregarLikesComments = (id) => {
                             </div>
                         </div>
                         <div className='nombre'>
-                          <h3 className='text-white font-family-SpaceGrotesk-Bold'>{muestras?.[0]?.choice1_name}</h3>
+                          <a className='text-white font-family-SpaceGrotesk-Bold' href={muestras?.[0]?.url_choice1+'&tag=plsq-20'} target="_blank"> 
+                         {muestras?.[0]?.choice1_name.length > 70 ? `${muestras?.[0]?.choice1_name.substring(0, 70)}...` : muestras?.[0]?.choice1_name}</a>
                         </div>
                       </div>
                       <div className='columna-refresh'>
@@ -394,7 +406,9 @@ const agregarLikesComments = (id) => {
                             </div>
                         </div>
                         <div className='nombre'>
-                          <h3 className='text-white font-family-SpaceGrotesk-Bold'>{ muestras?.[0]?.choice2_name}</h3>
+                        <a className='text-white font-family-SpaceGrotesk-Bold' href={muestras?.[0]?.url_choice2+'&tag=plsq-20'} target="_blank"> 
+                          {muestras?.[0]?.choice2_name.length > 70 ? `${muestras?.[0]?.choice2_name.substring(0, 70)}...` : muestras?.[0]?.choice2_name}
+                          </a>
                         </div>
                       </div>
                     </div>
@@ -417,10 +431,12 @@ const agregarLikesComments = (id) => {
 
                     {
                     comentarios.map((comentario) => (
+          
                         <div className="box-comentario"
                             key={
                                 comentario.id
                         }>
+                           { comentario.usuario !='' &&
                             <div className="content">
                                 <div className="avatar">
                                     <img src={
@@ -533,6 +549,7 @@ const agregarLikesComments = (id) => {
                                     )
                                 } </div>
                             </div>
+                          }
                             <div className="footer"></div>
                         </div>
                     ))

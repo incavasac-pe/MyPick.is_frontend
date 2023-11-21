@@ -1,8 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import { useNavigate,useLocation  } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import sleep from '@react-corekit/sleep';
+import 'react-toastify/dist/ReactToastify.css'; 
 import FacebookLogin from 'react-facebook-login';
 import { GoogleOAuthProvider ,GoogleLogin} from '@react-oauth/google'; 
 import jwt_decode from "jwt-decode";
@@ -22,13 +21,13 @@ const LoginStatus = () => {
       const storedUser = localStorage.getItem('user');
       const storedUserPhoto = localStorage.getItem('photo');
     if (storedUser) {
+      setLoggedIn(true); 
       const parsedUser = JSON.parse(storedUser);     
       const parsedUserPhoto = JSON.parse(storedUserPhoto);
     
       setName (parsedUser.name)
-      setEmail(parsedUser.email)
-      setLoggedIn(true); 
-        setUser({ name: parsedUser.name, photo: parsedUserPhoto?.photo ?? '', email: parsedUser.email });
+      setEmail(parsedUser.email) 
+        setUser({ name: parsedUser.name, photo: parsedUserPhoto?.photo ?? '', email: parsedUser.email }); 
     }
    
   }, [location.state]);
@@ -71,8 +70,10 @@ const LoginStatus = () => {
                  setUser({ name: data.data.user.full_name, photo: `${API_BASE_URL}/see_photo?img=${data.data.user.photo}` , email: data.data.user.email,token:data.data.token});                 
                  localStorage.setItem('user', JSON.stringify({ name: data.data.user.full_name,  email: data.data.user.email,token:data.data.token,nick:data.data.user.username}));
                  if(data.data.user.photo!=null)   localStorage.setItem('photo', JSON.stringify({ photo: `${API_BASE_URL}/see_photo?img=${data.data.user.photo}`}));
-                 sleep(4000);
-                 window.location.reload()
+                                               
+                  setTimeout(() => {     
+                    window.location.reload()           
+                  },4000);   
                 } 
                }
            }
@@ -142,6 +143,13 @@ const LoginStatus = () => {
     if (!full_name.trim()) errors_re.full_name = 'Please enter your full name'
  
     if (Object.keys(errors_re).length === 0) {
+      localStorage.removeItem('user');
+      localStorage.removeItem('photo');
+      localStorage.removeItem('searchTerm');
+      localStorage.removeItem('idCat'); 
+      setLoggedIn(false);
+      setUser(null);
+
         fetch(`${API_BASE_URL}/register`, {
           method: 'POST',
           body: JSON.stringify({ full_name: full_name, email: email, password: password, origin:'mipick' }),
@@ -160,10 +168,12 @@ const LoginStatus = () => {
             setPassword('');  
          
               toast.success('An email was sent to you to continue with account activation.', {
-                position: toast.POSITION.TOP_RIGHT
-            });
-            sleep(4000);
-            window.location.reload()
+                position: toast.POSITION.TOP_RIGHT,autoClose:5000
+            });          
+            setTimeout(() => {     
+                window.location.reload()            
+          },5000); 
+      
            }
         })
         .catch(error => {
@@ -175,6 +185,7 @@ const LoginStatus = () => {
       // Form is invalid, update the state with the errors
       setErrors_re(errors_re);
     }
+
   };
    
   const [email_forgot, setEmailForgot] = useState('');
@@ -255,8 +266,10 @@ const LoginStatus = () => {
       })  
       .then(response => {            
         if (response.status===201 || response.status===401){ 
-          sleep(2000);
-          window.location.reload()   
+        
+          setTimeout(() => {     
+            window.location.reload()           
+          },4000);   
         }
       }) 
     
@@ -291,8 +304,9 @@ const LoginStatus = () => {
      })  
      .then(response => {            
        if (response.status===201 || response.status===401){ 
-         sleep(2000);
-         window.location.reload()   
+        setTimeout(() => {     
+          window.location.reload()           
+        },4000);  
        }
      }) 
    
@@ -316,7 +330,7 @@ const LoginStatus = () => {
                 <div className="d-inline-block dropdown">
                     <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" className="dropdown-toggle"> 
                         <span className='text-white mr-4 font-family-SpaceGrotesk-Bold'>{user.name}</span>              
-                         <img src={user.photo} alt="User" /> 
+                         <img src={user.photo} /> 
                     </button>
                     <div tabIndex={-1} role="menu" aria-hidden="true" className="dropdown-menu dropdown-menu-right" x-placement="bottom-end">
                         <ul className="nav flex-column">                        
@@ -355,7 +369,7 @@ const LoginStatus = () => {
                             <p className='font-family-SpaceGrotesk-Medium'>
                                 Sign in to your account to save, create and edit your picks
                             </p>
-                             <ToastContainer position="top-center" autoClose={2000} closeOnClick theme="dark"/>                         
+                             <ToastContainer position="top-center" autoClose={8000} closeOnClick theme="dark"/>                         
                         </div>
                     </div>
                     <form onSubmit={handleLogin}>
@@ -444,7 +458,7 @@ const LoginStatus = () => {
                         </div>
                         <div className='col-md-12'>
                             <p className='text-gray font-family-SpaceGrotesk-Medium'>Create a new account to save, create and edit your picks</p>
-                            <ToastContainer position="top-center" autoClose={2000} closeOnClick theme="dark"/>  
+                            <ToastContainer position="top-center" autoClose={8000} closeOnClick theme="dark"/>  
                         </div>
                     </div>
                       <form className='mt-2' onSubmit={handleRegister}>
@@ -537,7 +551,7 @@ const LoginStatus = () => {
                         <p className='font-family-SpaceGrotesk-Medium'>
                           Enter your email address and we will send you a link to create a new password.
                         </p>
-                        <ToastContainer position="top-right"  autoClose={4000} closeOnClick theme="dark"/>    
+                        <ToastContainer position="top-right"  autoClose={8000} closeOnClick theme="dark"/>    
                       </div>
                       <div className='col-md-12'>
                         <form className='mt-4' onSubmit={handleForgotPassword}>

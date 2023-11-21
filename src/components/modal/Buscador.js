@@ -52,6 +52,13 @@ const Buscador = (props) => {
       setSearchTerm(transcript)  
     };
 
+    const handleKeyDown = (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        handleSearchChange();
+      }
+    };
+
     return (
         <div className="form-group w-100 pc">
           <div className='buscador'>
@@ -61,7 +68,7 @@ const Buscador = (props) => {
                   <i className="fal fa-microphone"></i>
                 </button>
               </div> 
-              <input type="text" className="form-control input-search" placeholder="Search Anything..."  value={searchTerm} onChange={handleInputChange} />
+              <input type="text" className="form-control input-search" placeholder="Search Anything..."    onKeyDown={handleKeyDown}  value={searchTerm} onChange={handleInputChange} />
 
               <div className='text-right'>
                 <button type="button" className="btn btn-cleaner" onClick={handleSearchChange} >

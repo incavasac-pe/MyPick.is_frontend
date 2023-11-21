@@ -1,8 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import { useLocation,useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import sleep from '@react-corekit/sleep';
+import 'react-toastify/dist/ReactToastify.css'; 
 const API_BASE_URL = process.env.REACT_APP_URL_API
 
 const ResetPassword = () => {    
@@ -27,8 +26,10 @@ const ResetPassword = () => {
    
       if(data.error){        
          toast.error(data.msg);   
-           sleep(3000);
-         navigate('/')  
+         setTimeout(() => {     
+                navigate('/')               
+          },3000);   
+      
       } else {     
            // Lógica para iniciar sesión     
            if (data.data.email) {   
@@ -42,8 +43,10 @@ const ResetPassword = () => {
     .catch(async error => { 
       // Manejar cualquier error de la solicitud           
       toast.error("An error has occurred",error);    
-       await sleep(3000);
-      navigate('/')
+       setTimeout(() => {     
+         navigate('/')               
+        },3000);   
+          
    
     });    
   }, [navigate,token]); 
@@ -84,8 +87,11 @@ const ResetPassword = () => {
           toast.success(data.msg, {
             position: toast.POSITION.TOP_RIGHT
          });
-         await sleep(3000);
-           navigate('/')
+       
+         setTimeout(() => {     
+              navigate('/')               
+        },3000);   
+          
          }
       })
       .catch(() => {
