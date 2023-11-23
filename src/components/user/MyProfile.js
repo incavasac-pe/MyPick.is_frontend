@@ -16,9 +16,6 @@ const MyProfile = () => {
   const [errors, setErrors] = useState({});
   
   useEffect(() => {  
-    if (location.pathname === '/MyProfile' ) {
-      window.location.reload();
-    }
     const body = document.body; 
     if (location.state && location.state.modalOpen) {
       body.classList.add('modal-open'); 
