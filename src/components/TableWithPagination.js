@@ -69,8 +69,8 @@ const TableWithPagination = (props) => {
               <td>
                 <div className='table-img d-flex align-items-center justify-content-start'>
                     <div>
-                      <img src={`${API_BASE_URL}/see_photo?img=${row.photo1_name}`} alt={`${row.photo1_name}`} />
-                      <img src={`${API_BASE_URL}/see_photo?img=${row.photo2_name}`} alt={`${row.photo2_name}`} className='pc' />
+                      <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(row.photo1_name)}`} alt={`${row.photo1_name}`} />
+                      <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(row.photo2_name)}`} alt={`${row.photo2_name}`} className='pc' />
                     </div>                    
                     <div>
                     <span className='ml-3 d-block'>- {row.choice1_name}</span>
@@ -85,7 +85,7 @@ const TableWithPagination = (props) => {
               <td className='pc'> {formatearTiempo(row.dias)}</td>
               <td className='pc'>
                 <div className='table-img'>
-                <img src={`${API_BASE_URL}/see_photo?img=${row.selectd1 >= row.selectd2 ? row.photo1_name : row.photo2_name}`}/> 
+                <img src={`${API_BASE_URL}/see_photo?img=${row.selectd1 >= row.selectd2 ? encodeURIComponent(row.photo1_name) : encodeURIComponent(row.photo2_name)}`}/> 
                    <span className='ml-3'>{ row.selectd1 >= row.selectd2 ? row.choice1_name : row.choice2_name }</span>
                 </div>
                 
