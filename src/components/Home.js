@@ -350,7 +350,7 @@ const agregarLikesComments = (id) => {
                               I'm on team 
                               <span className='text-morado'>   
                               <a className='text-white font-family-SpaceGrotesk-Bold' href={urlActivo} target="_blank">
-                              &nbsp;{textoActivo.length > 70 ? `${textoActivo.substring(0, 70)}... ` : textoActivo}
+                               &nbsp;{ textoActivo}
                               </a></span>
                           </h3>
                           <a href="#" onClick={nextStep} className='text-morado d-inline-block font-family-SpaceGrotesk-Bold animate__heartBeat'>

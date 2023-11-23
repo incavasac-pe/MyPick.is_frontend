@@ -166,7 +166,8 @@ const LoginStatus = () => {
             setName('');
             setEmail('');
             setPassword('');  
-         
+            setUser({ name: full_name, photo:  '', email: 'email',token:''});                 
+                
               toast.success('An email was sent to you to continue with account activation.', {
                 position: toast.POSITION.TOP_RIGHT,autoClose:5000
             });          
