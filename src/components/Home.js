@@ -293,12 +293,12 @@ const agregarLikesComments = (id) => {
                           className={`box-img ${imagenActiva === muestras?.[0]?.photo1_name ? 'activo' : ''}`}
                           onClick={() => handleClickImagen(muestras?.[0]?.id_choice1, muestras?.[0]?.photo1_name, muestras?.[0]?.choice1_name,muestras?.[0]?.url_choice1)}
                         >
-                          <img src={`${API_BASE_URL}/see_photo?img=${muestras?.[0]?.photo1_name}`} width={"282px"}  height={"282px"} alt="ciudad"  />
+                          <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(muestras?.[0]?.photo1_name)}`} width={"282px"}  height={"282px"} alt="ciudad"  />
                         </div>
                         <div className='nombre link_url' style={{ cursor: 'pointer' }}>
                            <a className='text-white font-family-SpaceGrotesk-Bold' href={muestras?.[0]?.url_choice1+'&tag=plsq-20'} target="_blank">
-                {muestras?.[0]?.choice1_name.length > 70 ? `${muestras?.[0]?.choice1_name.substring(0, 70)}...` : muestras?.[0]?.choice1_name}
-              </a>
+                        {muestras?.[0]?.choice1_name.length > 70 ? `${muestras?.[0]?.choice1_name.substring(0, 70)}...` : muestras?.[0]?.choice1_name}
+                      </a>
                         </div>
                       </div>
                       <div className='columna-refresh'>
@@ -311,7 +311,7 @@ const agregarLikesComments = (id) => {
                           className={`box-img ${imagenActiva === muestras?.[0]?.photo2_name ? 'activo' : ''}`}
                           onClick={() => handleClickImagen(muestras?.[0]?.id_choice2,  muestras?.[0]?.photo2_name, muestras?.[0]?.choice2_name,muestras?.[0]?.url_choice2)}
                         >
-                          <img src={`${API_BASE_URL}/see_photo?img=${muestras?.[0]?.photo2_name}`} width={"282px"}  height={"282px"} alt="ciudad" />
+                          <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(muestras?.[0]?.photo2_name)}`} width={"282px"}  height={"282px"} alt="ciudad" />
                         </div>
                         
                         <div className='nombre link_url' style={{ cursor: 'pointer' }}>
@@ -337,11 +337,11 @@ const agregarLikesComments = (id) => {
                       <div className='columna'>
                         <div className='box-img activo'>                      
                           {imagenActiva === muestras?.[0]?.photo1_name && (
-                            <img src={`${API_BASE_URL}/see_photo?img=${muestras?.[0]?.photo1_name}`} width={"282px"}  height={"282px"} alt="ciudad" onClick={nextStep}/>
+                            <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(muestras?.[0]?.photo1_name)}`} width={"282px"}  height={"282px"} alt="ciudad" onClick={nextStep}/>
                           )}
                           
                           {imagenActiva === muestras?.[0]?.photo2_name && (
-                            <img src={`${API_BASE_URL}/see_photo?img=${muestras?.[0]?.photo2_name}`}  width={"282px"}  height={"282px"}alt="ciudad" onClick={nextStep} />
+                            <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(muestras?.[0]?.photo2_name)}`}  width={"282px"}  height={"282px"}alt="ciudad" onClick={nextStep} />
                           )}
                         
                         </div>
