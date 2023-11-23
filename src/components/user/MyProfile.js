@@ -16,7 +16,7 @@ const MyProfile = () => {
   const [errors, setErrors] = useState({});
   
   useEffect(() => {  
-    if (location.pathname === '/activate') {
+    if (location.pathname === '/MyProfile' ) {
       window.location.reload();
     }
     const body = document.body; 
