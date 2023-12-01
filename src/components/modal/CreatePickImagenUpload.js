@@ -182,19 +182,21 @@ fetch(imageUrl)
     }; 
 
         if(image1 && image2){
-        fetch(`${API_BASE_URL}/register_picks`, requestOptions) 
-              .then(response => {            
-                if (response.status===201){                   
-                    toast.success('Created picks successfully', {
-                      position: toast.POSITION.TOP_RIGHT,autoClose:3000
-                  }); 
-                   
-              setTimeout(() => {     
-                window.location.reload()           
-              },3000);   
-                
-                } 
-              })  
+        fetch(`${API_BASE_URL}/register_picks`, requestOptions)  
+                .then(response => response.json())
+                  .then(data => { 
+                    if(!data.error && data.data){ 
+                    const id_pick_create = data.data;
+                    localStorage.setItem("id_pick_create",id_pick_create )              
+                      toast.success('Created picks successfully', {
+                        position: toast.POSITION.TOP_RIGHT,autoClose:3000
+                    }); 
+                    
+                    setTimeout(() => {     
+                      window.location.reload()           
+                    },2000); 
+                }   
+            })  
              
         .catch(() => {
           // Manejar cualquier error de la solicitud           

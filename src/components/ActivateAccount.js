@@ -29,11 +29,11 @@ const ActivateAccount = () => {
               position: toast.POSITION.TOP_RIGHT,
               autoClose:4000        
           });
-       
+        localStorage.setItem('actived',true)
         localStorage.setItem('user', JSON.stringify({ name: data.data.user.full_name, email: data.data.user.email,token:data.data.token}));        
         setTimeout(() => {     
           navigate('/MyProfile'); // Redirigir al usuario a la página de perfil   
-          },4000);  
+          },3000);  
        
           }  
        }

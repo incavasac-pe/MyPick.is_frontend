@@ -29,13 +29,16 @@ const MyProfile = () => {
       const parsedPhoto = JSON.parse(storedUserPhotonNew);     
       setSelectedFileNew(parsedPhoto.photo)
     }
-    
+    const activateUser = localStorage.getItem('actived') ?? false;
+    if (activateUser) {
+      localStorage.removeItem('actived')
+      window.location.reload()        
+    }
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);     
       setName (parsedUser.name)
-      setEmail(parsedUser.email)      
-     
+      setEmail(parsedUser.email)    
     }else{
       navigate('/'); // Redirigir al usuario a la página de home
      }

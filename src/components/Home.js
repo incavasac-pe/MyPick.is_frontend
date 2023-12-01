@@ -7,7 +7,7 @@ import { checkAuth }  from '../AuthMiddleware';
 
 const API_BASE_URL = process.env.REACT_APP_URL_API
 const Home = (props) => { 
-  const idCat = props.idCat;  
+ 
   const [currentStep, setcurrentStep] = useState(1);
   const [imagenActiva, setimagenActiva] = useState('');  
   const [textoActivo, settextoActivo] = useState('');  
@@ -129,11 +129,16 @@ const Home = (props) => {
     setMuestras(null)    
     let email
     const storedUser = localStorage.getItem('user'); 
+    const id_pick_create = localStorage.getItem('id_pick_create'); 
+    let url = `${API_BASE_URL}/list_all_picks?limit=${1}&ip_maq=${ip}&email=${email}&id_pick=${id_pick}`;
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);     
       email = parsedUser.email 
     }
-    fetch(`${API_BASE_URL}/list_all_picks?limit=${1}&ip_maq=${ip}&email=${email}&id_pick=${id_pick}`, {
+    if (id_pick_create && id_pick_create!='') {
+        url = `${API_BASE_URL}/list_all_picks?limit=${1}&ip_maq=${ip}&email=${email}&id_pick=${id_pick_create}`;
+    } 
+    fetch(url, {
       method: 'GET', 
       headers: {
         'Content-Type': 'application/json'      
@@ -146,7 +151,7 @@ const Home = (props) => {
         setMuestras(data.data)  
         setPick(data.data?.[0]?.id)     
         sety_nLikes(data.other) 
-
+        localStorage.removeItem("id_pick_create")
         localStorage.setItem("pick",JSON.stringify(data.data) )
         localStorage.setItem("id_pick",data.data?.[0]?.id )
         localStorage.setItem("y_nLikes",data.other)
