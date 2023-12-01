@@ -129,14 +129,14 @@ const Home = (props) => {
     setMuestras(null)    
     let email
     const storedUser = localStorage.getItem('user'); 
-    const id_pick_create = localStorage.getItem('id_pick_create'); 
-    let url = `${API_BASE_URL}/list_all_picks?limit=${1}&ip_maq=${ip}&email=${email}&id_pick=${id_pick}`;
+    const id_pick_create = localStorage.getItem('id_pick_create') ?? ''; 
+    let url = `${API_BASE_URL}/list_all_picks?limit=${1}&ip_maq=${ip}&email=${email}&id_pick=${id_pick}&flag=false`;
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);     
       email = parsedUser.email 
     }
     if (id_pick_create && id_pick_create!='') {
-        url = `${API_BASE_URL}/list_all_picks?limit=${1}&ip_maq=${ip}&email=${email}&id_pick=${id_pick_create}`;
+        url = `${API_BASE_URL}/list_all_picks?limit=${1}&ip_maq=${ip}&email=${email}&id_pick=${id_pick_create}&flag=true`;
     } 
     fetch(url, {
       method: 'GET', 
