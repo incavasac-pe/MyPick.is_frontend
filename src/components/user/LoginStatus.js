@@ -420,9 +420,9 @@ const LoginStatus = () => {
                             onError={() => {
                               console.log('Login Failed');
                             }}
-                          />;
+                          />
                             
-                            </GoogleOAuthProvider>;
+                            </GoogleOAuthProvider>
                         
                    
                        {/*  {!loggedIn &&
