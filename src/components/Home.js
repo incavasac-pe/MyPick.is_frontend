@@ -130,7 +130,7 @@ const Home = (props) => {
     let email
     const storedUser = localStorage.getItem('user'); 
     const id_pick_create = localStorage.getItem('id_pick_create') ?? ''; 
-    let url = `${API_BASE_URL}/list_all_picks?limit=${1}&ip_maq=${ip}&email=${email}&id_pick=${id_pick}&flag=false`;
+    let url = `${API_BASE_URL}/list_all_picks?limit=${1}&ip_maq=${ip}&email=${email}&id_pick=${id_pick}`;
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);     
       email = parsedUser.email 
