@@ -279,6 +279,16 @@ const agregarLikesComments = (id) => {
     registerLikeComments(id, id_pick)
   }
 };
+
+function removeQueryParams(url) {
+  if(url!='' && url){
+    const refIndex = url.indexOf("ref=");
+    if (refIndex !== -1) {
+      return url.slice(0, refIndex);
+    }
+  }
+  return url ;
+}
     return (
       <div>        
         <div className='container'>
@@ -301,7 +311,7 @@ const agregarLikesComments = (id) => {
                           <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(muestras?.[0]?.photo1_name)}`} width={"282px"}  height={"282px"} alt="ciudad"  />
                         </div>
                         <div className='nombre link_url' style={{ cursor: 'pointer' }}>
-                           <a className='text-white font-family-SpaceGrotesk-Bold' href={muestras?.[0]?.url_choice1+'&tag=plsq-20'} target="_blank">
+                           <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice1)+'?tag=plsq-20'} target="_blank">
                         {muestras?.[0]?.choice1_name.length > 70 ? `${muestras?.[0]?.choice1_name.substring(0, 70)}...` : muestras?.[0]?.choice1_name}
                       </a>
                         </div>
@@ -320,7 +330,7 @@ const agregarLikesComments = (id) => {
                         </div>
                         
                         <div className='nombre link_url' style={{ cursor: 'pointer' }}>
-                        <a className='text-white font-family-SpaceGrotesk-Bold' href={muestras?.[0]?.url_choice2+'&tag=plsq-20'} target="_blank">
+                        <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice2)+'?tag=plsq-20'} target="_blank">
                             {muestras?.[0]?.choice2_name.length > 70 ? `${muestras?.[0]?.choice2_name.substring(0, 70)}...` : muestras?.[0]?.choice2_name}
                           </a>
                            </div>
@@ -391,7 +401,7 @@ const agregarLikesComments = (id) => {
                             </div>
                         </div>
                         <div className='nombre'>
-                          <a className='text-white font-family-SpaceGrotesk-Bold' href={muestras?.[0]?.url_choice1+'&tag=plsq-20'} target="_blank"> 
+                          <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice1)+'?tag=plsq-20'} target="_blank"> 
                          {muestras?.[0]?.choice1_name.length > 70 ? `${muestras?.[0]?.choice1_name.substring(0, 70)}...` : muestras?.[0]?.choice1_name}</a>
                         </div>
                       </div>
@@ -411,7 +421,7 @@ const agregarLikesComments = (id) => {
                             </div>
                         </div>
                         <div className='nombre'>
-                        <a className='text-white font-family-SpaceGrotesk-Bold' href={muestras?.[0]?.url_choice2+'&tag=plsq-20'} target="_blank"> 
+                        <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice2)+'?tag=plsq-20'} target="_blank"> 
                           {muestras?.[0]?.choice2_name.length > 70 ? `${muestras?.[0]?.choice2_name.substring(0, 70)}...` : muestras?.[0]?.choice2_name}
                           </a>
                         </div>
@@ -419,7 +429,7 @@ const agregarLikesComments = (id) => {
                     </div>
                     <div className='row'>
                       <div className='col-auto m-auto'>
-                      {muestras && (<Like likes={muestras?.[0]?.likes} id_pick={id_pick}  /> )} 
+                      {muestras && (<Like likes={muestras?.[0]?.likes} id_pick={id_pick}/> )} 
                       </div>
                     </div>
                     <div className='pc'>
