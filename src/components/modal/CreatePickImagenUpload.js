@@ -35,7 +35,7 @@ const CreatePickImagenUpload = (props) => {
   const fetchDataChoice =  () => {
     if (searchTerm.length > 5 && searchTerm !=undefined ) {
       setIsLoading(true); 
-   const url = `${API_BASE_URL}/list_products_api_externa?search=${searchTerm}`;
+   const url = `${API_BASE_URL}/list_products_api_externa_new?search=${searchTerm}`;
   
   fetch(url, {
     method: 'GET',
@@ -64,7 +64,7 @@ const CreatePickImagenUpload = (props) => {
   const fetchDataChoice2 =  () => {
     if (searchTerm2.length > 5 && searchTerm2 !=undefined ) {
       setIsLoading2(true); 
-   const url = `${API_BASE_URL}/list_products_api_externa?search=${searchTerm2}`;
+   const url = `${API_BASE_URL}/list_products_api_externa_new?search=${searchTerm2}`;
   
   fetch(url, {
     method: 'GET',
@@ -90,8 +90,9 @@ const CreatePickImagenUpload = (props) => {
     });
   }}
   const getImageName = (url,origin) => {
-    const urlParts = url.split('/');
-    const imageName = urlParts[urlParts.length - 1];
+   // const urlParts = url.split('/');
+   // const imageName = urlParts[urlParts.length - 1];
+    const imageName = url;
     if(origin== '1'){
     setText1(imageName)
     }else{
@@ -221,11 +222,11 @@ fetch(imageUrl)
       item.title.toLowerCase().includes(searchTerm.toLowerCase())
     ); 
  
-const imagenProducto = filteredResults[0]?.imageUrls[0] 
+const imagenProducto = filteredResults[0]?.imageUrl;
     if (filteredResults.length > 0) { 
       ImageDownloader(imagenProducto,'1')
       getImageName(imagenProducto,'1')
-      setUrl1(filteredResults[0]?.url)
+      setUrl1(filteredResults[0]?.detailPageURL)
     } else {
        setNotFound(true);
     }  
@@ -237,11 +238,11 @@ const imagenProducto = filteredResults[0]?.imageUrls[0]
     const filteredResults2 = results2.filter((item) =>
       item.title.toLowerCase().includes(searchTerm2.toLowerCase())
     ); 
-    const imagenProducto2 = filteredResults2[0]?.imageUrls[0] 
+    const imagenProducto2 = filteredResults2[0]?.imageUrl; 
     if (filteredResults2.length > 0) { 
       ImageDownloader(imagenProducto2,'2')
       getImageName(imagenProducto2,'2')
-      setUrl2(filteredResults2[0]?.url)
+      setUrl2(filteredResults2[0]?.detailPageURL)
     } else {
       setNotFound2(true);
     }  

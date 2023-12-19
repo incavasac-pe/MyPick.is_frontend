@@ -1,7 +1,9 @@
 import React, { useState,useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 const API_BASE_URL = process.env.REACT_APP_URL_API 
 
 const SearchResults = (props) => { 
+    const navigate = useNavigate(); // Hook de navegación
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [data, setSearch] = useState([]);
@@ -36,10 +38,12 @@ const SearchResults = (props) => {
         setRowsPerPage(Number(event.target.value));
         setCurrentPage(1);
     };
-
-    // Calcular el número total de páginas
-//   const totalPages = Math.ceil(data.length / rowsPerPage);
-
+    const handleRedirectMypick = (id) => { 
+        localStorage.setItem("id_pick_create",id )    
+        setTimeout(() => {     
+            navigate('/'); // Redirigir al usuario a la página de perfil   
+            },500);       
+    }; 
     // Paginar los datos
     const indexOfLastRow = currentPage * rowsPerPage;
     const indexOfFirstRow = indexOfLastRow - rowsPerPage;
@@ -66,23 +70,23 @@ const SearchResults = (props) => {
                                 </thead>
                                 <tbody className='text-white'>
                                 {currentRows.map((row) => (
-                                    <tr key={row.id}>
+                                    <tr key={row.id}  >
                                         <td>
-                                            <div className='table-img d-flex align-items-center justify-content-start'>
-                                                <div> 
+                                            <div className='table-img d-flex align-items-center justify-content-start '>
+                                                <div className='manito' onClick={() => handleRedirectMypick(row.id)}> 
                                                     <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(row.photo1_name)}`} alt={`${encodeURIComponent(row.photo1_name)}`} />
                                                     <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(row.photo2_name)}`} alt={`${encodeURIComponent(row.photo2_name)}`} className='pc' />
                                                 </div>
                                                 <div>
-                                                <span className='ml-3 d-block'>- {row.choice1_name}</span>
-                                                <span className='ml-3 d-block'>- {row.choice2_name}</span>
+                                                <span className='ml-3 d-block manito' onClick={() => handleRedirectMypick(row.id)}>- {row.choice1_name}</span>
+                                                <span className='ml-3 d-block manito' onClick={() => handleRedirectMypick(row.id)}>- {row.choice2_name}</span>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>{row.category}</td>
                                         <td className='pc'>{row.pick_ranking ?? '0'} Picks</td>
                                         <td>
-                                            <div className='table-img d-flex align-items-center justify-content-start'>
+                                            <div  onClick={() => handleRedirectMypick(row.id)} className='table-img d-flex align-items-center justify-content-start manito'>
                                             <img src={`${API_BASE_URL}/see_photo?img=${row.selectd1 >= row.selectd2 ? encodeURIComponent(row.photo1_name) : encodeURIComponent(row.photo2_name)}`} alt="equipo" />
                                             <span className='ml-3'>{ row.selectd1 >= row.selectd2 ? row.choice1_name : row.choice2_name }</span>
                                             </div>
