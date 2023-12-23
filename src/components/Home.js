@@ -3,10 +3,15 @@ import Like from './like';
 import CreatePick from './modal/CreatePick';
 import AuthLogin from './modal/AuthLogin'; 
 import ModalRedes from './modal/ModalRedes';
-import { checkAuth }  from '../AuthMiddleware';  
-
+import { checkAuth }  from '../AuthMiddleware'; 
+import { useLocation } from 'react-router-dom'; 
+ 
 const API_BASE_URL = process.env.REACT_APP_URL_API
 const Home = (props) => { 
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const id_pick_search = searchParams.get('myPick') ?? '';
+
  
   const [currentStep, setcurrentStep] = useState(1);
   const [imagenActiva, setimagenActiva] = useState('');  
@@ -25,6 +30,8 @@ const Home = (props) => {
   const [mostrarRespuestas, setmostrarRespuestas] = useState({});   
   const [mostrarFormularioRespuesta, setmostrarFormularioRespuesta] = useState({}); 
    
+ 
+  
   const fetchIp = async () => {       
     fetch(`https://api.ipify.org?format=json`, {
       method: 'GET',       
@@ -34,6 +41,11 @@ const Home = (props) => {
       setIp(data.ip)
       
      if(!props.origin){ 
+      if(id_pick_search && id_pick_search!= ''){
+        console.log("id_pick_search",id_pick_search)
+        localStorage.setItem("id_pick_create",id_pick_search )   
+           
+      }
       fetchData(data.ip)
     }
      else{
@@ -785,7 +797,7 @@ function removeQueryParams(url) {
                   <div class="modal-body p-0">
                     <div className='cuadro'>
                       <div className='box-cuadro-modal'>
-                        <ModalRedes />
+                        <ModalRedes id_pick={5} />
                       </div>
                     </div>
                   </div>
