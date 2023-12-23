@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import twitter from '../img/x-corp-logo.png'
-
-const urlToShare = 'https://www.mypick.is/';
-const urlToShareEndFace = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(urlToShare)}`;  
-const urlToShareEndReddit = `https://www.reddit.com/submit?url=${encodeURIComponent(urlToShare)}`;  
-const urlToShareEndTwitter = `https://twitter.com/intent/tweet?url=${encodeURIComponent(urlToShare)}"`;  
-
-class ModalRedes extends Component {
-    
-    render() {
+ 
+const ModalRedes =  (props) => {
+  const { id_pick } = props;
+    const urlToShare = 'https://www.mypick.is/pick/?myPick='+id_pick;
+    const urlToShareEndFace = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(urlToShare)}`;  
+    const urlToShareEndReddit = `https://www.reddit.com/submit?url=${encodeURIComponent(urlToShare)}`;  
+    const urlToShareEndTwitter = `https://twitter.com/intent/tweet?url=${encodeURIComponent(urlToShare)}"`;  
+  
         return (
             <div className='row'>
                 <div className="col-md-12 position-relative">
@@ -39,6 +38,6 @@ class ModalRedes extends Component {
             </div>
         );
     }
-}
+ 
 
 export default ModalRedes;
