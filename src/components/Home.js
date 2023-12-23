@@ -797,7 +797,7 @@ function removeQueryParams(url) {
                   <div class="modal-body p-0">
                     <div className='cuadro'>
                       <div className='box-cuadro-modal'>
-                        <ModalRedes id_pick={5} />
+                        <ModalRedes id_pick={id_pick} />
                       </div>
                     </div>
                   </div>
