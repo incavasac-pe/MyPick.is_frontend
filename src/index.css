@@ -229,7 +229,9 @@ header .buscador p{
   background-color: #8459DE;
   color: #fff;
 }
-
+.WordSection1{
+  width: 100%;
+}
 /*general*/
 .contenido{
   padding: 50px 0;

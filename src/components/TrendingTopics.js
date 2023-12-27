@@ -99,8 +99,8 @@ fetchDataTopCategory = (id) => {
         <div className="container">
         <div className='row'>
           <div className='col-md-12 text-center'>
-            <h1 className='text-white titulo font-family-SpaceGrotesk-Light'>Trending Topics</h1>
-             <p className='text-gris descripcion'>Showing what’s eveyone’s picking at this moment!</p>
+            <h1 className='text-white titulo font-family-SpaceGrotesk-Light'>Trending Topics</h1> 
+             <p className='text-gris descripcion'>What everyone's picking at this moment!</p>
           </div>          
         </div>
         <ul className="nav nav-tabs">
