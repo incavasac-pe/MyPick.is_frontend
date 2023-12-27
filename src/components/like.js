@@ -132,7 +132,7 @@ const API_BASE_URL = process.env.REACT_APP_URL_API
 
           <a href='javascript:void(0);' className='soloMovil' data-toggle="modal" data-target="#comentarios">
             <i class="fas fa-comment-alt-dots"></i>
-            <p className='font-family-SpaceGrotesk-Light'>Commets</p>
+            <p className='font-family-SpaceGrotesk-Light'>Comments</p>
           </a>
         </div>  
     );
