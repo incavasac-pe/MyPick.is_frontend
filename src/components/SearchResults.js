@@ -66,6 +66,7 @@ const SearchResults = (props) => {
                                     <th>CATEGORY</th>
                                     <th className='pc'>NO. OF PICKS	</th>
                                     <th>CONSENSUS</th>
+                                    <th>DETAILS</th>
                                 </tr>
                                 </thead>
                                 <tbody className='text-white'>
@@ -92,6 +93,7 @@ const SearchResults = (props) => {
                                             </div>
 
                                         </td>
+                                        <td className='pc'>  <button onClick={() => handleRedirectMypick(row.id)}   className='btn-login font-family-SpaceGrotesk-Bold solo-login'>See pick</button></td>
                                     </tr>
                                 ))}
                                 </tbody>

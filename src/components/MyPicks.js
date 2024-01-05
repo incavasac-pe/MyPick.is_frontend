@@ -18,8 +18,8 @@ const MyPicks = (props) => {
       <div className='container contenido'>    
         <div className='row'>
           <div className='col-md-12 text-center'>
-            <h1 className='text-white titulo font-family-SpaceGrotesk-Light'>My Picks</h1>
-            <p className='text-grey descripcion'>Showing all the picks you’ve created so far.</p>
+            <h1 className='text-white titulo font-family-SpaceGrotesk-Light'>My Picks</h1> 
+            <p className='text-grey descripcion'>All the picks you've created so far!</p>
             {!login && (<p className='text-grey descripcion'>
               Sorry, to continue, you must Login:
             </p>)}

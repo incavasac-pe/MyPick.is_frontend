@@ -373,7 +373,7 @@ function removeQueryParams(url) {
                         
                         </div>
                         <div className='nombre text-center'>
-                          <h3 className='text-white font-family-SpaceGrotesk-Bold'>
+                          <h3 className='text-morado font-family-SpaceGrotesk-Bold'>
                               I'm on team 
                               <span className='text-morado'>   
                               <a className='text-white font-family-SpaceGrotesk-Bold' href={urlActivo} target="_blank">
@@ -397,7 +397,7 @@ function removeQueryParams(url) {
                     <div className='row'>
                       <div className='col-md-12 mb-4'>
                         <h1 className='text-center text-white titulo font-family-SpaceGrotesk-Light'>
-                        Picks and comments from others
+                        Picks and Comments from others
                         </h1>
                       </div>
                     </div>
