@@ -151,8 +151,7 @@ const Contact = () => {
                <ToastContainer position="top-center" autoClose={3000} closeOnClick theme="dark"/>  
                 <div className='col-md-12'>
                   <p className='text-white font-family-SpaceGrotesk-Light'>
-                    Praesent Maximus Nisl At Interdum Sodales. Fusce Fermentum
-                    Ligula Quis Velit Accumsan, Eu Mattis Magna Lobortis.
+                  Connect with us at Mypick.is for support, consultation and collaboration.
                   </p>
                 </div>
                 <div className="col-md-6">

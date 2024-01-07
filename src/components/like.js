@@ -122,7 +122,7 @@ const API_BASE_URL = process.env.REACT_APP_URL_API
             <p className='font-family-SpaceGrotesk-Light'>Share</p>
           </a>
           <a href='javascript:void(0);' className={activeLinkB === 'bookmark' ? 'activo' : ''} onClick={() => handleClick('bookmark')}  data-toggle="modal" data-target="#login">
-            <i className="far fa-bookmark"></i>
+            <i className= {activeLinkB === 'bookmark' ? 'fa fa-bookmark' : 'far fa-bookmark'}></i>
             <p className='font-family-SpaceGrotesk-Light'>Bookmark</p>
           </a>
           <a href='javascript:void(0);' className={activeLink === 'create' ? 'activo' : ''} onClick={() => handleClick('create')} data-toggle="modal" data-target="#creapick">

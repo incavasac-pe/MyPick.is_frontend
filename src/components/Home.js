@@ -315,7 +315,7 @@ function removeQueryParams(url) {
                       </div>
                     </div>
                     <div className='box-flex'>
-                      <div className='columna'>
+                      <div className='columna col_div_ajus'>
                         <div
                           className={`box-img ${imagenActiva === muestras?.[0]?.photo1_name ? 'activo' : ''}`}
                           onClick={() => handleClickImagen(muestras?.[0]?.id_choice1, muestras?.[0]?.photo1_name, muestras?.[0]?.choice1_name,muestras?.[0]?.url_choice1)}
@@ -333,7 +333,7 @@ function removeQueryParams(url) {
                           <i className="fas fa-redo"></i>
                         </button>
                       </div>
-                      <div className='columna'>
+                      <div className='columna col_div_ajus'>
                         <div
                           className={`box-img ${imagenActiva === muestras?.[0]?.photo2_name ? 'activo' : ''}`}
                           onClick={() => handleClickImagen(muestras?.[0]?.id_choice2,  muestras?.[0]?.photo2_name, muestras?.[0]?.choice2_name,muestras?.[0]?.url_choice2)}
@@ -373,7 +373,7 @@ function removeQueryParams(url) {
                         
                         </div>
                         <div className='nombre text-center'>
-                          <h3 className='text-morado font-family-SpaceGrotesk-Bold'>
+                          <h3 className='text-morado font-family-SpaceGrotesk-Bold link_url2'>
                               I'm on team 
                               <span className='text-morado'>   
                               <a className='text-white font-family-SpaceGrotesk-Bold' href={urlActivo} target="_blank">
@@ -402,7 +402,7 @@ function removeQueryParams(url) {
                       </div>
                     </div>
                     <div className='box-flex'>
-                      <div className='columna' >
+                      <div className='columna col_div_ajus' >
                         <div className='box-img'>
                            <div className='box-color bg-morado'>
                               {porciento.map((percen) => (
@@ -412,7 +412,7 @@ function removeQueryParams(url) {
                               ))}
                             </div>
                         </div>
-                        <div className='nombre'>
+                        <div className='nombre link_urlstep3'>
                           <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice1)+'?tag=plsq-20'} target="_blank"> 
                          {muestras?.[0]?.choice1_name.length > 70 ? `${muestras?.[0]?.choice1_name.substring(0, 70)}...` : muestras?.[0]?.choice1_name}</a>
                         </div>
@@ -422,7 +422,7 @@ function removeQueryParams(url) {
                           <i className="fas fa-redo"></i>
                         </button>
                       </div>
-                      <div className='columna'>
+                      <div className='columna col_div_ajus'>
                         <div className='box-img'>                         
                           <div className='box-color bg-gris'>
                               {porciento.map((percen2) => (
@@ -432,7 +432,7 @@ function removeQueryParams(url) {
                               ))}
                             </div>
                         </div>
-                        <div className='nombre'>
+                        <div className='nombre link_urlstep3'>
                         <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice2)+'?tag=plsq-20'} target="_blank"> 
                           {muestras?.[0]?.choice2_name.length > 70 ? `${muestras?.[0]?.choice2_name.substring(0, 70)}...` : muestras?.[0]?.choice2_name}
                           </a>
