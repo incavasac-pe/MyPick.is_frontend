@@ -21,7 +21,7 @@ class Menu extends Component {
         const { searchTerm } = this.state;
         return (
             <div className="row">
-                <div className='col-xl-4 col-6'>
+                <div className='col-4'>
                 <button type="button" className='btnmenu' style={{ fontSize: '30px', cursor: 'pointer' }} onClick={openNav}>
                         <i className="fas fa-grip-lines text-white"></i>
                     </button>
@@ -31,7 +31,7 @@ class Menu extends Component {
                      <b className="text-white mr-4 font-family-SpaceGrotesk-Bold title-logo" >MyPick.Is</b>
                   
                 </div>
-                <div className='align-items-center col-1 col-xl-4 d-flex justify-content-center p-movil'>
+                <div className='align-items-center col-4 d-flex justify-content-center p-movil'>
                     <div className='movil' data-toggle="modal" data-target="#buscador">
                         <div className='text-center buscador_movil'><i className="fal fa-search"></i></div>
                     </div>
@@ -44,7 +44,7 @@ class Menu extends Component {
                     </div>
                     <Buscador onData={this.handleDataFromChild}/>
                 </div>
-                <div className='col-xl-4 col-5 d-flex justify-content-center align-items-center'>
+                <div className='col-4 d-flex justify-content-center align-items-center'>
                     <LoginStatus />
                 </div>
             </div>

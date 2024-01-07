@@ -20,7 +20,7 @@ import LoginStatus from './user/LoginStatus';
         <div className='row'>
           <div className='col-md-12 text-center'>
             <h1 className='text-white titulo font-family-SpaceGrotesk-Light'>My Bookmarks</h1>
-            <p className='text-grey descripcion'>All the picks you've created so far!</p>
+            <p className='text-grey descripcion'>All the picks you've saved so far!</p>  
             {!login && (<p className='text-grey descripcion'>
               Sorry, to continue, you must Login:
             </p>)}

@@ -330,7 +330,7 @@ const LoginStatus = () => {
               <div className="user-profile">                       
                 <div className="d-inline-block dropdown">
                     <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" className="dropdown-toggle"> 
-                        <span className='text-white mr-4 font-family-SpaceGrotesk-Bold'>{user.name}</span>              
+                        <span className='user-close-movil text-white mr-4 font-family-SpaceGrotesk-Bold'>{user.name}</span>              
                          <img src={user.photo} /> 
                     </button>
                     <div tabIndex={-1} role="menu" aria-hidden="true" className="dropdown-menu dropdown-menu-right" x-placement="bottom-end">

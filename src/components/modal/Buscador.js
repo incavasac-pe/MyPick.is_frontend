@@ -61,10 +61,21 @@ const Buscador = (props) => {
 
     return (
         <div className="form-group w-100 pc">
+          <div  className='buscador_movilllll'>  
+          <div className='align-items-start busca d-flex justify-content-between position-relative'>
+          <input type="text" className="form-control input-search" placeholder="Search"    onKeyDown={handleKeyDown}  value={searchTerm} onChange={handleInputChange} />
+          <div className='text-right'>
+                <button type="button" className="btn btn-cleaner" onClick={handleSearchChange} >
+                  <i className="fal fa-search"></i>
+                </button>
+              </div>
+              </div>
+          </div>
           <div className='buscador'>
             <div className='align-items-start busca d-flex justify-content-between position-relative'>
+              
               <div className='text-left'>
-                <button id="voiceButton" className="btn btn-search">
+                <button id="voiceButton" className="btn btn-search voiceButton">
                   <i className="fal fa-microphone"></i>
                 </button>
               </div> 

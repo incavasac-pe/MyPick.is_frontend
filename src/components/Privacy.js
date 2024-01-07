@@ -308,7 +308,7 @@ class Privacy extends Component {
          If you are a Facebook user, Facebook Pixel helps us target advertising to you via Facebook, Inc.’s platforms (Facebook and Instagram) based on the various pages you visit on our website.
          For more information about Facebook Pixel, see
         <a href=" https://www.facebook.com/business/learn/facebook-ads-pixel">
-          <span style={{ fontFamily: 'Helvetica, sans-serif' }}> https://www.facebook.com/business/learn/facebook-ads-pixel</span>        </a><br></br> 
+          <span style={{ fontFamily: 'Helvetica, sans-serif' }}> https://facebook.com/business/learn/facebook-ads-pixel</span>        </a><br></br> 
        
        </span>         
       </p>
@@ -404,7 +404,7 @@ class Privacy extends Component {
 
       </span>  
       <br></br>       
-       · Chrome - https://support.google.com/accounts/answer/32050;
+      <div >· Chrome -https://support.google.com/accounts-answer/32050;  </div> 
        <br></br>       
        · Firefox - https://support.mozilla.org/en-US/kb/delete-cookies-remove-info-websites-stored;
        <br></br>       
@@ -425,9 +425,12 @@ class Privacy extends Component {
         </br>
         
         For example, cookies are used in connection with our use of Google LLC’s Google Analytics. For more information on Google Analytics and how cookies are used by Google Analytics, 
-        see Google LLC’s information page at  <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage">
-          <span style={{ fontFamily: 'Helvetica, sans-serif' }}> https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage</span> </a> . 
-     
+        see Google LLC’s information page at   <br>
+        </br> 
+           <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage">
+          <span style={{ fontFamily: 'Helvetica, sans-serif' }}>
+               https://developers.google.com/analytics-devguides/collection/analyticsjs/cookie-usage</span> </a> . 
+          
      <br></br>
      We, or Third-Party Providers we use to enable cookies, may also use cookies on our website to remember choices you have made, such as your language of preference or region, your username or to target advertising and to customize advertising across various websites (not just our own) and make such advertisements more relevant to you.   </span>         
       </p>
