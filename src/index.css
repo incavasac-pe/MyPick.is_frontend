@@ -329,9 +329,7 @@ header .buscador p{
 .claseabrir .user-profile{
   display: none;
 }
-.user-close-movil{
-  display: blo;
-}
+ 
 #stepWizard .box-flex{
   display: flex;
   align-items: center;
@@ -1527,7 +1525,7 @@ ul{
     height: 54px;
   }
   .buscador_movilllll{
-    display: block;
+    display: block !important;
   }
   .buscador{
     display: none;
@@ -1637,11 +1635,20 @@ ul{
     font-size: 25px;
   }
   .pc{
+    display: none;
+  }
+  .movil{
+    display: block;
+  }
+  .pc_buscador{
+    display: block
+  }
+  /*.pc{
     display: block;
   }
   .movil{
-    display: none;
-  }
+   display: none;
+  } */
   .box-color {
     text-align: center;
     line-height: 3.7;
