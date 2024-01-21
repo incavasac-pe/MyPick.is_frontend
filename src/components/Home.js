@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect,useRef} from 'react'; 
 import Like from './like';
 import CreatePick from './modal/CreatePick';
 import AuthLogin from './modal/AuthLogin'; 
@@ -8,6 +8,8 @@ import { useLocation } from 'react-router-dom';
  
 const API_BASE_URL = process.env.REACT_APP_URL_API
 const Home = (props) => { 
+ 
+  const commentsSectionRef = useRef(null);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const id_pick_search = searchParams.get('myPick') ?? '';
@@ -29,9 +31,11 @@ const Home = (props) => {
   const [nuevaRespuesta, setnuevaRespuesta] = useState('');    
   const [mostrarRespuestas, setmostrarRespuestas] = useState({});   
   const [mostrarFormularioRespuesta, setmostrarFormularioRespuesta] = useState({}); 
-   
- 
   
+  const scrollToComments = () => {
+    commentsSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const fetchIp = async () => {       
     fetch(`https://api.ipify.org?format=json`, {
       method: 'GET',       
@@ -41,8 +45,7 @@ const Home = (props) => {
       setIp(data.ip)
       
      if(!props.origin){ 
-      if(id_pick_search && id_pick_search!= ''){
-        console.log("id_pick_search",id_pick_search)
+      if(id_pick_search && id_pick_search!= ''){ 
         localStorage.setItem("id_pick_create",id_pick_search )   
            
       }
@@ -97,6 +100,7 @@ const Home = (props) => {
  
  const handleClickImagen = (id_choice,imagen, texto,url) => { 
  
+ 
       const storedUser = localStorage.getItem('user');
       let email = 'default@test.com';
       if (storedUser) {
@@ -133,10 +137,11 @@ const Home = (props) => {
     const isAuthenticated = checkAuth();
     setlogin(isAuthenticated)    
     
-    fetchIp();
+    fetchIp(); 
 
   }, []);
 
+ 
   const fetchData = async (ip) => {    
     setMuestras(null)    
     let email
@@ -350,7 +355,7 @@ function removeQueryParams(url) {
                     </div>
                     <div className='row'>
                       <div className='col-auto m-auto'>
-                       { (<Like likes={muestras?.[0]?.likes ?? 0 } id_pick={id_pick} y_nLikes={y_nLikes} /> )} 
+                       { (<Like likes={muestras?.[0]?.likes ?? 0 } id_pick={id_pick} y_nLikes={y_nLikes} scrollToComments={scrollToComments}  /> )} 
                       </div>
                     </div>
                   </div>
@@ -376,7 +381,7 @@ function removeQueryParams(url) {
                           <h3 className='text-morado font-family-SpaceGrotesk-Bold link_url2'>
                               I'm on team 
                               <span className='text-morado'>   
-                              <a className='text-white font-family-SpaceGrotesk-Bold' href={urlActivo} target="_blank">
+                              <a className='text-white font-family-SpaceGrotesk-Bold'  href={removeQueryParams(urlActivo)+'?tag=plsq-20'} target="_blank">
                                &nbsp;{ textoActivo}
                               </a></span>
                           </h3>
@@ -447,7 +452,7 @@ function removeQueryParams(url) {
                     <div className='pc'>
                    
                     <div className="wrapper">
-                   <div className="comment">
+                   <div className="comment" >
                     <div className="commet-title">
                         <h3 className="text-white font-family-SpaceGrotesk-Bold">Comments  
                         </h3>
@@ -459,12 +464,12 @@ function removeQueryParams(url) {
                     {
                     comentarios.map((comentario) => (
           
-                        <div className="box-comentario"
+                        <div ref={commentsSectionRef} className="box-comentario"
                             key={
                                 comentario.id
                         }>
                            { comentario.usuario !='' &&
-                            <div className="content">
+                            <div   className="content">
                                 <div className="avatar">
                                     <img src={
                                             `${API_BASE_URL}/see_photo?img=${

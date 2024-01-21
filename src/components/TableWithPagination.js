@@ -1,9 +1,9 @@
 import React, { useState,useEffect } from 'react'; 
-import { formatearTiempo } from '../utils'; 
+import { formatearTiempo } from '../utils';  
 const API_BASE_URL = process.env.REACT_APP_URL_API
 
 const TableWithPagination = (props) => { 
-  
+ 
   const [data, setMyBookmark] = useState([]);
   const idCat = props.idCat; 
  
@@ -21,7 +21,7 @@ const TableWithPagination = (props) => {
     })
     .then(response => response.json())
     .then(data => { 
-      if(!data.error && data.data){     
+      if(!data.error && data.data){    
         setMyBookmark(data.data);
        }else{
         setMyBookmark([])
@@ -48,19 +48,34 @@ const TableWithPagination = (props) => {
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   const currentRows = data.slice(indexOfFirstRow, indexOfLastRow);
- 
-  
+
+  const handleRedirectMypick = (id) => {  
+    localStorage.setItem("id_pick_create",id )    
+    setTimeout(() => {     
+      window.location.reload(false);
+   },500);       
+}
+
+function removeQueryParams(url) {
+  if(url!='' && url){
+    const refIndex = url.indexOf("ref=");
+    if (refIndex !== -1) {
+      return url.slice(0, refIndex);
+    }
+  }
+  return url ;
+}
+
   return (
-    <div className='Bookmarks border-linea mb-5'>
+    <div className='Bookmarks border-linea mb-5 tabla-contenedor'>
       <table className="table table-striped table-bordered">
         <thead>
           <tr>
             <th>COMPARISON</th>
             <th>CATEGORY</th>
-            <th className='pc'>NO. OF PICKS</th>
-            <th className='pc'>TIME OF PICK</th>
-            <th className='pc'>CONSENSUS</th>
-           {/*  <th>MY PICK</th> */}
+            <th>NO. OF PICKS</th>
+            <th>TIME OF PICK</th>
+            <th>CONSENSUS</th> 
           </tr>
         </thead>
         <tbody className='text-white'>
@@ -68,25 +83,28 @@ const TableWithPagination = (props) => {
             <tr key={row.id}>
               <td>
                 <div className='table-img d-flex align-items-center justify-content-start'>
-                    <div>
+                 <div className='manito' onClick={() => handleRedirectMypick(row.id)}> 
                       <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(row.photo1_name)}`} alt={`${row.photo1_name}`} />
                       <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(row.photo2_name)}`} alt={`${row.photo2_name}`} className='pc' />
                     </div>                    
                     <div>
-                    <span className='ml-3 d-block'>- {row.choice1_name}</span>
-                      <span className='ml-3 d-block'>- {row.choice2_name}</span>
+                    <span className='ml-3 d-block manito' onClick={() => handleRedirectMypick(row.id)}>- {row.choice1_name}</span>
+                    <span className='ml-3 d-block manito' onClick={() => handleRedirectMypick(row.id)}>- {row.choice2_name}</span>
                     </div>
                 </div>        
               </td>
               <td>{row.category}</td>
-              <td className='pc'>
+              <td>
                 {row.pick_ranking} Picks
               </td>
-              <td className='pc'> {formatearTiempo(row.dias)}</td>
-              <td className='pc'>
+              <td> {formatearTiempo(row.dias)}</td>
+              <td>
                 <div className='table-img'>
                 <img src={`${API_BASE_URL}/see_photo?img=${row.selectd1 >= row.selectd2 ? encodeURIComponent(row.photo1_name) : encodeURIComponent(row.photo2_name)}`}/> 
-                   <span className='ml-3'>{ row.selectd1 >= row.selectd2 ? row.choice1_name : row.choice2_name }</span>
+
+                <a className='text-white' href={removeQueryParams(row.selectd1 >= row.selectd2  ? row?.url1 : row?.url2 )+'?tag=plsq-20'} target="_blank">
+                <span className='ml-3'> {row.selectd1 >= row.selectd2 ? row.choice1_name : row.choice2_name}</span>
+                      </a>                  
                 </div>
                 
               </td>

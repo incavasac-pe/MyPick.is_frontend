@@ -127,7 +127,26 @@ header .buscador p{
   width: 100%;
   display: none;
 }
+.tabla-contenedor {
+  max-width: 100%;
+  overflow-x: auto;
+}
 
+.tabla-contenedor table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-contenedor th,
+.tabla-contenedor td {
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+.tabla-contenedor thead {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
 .sidebar {
   height: 100%;
   width: 0;

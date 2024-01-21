@@ -5,13 +5,13 @@ import React, {useState, useEffect} from 'react';
 const API_BASE_URL = process.env.REACT_APP_URL_API
 
   const Like = (props) => {
-    const { likes, id_pick,y_nLikes } = props;
+    const { likes, id_pick,y_nLikes} = props;
    
     const [activeLinkB, setactiveLinkB] = useState('');
     const [activeLink, setactiveLink] = useState('');
     const [nro_pick_like, setpick_like] = useState(likes);
     const [email, setEmail] = useState('');   
-   
+    const [visible, setVisible] = useState(false);  
     const [ip, setIp] = useState('');
 
     useEffect(() => {    
@@ -110,7 +110,6 @@ const API_BASE_URL = process.env.REACT_APP_URL_API
         });
     }
 
-   
     return (
     <div className='like'>
           <a href='javascript:void(0);' className={activeLink === 'heart' ? 'activo' : ''} onClick={() => handleClick('heart')} >
@@ -128,6 +127,12 @@ const API_BASE_URL = process.env.REACT_APP_URL_API
           <a href='javascript:void(0);' className={activeLink === 'create' ? 'activo' : ''} onClick={() => handleClick('create')} data-toggle="modal" data-target="#creapick">
             <i className="fas fa-plus"></i>
             <p className='font-family-SpaceGrotesk-Light'>Create</p>
+          </a>
+          <a href='javascript:void(0);'  onClick={() => {
+              setVisible(false);
+            }} >
+            <i class="fas fa-comment-alt-dots"></i>
+            <p className='font-family-SpaceGrotesk-Light'>Comments</p>
           </a>
 
           <a href='javascript:void(0);' className='soloMovil' data-toggle="modal" data-target="#comentarios">

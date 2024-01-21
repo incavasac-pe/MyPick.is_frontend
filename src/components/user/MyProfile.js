@@ -313,7 +313,7 @@ const MyProfile = () => {
                     {selectedFileNew ? (
                       <img src={selectedFileNew} alt="Vista previa" />
                     ) : (
-                      <img src="" alt="Imagen por defecto" />
+                      <img src="descarga.png" alt="Imagen por defecto" />
                     )}
                   </div>
                 </div>
