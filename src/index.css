@@ -180,7 +180,7 @@ header .buscador p{
 .sidebar .closebtn {
   position: absolute;
   top: -5px;
-  left:  5px;
+  left:  -5px;
   font-size: 36px;
    
 }
@@ -1552,6 +1552,7 @@ ul{
   }
   .buscador_movilllll{
     display: block !important;
+    
   }
   .buscador{
     display: none;
@@ -1591,7 +1592,9 @@ ul{
   #stepWizard .box-flex .columna .nombre{
     min-height: 43px;
   }
-  
+  .user-solo-movil{
+    padding-bottom: 50px;
+  }
   .link_url{
     font-size: 18px;
     text-align: center;
@@ -1660,7 +1663,7 @@ ul{
   .titulo {
     font-size: 25px;
   }
-  .f{
+  .pc{
     display: none;
   }
   .movil{

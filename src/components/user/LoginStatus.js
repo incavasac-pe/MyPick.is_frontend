@@ -321,7 +321,7 @@ const LoginStatus = () => {
    } 
  }
   return (
-    <div>
+    <div className='user-solo-movil'>
       <nav>
         <ul>
           <li>
