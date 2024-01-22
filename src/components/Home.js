@@ -33,7 +33,7 @@ const Home = (props) => {
   const [mostrarFormularioRespuesta, setmostrarFormularioRespuesta] = useState({}); 
   
   const scrollToComments = () => {
-    commentsSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+   
   };
 
   const fetchIp = async () => {       
@@ -138,6 +138,9 @@ const Home = (props) => {
     setlogin(isAuthenticated)    
     
     fetchIp(); 
+    if (commentsSectionRef.current) {
+     commentsSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
 
   }, []);
 
@@ -266,6 +269,7 @@ const agregarComentario = () => {
        setnuevoComentario('')
      }
 };
+
 const toggleMostrarRespuestas = (id) => {
   setmostrarRespuestas((prevState) => ({
     ...prevState,
@@ -306,6 +310,12 @@ function removeQueryParams(url) {
   }
   return url ;
 }
+ 
+const manejarClick = (dato) => {  
+  if(dato){
+  commentsSectionRef.current.scrollIntoView({ behavior: 'smooth' });}
+}
+ 
     return (
       <div>        
         <div className='container'>
@@ -355,7 +365,7 @@ function removeQueryParams(url) {
                     </div>
                     <div className='row'>
                       <div className='col-auto m-auto'>
-                       { (<Like likes={muestras?.[0]?.likes ?? 0 } id_pick={id_pick} y_nLikes={y_nLikes} scrollToComments={scrollToComments}  /> )} 
+                       { (<Like likes={muestras?.[0]?.likes ?? 0 } id_pick={id_pick} y_nLikes={y_nLikes}   onClick={manejarClick}  /> )} 
                       </div>
                     </div>
                   </div>
@@ -393,7 +403,7 @@ function removeQueryParams(url) {
                     </div>
                     <div className='row'>
                       <div className='col-auto m-auto'>
-                      {muestras && (<Like likes={muestras?.[0]?.likes} id_pick={id_pick}  /> )} 
+                      {muestras && (<Like likes={muestras?.[0]?.likes} id_pick={id_pick}   onClick={(manejarClick)}  /> )} 
                       </div>
                     </div>                   
                   </div>
@@ -446,7 +456,7 @@ function removeQueryParams(url) {
                     </div>
                     <div className='row'>
                       <div className='col-auto m-auto'>
-                      {muestras && (<Like likes={muestras?.[0]?.likes} id_pick={id_pick}/> )} 
+                      {muestras && (<Like likes={muestras?.[0]?.likes} id_pick={id_pick}  onClick={manejarClick} /> )} 
                       </div>
                     </div>
                     <div className='pc'>
@@ -587,7 +597,7 @@ function removeQueryParams(url) {
                     ))
                 } </div>
 
-                <div className="box-comentario mt-4">
+                <div  className="box-comentario mt-4">
                     <textarea value={nuevoComentario}
                         onChange={
                             handleChangeNuevoComentario
@@ -753,7 +763,7 @@ function removeQueryParams(url) {
                     ))
                 } </div>
 
-                <div className="box-comentario mt-4">
+                <div  className="box-comentario mt-4">
                     <textarea value={nuevoComentario}
                         onChange={
                             handleChangeNuevoComentario

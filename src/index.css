@@ -1425,6 +1425,13 @@ ul{
 .soloMovil{
   display: none;
 }
+#step1 .like .soloComments ,
+#step2 .like .soloComments {
+  display: none;
+}
+#step3 .like .soloComments {
+  display: block;
+}
 .boxUpload{
   border: 1px solid #757E95;
   border-radius: 16px;
@@ -1653,7 +1660,7 @@ ul{
   .titulo {
     font-size: 25px;
   }
-  .pc{
+  .f{
     display: none;
   }
   .movil{
@@ -1662,12 +1669,7 @@ ul{
   .pc_buscador{
     display: block
   }
-  /*.pc{
-    display: block;
-  }
-  .movil{
-   display: none;
-  } */
+ 
   .box-color {
     text-align: center;
     line-height: 3.7;
@@ -1680,13 +1682,18 @@ ul{
   .like{
     gap: 25px;
   }
-  #step1 .like .soloMovil,
-  #step2 .like .soloMovil{
+  #step1 .like .soloMovil  ,
+  #step2 .like .soloMovil  {
     display: none;
   }
-  #step3 .like .soloMovil{
+  #step3 .like .soloMovil {
     display: block;
   }
+  #step3 .like .soloComments {
+    display: none;
+  }
+ 
+  
   .trending .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link{
     padding: 5px;
     font-size: 14px;

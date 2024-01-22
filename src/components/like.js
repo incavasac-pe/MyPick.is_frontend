@@ -3,15 +3,13 @@ import React, {useState, useEffect} from 'react';
 
 
 const API_BASE_URL = process.env.REACT_APP_URL_API
-
-  const Like = (props) => {
-    const { likes, id_pick,y_nLikes} = props;
+ 
+    const Like = ({ likes, id_pick, y_nLikes, onClick }) => {
    
     const [activeLinkB, setactiveLinkB] = useState('');
     const [activeLink, setactiveLink] = useState('');
     const [nro_pick_like, setpick_like] = useState(likes);
-    const [email, setEmail] = useState('');   
-    const [visible, setVisible] = useState(false);  
+    const [email, setEmail] = useState('');    
     const [ip, setIp] = useState('');
 
     useEffect(() => {    
@@ -109,7 +107,14 @@ const API_BASE_URL = process.env.REACT_APP_URL_API
           }
         });
     }
+  
 
+    const handleLike = () => {
+      // Realiza cualquier lógica necesaria para obtener el valor booleano
+      const isClicked = true; // Aquí establece el valor booleano que deseas enviar
+      onClick(isClicked);
+    };
+    
     return (
     <div className='like'>
           <a href='javascript:void(0);' className={activeLink === 'heart' ? 'activo' : ''} onClick={() => handleClick('heart')} >
@@ -128,11 +133,9 @@ const API_BASE_URL = process.env.REACT_APP_URL_API
             <i className="fas fa-plus"></i>
             <p className='font-family-SpaceGrotesk-Light'>Create</p>
           </a>
-          <a href='javascript:void(0);'  onClick={() => {
-              setVisible(false);
-            }} >
+          <a href='javascript:void(0);'  className='soloComments'  onClick={handleLike}>
             <i class="fas fa-comment-alt-dots"></i>
-            <p className='font-family-SpaceGrotesk-Light'>Comments</p>
+            <p className='font-family-SpaceGrotesk-Light'>Comments Es</p>
           </a>
 
           <a href='javascript:void(0);' className='soloMovil' data-toggle="modal" data-target="#comentarios">
