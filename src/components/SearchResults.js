@@ -44,11 +44,24 @@ const SearchResults = (props) => {
             navigate('/'); // Redirigir al usuario a la página de perfil   
             },500);       
     }; 
+
+    
     // Paginar los datos
     const indexOfLastRow = currentPage * rowsPerPage;
     const indexOfFirstRow = indexOfLastRow - rowsPerPage;
     const currentRows = data.slice(indexOfFirstRow, indexOfLastRow);
 
+    function removeQueryParams(url) {
+        if(url!='' && url){
+          const refIndex = url.indexOf("ref=");
+          if (refIndex !== -1) {
+            return url.slice(0, refIndex);
+          }
+        }
+        return url ;
+      }
+      
+    
     return (
         <div className='container'>
             <div className="contenido">
@@ -58,13 +71,13 @@ const SearchResults = (props) => {
                         <p className="text-gris-claro descripcion">Exploring all the picks related to your searched term.</p>
                     </div>
                     <div className="col-md-12">
-                        <div className='Bookmarks border-linea'>
+                        <div className='Bookmarks border-linea tabla-contenedor'>
                             <table className="table table-striped table-bordered">
                                 <thead>
                                 <tr>
                                     <th>COMPARISON</th>
                                     <th>CATEGORY</th>
-                                    <th className='pc'>NO. OF PICKS	</th>
+                                    <th>NO. OF PICKS	</th>
                                     <th>CONSENSUS</th>
                                     <th>DETAILS</th>
                                 </tr>
@@ -85,15 +98,18 @@ const SearchResults = (props) => {
                                             </div>
                                         </td>
                                         <td>{row.category}</td>
-                                        <td className='pc'>{row.pick_ranking ?? '0'} Picks</td>
+                                        <td>{row.pick_ranking ?? '0'} Picks</td>
                                         <td>
                                             <div  onClick={() => handleRedirectMypick(row.id)} className='table-img d-flex align-items-center justify-content-start manito'>
                                             <img src={`${API_BASE_URL}/see_photo?img=${row.selectd1 >= row.selectd2 ? encodeURIComponent(row.photo1_name) : encodeURIComponent(row.photo2_name)}`} alt="equipo" />
-                                            <span className='ml-3'>{ row.selectd1 >= row.selectd2 ? row.choice1_name : row.choice2_name }</span>
+                                          
+                                            <a className='text-white' href={removeQueryParams(row.selectd1 >= row.selectd2  ? row?.url_choice1 : row?.url_choice2 )+'?tag=plsq-20'} target="_blank">
+                                             <span className='ml-3'> {row.selectd1 >= row.selectd2 ? row.choice1_name : row.choice2_name}</span>
+                                            </a> 
                                             </div>
 
                                         </td>
-                                        <td className='pc'>  <button onClick={() => handleRedirectMypick(row.id)}   className='btn-login font-family-SpaceGrotesk-Bold solo-login'>See pick</button></td>
+                                        <td>  <button onClick={() => handleRedirectMypick(row.id)}   className='btn-login font-family-SpaceGrotesk-Bold solo-login'>See pick</button></td>
                                     </tr>
                                 ))}
                                 </tbody>

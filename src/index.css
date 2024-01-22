@@ -127,7 +127,26 @@ header .buscador p{
   width: 100%;
   display: none;
 }
+.tabla-contenedor {
+  max-width: 100%;
+  overflow-x: auto;
+}
 
+.tabla-contenedor table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-contenedor th,
+.tabla-contenedor td {
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+.tabla-contenedor thead {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
 .sidebar {
   height: 100%;
   width: 0;
@@ -161,7 +180,7 @@ header .buscador p{
 .sidebar .closebtn {
   position: absolute;
   top: -5px;
-  left:  5px;
+  left:  -5px;
   font-size: 36px;
    
 }
@@ -1406,6 +1425,13 @@ ul{
 .soloMovil{
   display: none;
 }
+#step1 .like .soloComments ,
+#step2 .like .soloComments {
+  display: none;
+}
+#step3 .like .soloComments {
+  display: block;
+}
 .boxUpload{
   border: 1px solid #757E95;
   border-radius: 16px;
@@ -1526,6 +1552,7 @@ ul{
   }
   .buscador_movilllll{
     display: block !important;
+    
   }
   .buscador{
     display: none;
@@ -1565,7 +1592,9 @@ ul{
   #stepWizard .box-flex .columna .nombre{
     min-height: 43px;
   }
-  
+  .user-solo-movil{
+    padding-bottom: 50px;
+  }
   .link_url{
     font-size: 18px;
     text-align: center;
@@ -1643,12 +1672,7 @@ ul{
   .pc_buscador{
     display: block
   }
-  /*.pc{
-    display: block;
-  }
-  .movil{
-   display: none;
-  } */
+ 
   .box-color {
     text-align: center;
     line-height: 3.7;
@@ -1661,13 +1685,18 @@ ul{
   .like{
     gap: 25px;
   }
-  #step1 .like .soloMovil,
-  #step2 .like .soloMovil{
+  #step1 .like .soloMovil  ,
+  #step2 .like .soloMovil  {
     display: none;
   }
-  #step3 .like .soloMovil{
+  #step3 .like .soloMovil {
     display: block;
   }
+  #step3 .like .soloComments {
+    display: none;
+  }
+ 
+  
   .trending .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link{
     padding: 5px;
     font-size: 14px;

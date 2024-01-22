@@ -321,7 +321,7 @@ const LoginStatus = () => {
    } 
  }
   return (
-    <div>
+    <div className='user-solo-movil'>
       <nav>
         <ul>
           <li>
@@ -331,7 +331,7 @@ const LoginStatus = () => {
                 <div className="d-inline-block dropdown">
                     <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" className="dropdown-toggle"> 
                         <span className='user-close-movil text-white mr-4 font-family-SpaceGrotesk-Bold'>{user.name}</span>              
-                         <img src={user.photo} /> 
+                         <img src={user.photo  ? user.photo : 'descarga.png'} /> 
                     </button>
                     <div tabIndex={-1} role="menu" aria-hidden="true" className="dropdown-menu dropdown-menu-right" x-placement="bottom-end">
                         <ul className="nav flex-column">                        
@@ -339,7 +339,7 @@ const LoginStatus = () => {
                             <a className="dropdown-item" href="Javascript:void(0)" onClick={handleEditProfile}>My profile</a>
                         </li>
                         <li className="nav-item">
-                            <a className="dropdown-item" href="Javascript:void(0)" onClick={handleLogout}><i className="far fa-sign-out"></i> Log out</a>
+                            <a className="dropdown-item" href="Javascript:void(0)" onClick={handleLogout}><i className="far fa-sign-out"></i>Log out</a>
                         </li>
                         </ul>
                     </div>

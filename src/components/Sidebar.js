@@ -6,7 +6,9 @@ const Sidebar = () => {
   const closeNav = () => {
     document.getElementById("mySidenav").style.width = "0";
   };
-
+  const redirectPage = () => {
+   
+  };
   const handleLinkClick = () => {
     closeNav();
   };
@@ -18,7 +20,8 @@ const Sidebar = () => {
         <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>
           &times;
         </a>
-        <img src={require('./img/logo.png')} alt="logo"  className='logo-side'/>
+        <a href='/'>  <img src={require('./img/logo.png')} alt="logo" onClick={redirectPage}   className='logo-side'/></a>
+       
          <b className="text-white mr-4 font-family-SpaceGrotesk-Bold title-logo" >MyPick.Is</b>
       </div>
       <ul>

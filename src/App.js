@@ -20,11 +20,14 @@ const App = () => {
   const [id, setIdcategory] = useState(''); 
   const [searchTerm, setsearchTerm] = useState('');  
 
-  const handleMenuDataChange = (newMenuData) => {  
+  const handleMenuDataChange = (newMenuData) => { 
+    console.log("newMenuData",newMenuData) 
     setIdcategory(newMenuData.id)
     setsearchTerm(newMenuData.searchTerm) 
     
   };
+
+  
   return (
     
     <Router>

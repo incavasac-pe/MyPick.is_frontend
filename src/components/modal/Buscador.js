@@ -62,9 +62,9 @@ const Buscador = (props) => {
     return (
         <div className="form-group w-100 ">
           <div  className='buscador buscador_movilllll'>  
-            <div className='align-items-start busca d-flex justify-content-between position-relative'>
+            <div className='align-items-start busca justify-content-between position-relative'>
             <input type="text" className="form-control input-search" placeholder="Search ..."    onKeyDown={handleKeyDown}  value={searchTerm} onChange={handleInputChange} />
-            <div className='text-right'>
+            <div className='text-center'>
                   <button type="button" className="btn btn-cleaner" onClick={handleSearchChange} >
                     <i className="fal fa-search"></i>
                   </button>
