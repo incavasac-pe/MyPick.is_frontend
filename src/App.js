@@ -1,6 +1,5 @@
 import React,  {useState} from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './components/Home';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; 
 import Home1 from './components/Home1';
 import About from './components/About';
 import Contact from './components/Contact';
@@ -20,11 +19,9 @@ const App = () => {
   const [id, setIdcategory] = useState(''); 
   const [searchTerm, setsearchTerm] = useState('');  
 
-  const handleMenuDataChange = (newMenuData) => { 
-    console.log("newMenuData",newMenuData) 
+  const handleMenuDataChange = (newMenuData) => {  
     setIdcategory(newMenuData.id)
-    setsearchTerm(newMenuData.searchTerm) 
-    
+    setsearchTerm(newMenuData.searchTerm)  
   };
 
   
