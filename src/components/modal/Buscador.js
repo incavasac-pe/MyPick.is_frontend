@@ -4,8 +4,10 @@ import { useNavigate  } from 'react-router-dom';
 const Buscador = (props) => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
-  useEffect(() => {
-  
+
+ 
+  useEffect(() => { 
+
     // Verificar si el navegador es compatible con la API Web Speech
     if ('webkitSpeechRecognition' in window) {
       const recognition = new window.webkitSpeechRecognition();
@@ -39,17 +41,17 @@ const Buscador = (props) => {
  
     const handleInputChange = (event) => {
       const searchTermV = event.target.value; 
-      setSearchTerm(searchTermV) 
+      setSearchTerm(searchTermV)  
     };
 
-    const handleSearchChange = () => {       
+    const handleSearchChange = () => {     
       const data =  { searchTerm}  
-      props.onData(data);
+      props.onData(data); 
       navigate('/SearchResults'); // Redirigir al usuario a la página de perfil   
     };
 
     const handleVoiceSearch = (transcript) => { 
-      setSearchTerm(transcript)  
+      setSearchTerm(transcript)   
     };
 
     const handleKeyDown = (event) => {

@@ -8,7 +8,8 @@ const SearchResults = (props) => {
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [data, setSearch] = useState([]);
 
-    useEffect(() => {     
+    useEffect(() => {  
+       
         if(props.search!='') {
         fetch(`${API_BASE_URL}/list_all_picks_search?search=${props.search}`, {
           method: 'GET',      
@@ -23,7 +24,7 @@ const SearchResults = (props) => {
             setCurrentPage(1);
            }else{
             setSearch([])
-           }
+           } 
         }) 
     }else {
         setSearch([])
