@@ -36,10 +36,11 @@ const TrendingTopics = (props) => {
 
  
   const changeTabName = (nameChoice) => {   
-    navigator.clipboard.writeText(nameChoice)  
-    toast.success('Text Copied', {
-      position: toast.POSITION.TOP_RIGHT
-  });
+   // navigator.clipboard.writeText(nameChoice)  
+    setTimeout(() => {     
+      navigate('/SearchResults?search='+nameChoice); // Redirigir al usuario a la página de perfil   
+      },500);   
+   
   };
  
   
