@@ -1,17 +1,22 @@
 import React, { useState,useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,useLocation} from 'react-router-dom';
 const API_BASE_URL = process.env.REACT_APP_URL_API 
 
 const SearchResults = (props) => { 
+    const location = useLocation();
     const navigate = useNavigate(); // Hook de navegación
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [data, setSearch] = useState([]);
 
-    useEffect(() => {  
-       
-        if(props.search!='') {
-        fetch(`${API_BASE_URL}/list_all_picks_search?search=${props.search}`, {
+    const searchParams = new URLSearchParams(location.search);
+    const search_ext = searchParams.get('search') ?? ''; 
+
+    useEffect(() => {         
+        if(props.search!=='' || search_ext!=='') {
+        const title = props.search!=='' ? props.search : search_ext
+        console.log("el title es",title)
+        fetch(`${API_BASE_URL}/list_all_picks_search?search=${title}`, {
           method: 'GET',      
           headers: {
             'Content-Type': 'application/json'      
@@ -29,7 +34,7 @@ const SearchResults = (props) => {
     }else {
         setSearch([])
     }
-      }, [props.search]); 
+      }, [props.search,search_ext]); 
 
     const handlePageChange = (page) => {
         setCurrentPage(page);

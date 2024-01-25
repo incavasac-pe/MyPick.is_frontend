@@ -115,7 +115,7 @@ function removeQueryParams(url) {
                 </select>
             </div>
             <div className='ml-5 mr-5 margin-mobil'>
-                <p className='text-gris-claro mb-0'>{currentPage} - {Math.min(indexOfLastRow, data.length)} de {data.length}</p>
+                <p className='text-gris-claro mb-0'>{currentPage} - {Math.min(indexOfLastRow, data.length)} of {data.length}</p>
             </div>
             <nav aria-label="Page navigation" className='mb-0'>
                 <ul className="pagination mb-0">

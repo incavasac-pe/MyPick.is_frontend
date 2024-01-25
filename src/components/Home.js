@@ -319,7 +319,7 @@ const manejarClick = (dato) => {
     return (
       <div>        
         <div className='container'>
-          <div className='contenido'>
+          <div className='contenido contenido_mobile'>
             <div className='row'>
               <div className='col-md-8 m-auto'>
                 <div id="stepWizard">

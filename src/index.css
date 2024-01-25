@@ -1541,7 +1541,7 @@ ul{
     display: none;
   }
   .columna-refresh{
-    margin-bottom: 120px;
+    margin-bottom: 140px;
     margin-left: 5px;
     margin-right: 5px;
   }
@@ -1556,6 +1556,9 @@ ul{
   }
   .buscador{
     display: none;
+  }
+  .contenido_mobile{
+    padding: 5px;
   }
 }
 @media screen and (max-height: 450px) {
