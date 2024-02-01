@@ -75,6 +75,10 @@ body,
 .App {
   background-color:#1B161E;
 }
+.show_message {
+  display: block !important;
+  margin-top: 0;
+}
 header{
   padding: 24px 0;
 }
@@ -423,6 +427,7 @@ header .buscador p{
     font-size: 18px;
   text-align: center;
   margin-top: 24px; 
+ 
 }
 .link_url2{
   width: 300px;
@@ -1602,14 +1607,19 @@ ul{
     font-size: 18px;
     text-align: center;
     margin-top: 14px;
-    height: 140px;
+    height: 90px;
+    overflow-y: auto;
   }
   .link_url2{
     width: 300px;
  }
   .link_urlstep3 {
     text-align: center;
-    height: 100px;
+    height: 90px;
+    overflow-y: auto;
+}
+.row_space{
+ margin-bottom: 1rem;
 }
   .menu-float-movil .fondoboton,
   .menu-float-movil ul{
