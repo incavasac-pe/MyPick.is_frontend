@@ -232,23 +232,23 @@ const Contact = () => {
                 </div>
             
                 <div className="col-md-12">
-                <div class="form-group form-check custom-control">
-                    <label class="form-check-label">
-                      <input type="checkbox" className="form-check-input aaaa"    
-                         checked={isChecked}
-                      onChange={handleCheckboxChange}/> 
-                       <label className="font-family-SpaceGrotesk-Medium">
-                       I Agree To The <a href='https://www.mypick.is/terms' className='text-morado'>Terms And Conditions</a> and <a href='https://www.mypick.is/privacy' className='text-morado'>Privacy Policy</a>
-                    </label>
-                    {formErrors.privacyPolicy && (
-                      <div className="invalid-feedback">
-                        {formErrors.privacyPolicy}
-                      </div>
-                    )}
-                    </label>
-                  </div>
-            
+                      <div class="custom-control form-control-lg custom-checkbox row_space">  
+                      <label class="form-check-label">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1"  checked={isChecked} onChange={handleCheckboxChange}/>  
+                  
+                    <label className="custom-control-label font-family-SpaceGrotesk-Medium"  for="customCheck1">
+                            I Agree To The <a href='https://www.mypick.is/terms' className='text-morado'>Terms And Conditions</a> and <a href='https://www.mypick.is/privacy' className='text-morado'>Privacy Policy</a>
+                          </label>
+                      {formErrors.privacyPolicy && (
+                          <div className="invalid-feedback show_message">
+                            {formErrors.privacyPolicy}
+                          </div>
+                        )}
+                          </label>
+
+                </div>   
                 </div>
+                <br/>   <br/>
                 <div className="col-md-12">
                   <button type="submit" disabled={isDisable} className="btn btn-enviar font-family-SpaceGrotesk-Bold">
                   Submit
