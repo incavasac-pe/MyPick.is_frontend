@@ -80,7 +80,9 @@ body,
   margin-top: 0;
 }
 header{
-  padding: 24px 0;
+  padding-top: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 header img{
   width: 144px;
@@ -264,7 +266,7 @@ header .buscador p{
 }
 /*general*/
 .contenido{
-  padding: 50px 0;
+  padding: 40px 0;
 }
 .text-grey{
   color: #4C5D70;
@@ -1546,7 +1548,7 @@ ul{
     display: none;
   }
   .columna-refresh{
-    margin-bottom: 140px;
+    margin-bottom: 108px;
     margin-left: 5px;
     margin-right: 5px;
   }
