@@ -1564,9 +1564,7 @@ ul{
   .buscador{
     display: none;
   }
-  .contenido_mobile{
-    padding: 0px;
-  }
+ 
 }
 @media screen and (max-height: 450px) {
   .sidebar {padding-top: 15px;}
