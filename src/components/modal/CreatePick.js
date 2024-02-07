@@ -63,6 +63,7 @@ const CreatePick = () => {
                   <label>Select Topic</label>
                   <span className="icon fas fa-magic fa-lg"></span>    
                    <select className="form-control" id="topic" name="topic" value={selectedOptionTopic} onChange={handleSelectChange}>
+                   <option value=''>Select</option>
                   {muestras.map((opcion, index) => (
                     <option key={index} value={opcion.id}>{opcion.name}</option>
                   ))}
