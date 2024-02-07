@@ -33,9 +33,9 @@ const CreatePickImagenUpload = (props) => {
 
   
   const fetchDataChoice =  () => {
-    if (searchTerm.length > 5 && searchTerm !=undefined ) {
+    if (searchTerm.length > 2 && searchTerm !=undefined ) {
       setIsLoading(true); 
-   const url = `${API_BASE_URL}/list_products_api_externa_new?search=${searchTerm}`;
+   const url = `${API_BASE_URL}/list_products_api_externa_new_1?search=${searchTerm}`;
   
   fetch(url, {
     method: 'GET',
@@ -62,9 +62,9 @@ const CreatePickImagenUpload = (props) => {
   }}
 
   const fetchDataChoice2 =  () => {
-    if (searchTerm2.length > 5 && searchTerm2 !=undefined ) {
+    if (searchTerm2.length > 2 && searchTerm2 !=undefined ) {
       setIsLoading2(true); 
-   const url = `${API_BASE_URL}/list_products_api_externa_new?search=${searchTerm2}`;
+   const url = `${API_BASE_URL}/list_products_api_externa_new_1?search=${searchTerm2}`;
   
   fetch(url, {
     method: 'GET',
@@ -288,6 +288,7 @@ const imagenProducto = filteredResults[0]?.imageUrl;
             {!notFound && searchTerm && !isLoading && ( 
            
               <select   className="form-control" onChange={handleSearch}> 
+               <option data-tokens="ketchup mustard" value=''>Search</option>
                   {results.map((item) => (
               <option data-tokens="ketchup mustard" value={item.title}>{item.title}</option>
               ))}
@@ -335,7 +336,8 @@ const imagenProducto = filteredResults[0]?.imageUrl;
 
               {!notFound2 && searchTerm2 && !isLoading2 && ( 
            
-           <select  className="form-control"   onChange={handleSearch2}> 
+           <select  className="form-control"  onChange={handleSearch2}> 
+           <option data-tokens="ketchup mustard" value=''>Search</option>
                {results2.map((item) => (
           <option data-tokens="ketchup mustard" value={item.title}>{item.title}</option>
            ))}
