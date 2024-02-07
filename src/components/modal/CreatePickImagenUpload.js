@@ -35,7 +35,7 @@ const CreatePickImagenUpload = (props) => {
   const fetchDataChoice =  () => {
     if (searchTerm.length > 2 && searchTerm !=undefined ) {
       setIsLoading(true); 
-   const url = `${API_BASE_URL}/list_products_api_externa_new_1?search=${searchTerm}`;
+   const url = `${API_BASE_URL}/list_products_api_externa_new?search=${searchTerm}`;
   
   fetch(url, {
     method: 'GET',
@@ -64,7 +64,7 @@ const CreatePickImagenUpload = (props) => {
   const fetchDataChoice2 =  () => {
     if (searchTerm2.length > 2 && searchTerm2 !=undefined ) {
       setIsLoading2(true); 
-   const url = `${API_BASE_URL}/list_products_api_externa_new_1?search=${searchTerm2}`;
+   const url = `${API_BASE_URL}/list_products_api_externa_new?search=${searchTerm2}`;
   
   fetch(url, {
     method: 'GET',
