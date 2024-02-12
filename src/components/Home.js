@@ -432,9 +432,9 @@ const manejarClick = (dato) => {
                          {muestras?.[0]?.choice1_name.length > 70 ? `${muestras?.[0]?.choice1_name.substring(0, 70)}...` : muestras?.[0]?.choice1_name}</a>
                         </div>
                       </div>
-                      <div className='columna-refresh'>
-                        <button onClick={goToFirstStep}>
-                          <i className="fas fa-redo"></i>
+                      <div className='columna-refresh1'>
+                        <button onClick={goToFirstStep} >
+                         Next pick
                         </button>
                       </div>
                       <div className='columna col_div_ajus'>
