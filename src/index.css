@@ -393,7 +393,7 @@ header .buscador p{
     width: 100%;
     cursor: pointer;
 } 
-#stepWizard .box-flex .columna-refresh button{
+#stepWizard .box-flex .columna-refresh   button{
   border: 1px solid #4C5D70;
   background: transparent;
   width: 40px;
@@ -406,7 +406,26 @@ header .buscador p{
   -ms-transition: 0.2s all linear;
   -o-transition: 0.2s all linear;
 }
-#stepWizard .box-flex .columna-refresh button:hover{
+#stepWizard .box-flex .columna-refresh1  button{
+  border: 1px solid #4C5D70;
+  background: transparent;
+  width: 62px;
+  height: 62px;
+  margin-bottom: 60px;
+  border-radius: 50%;
+  color: #4C5D70;
+  transition: 0.2s all linear;
+  -webkit-transition: 0.2s all linear;
+  -moz-transition: 0.2s all linear;
+  -ms-transition: 0.2s all linear;
+  -o-transition: 0.2s all linear;
+}
+#stepWizard .box-flex .columna-refresh  button:hover{
+  background-color: #8459DE;
+  border: 1px solid #8459DE;
+  color: #fff;
+}
+#stepWizard .box-flex  .columna-refresh1  button:hover{
   background-color: #8459DE;
   border: 1px solid #8459DE;
   color: #fff;
@@ -415,6 +434,10 @@ header .buscador p{
   width: min-content ;
 }
 .columna-refresh{
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.columna-refresh1{
   margin-left: 20px;
   margin-right: 20px;
 }
@@ -1551,6 +1574,11 @@ ul{
     margin-bottom: 108px;
     margin-left: 5px;
     margin-right: 5px;
+  }
+  .columna-refresh1{
+    margin-bottom: 35px;
+    margin-left: 10px;
+    margin-right: 10px;
   }
   .logo-side{
     left: 20px;
