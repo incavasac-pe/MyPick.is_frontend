@@ -190,7 +190,16 @@ header .buscador p{
   font-size: 36px;
    
 }
- 
+ .p-movil{
+  margin-left: 145px;
+  margin-right: 0px;
+  width: 450px;
+  margin: 20;
+  align-items: center!important;
+  align-items: center!important;
+  display: flex!important; 
+ }
+
 .logo-side{
   width: 64px;
   height: 64px; 
@@ -392,6 +401,12 @@ header .buscador p{
 #stepWizard .box-flex .columna .box-img img{ 
     width: 100%;
     cursor: pointer;
+    background-size: cover;
+    background-position: center;
+    vertical-align: middle;
+    border-style: none;
+    max-width: 100%;
+    max-height: 100%;
 } 
 #stepWizard .box-flex .columna-refresh   button{
   border: 1px solid #4C5D70;
@@ -1570,6 +1585,12 @@ ul{
   .user-close-movil{
     display: none;
   }
+  .p-movil{
+    padding: 0;
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 280px;
+  }
   .columna-refresh{
     margin-bottom: 108px;
     margin-left: 5px;
@@ -1581,7 +1602,7 @@ ul{
     margin-right: 10px;
   }
   .logo-side{
-    left: 20px;
+    left: 40px;
     width: 54px;
     height: 54px;
   }
@@ -1614,8 +1635,16 @@ ul{
   .title-logo{
    display: none;
   }
+  .logo-side {
+    left: 0px;
+    width: 54px;
+    height: 54px;
+  }
   .p-movil{
     padding: 0;
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 122px;
   }
   header .btnmenu{
     left: 10px;
