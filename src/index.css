@@ -1809,3 +1809,26 @@ ul{
 .claseabrir .user-profile{
   display: none;
 }
+
+.reload-button {
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+}
+
+.reload-button i {
+  font-size: 20px; /* Ajusta el tamaño del icono según tus necesidades */
+}
+
+/* Estilos adicionales para ajustar el responsive */
+@media (max-width: 768px) {
+  .reload-button {
+    width: 38px !important; /* Ajusta el ancho del botón en dispositivos con ancho máximo de 768px */
+    height: 38px !important; /* Ajusta la altura del botón en dispositivos con ancho máximo de 768px */
+    padding: 0px 6px;
+  }
+
+  .reload-button i {
+    font-size: 14px; /* Ajusta el tamaño del icono en dispositivos con ancho máximo de 768px */
+  }
+}
