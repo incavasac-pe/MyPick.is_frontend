@@ -433,7 +433,7 @@ const manejarClick = (dato) => {
                         </div>
                       </div>
                       <div className='columna-refresh1'>
-                        <button onClick={goToFirstStep} >
+                        <button  class="reload-button1"  onClick={goToFirstStep} >
                          Next pick
                         </button>
                       </div>
