@@ -5,6 +5,7 @@ import AuthLogin from './modal/AuthLogin';
 import ModalRedes from './modal/ModalRedes';
 import { checkAuth }  from '../AuthMiddleware'; 
 import { useLocation } from 'react-router-dom'; 
+import TagManager from 'react-gtm-module';
  
 const API_BASE_URL = process.env.REACT_APP_URL_API
 const Home = (props) => { 
@@ -98,9 +99,14 @@ const Home = (props) => {
  
   };
  
- const handleClickImagen = (id_choice,imagen, texto,url) => { 
- 
- 
+ const handleClickImagen = (id_choice,imagen, texto,url,event) => { 
+          
+        console.log("event",event)
+        TagManager.dataLayer({
+          event: 'Click ID',
+          data: event
+        }); 
+
       const storedUser = localStorage.getItem('user');
       let email = 'default@test.com';
       if (storedUser) {
@@ -333,7 +339,7 @@ const manejarClick = (dato) => {
                       <div className='columna col_div_ajus'>
                         <div
                           className={`box-img ${imagenActiva === muestras?.[0]?.photo1_name ? 'activo' : ''}`}
-                          onClick={() => handleClickImagen(muestras?.[0]?.id_choice1, muestras?.[0]?.photo1_name, muestras?.[0]?.choice1_name,muestras?.[0]?.url_choice1)}
+                          onClick={() => handleClickImagen(muestras?.[0]?.id_choice1, muestras?.[0]?.photo1_name, muestras?.[0]?.choice1_name,muestras?.[0]?.url_choice1,'PickLeft')}
                         >
                           <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(muestras?.[0]?.photo1_name)}`} width={"282px"}  height={"282px"} alt="ciudad"  />
                         </div>
@@ -351,7 +357,7 @@ const manejarClick = (dato) => {
                       <div className='columna col_div_ajus'>
                         <div
                           className={`box-img ${imagenActiva === muestras?.[0]?.photo2_name ? 'activo' : ''}`}
-                          onClick={() => handleClickImagen(muestras?.[0]?.id_choice2,  muestras?.[0]?.photo2_name, muestras?.[0]?.choice2_name,muestras?.[0]?.url_choice2)}
+                          onClick={() => handleClickImagen(muestras?.[0]?.id_choice2,  muestras?.[0]?.photo2_name, muestras?.[0]?.choice2_name,muestras?.[0]?.url_choice2,'PickRight')}
                         >
                           <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(muestras?.[0]?.photo2_name)}`} width={"282px"}  height={"282px"} alt="ciudad" />
                         </div>

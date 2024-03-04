@@ -23,7 +23,6 @@ const App = () => {
     setIdcategory(newMenuData.id)
     setsearchTerm(newMenuData.searchTerm)  
   };
-
   
   return (
     
