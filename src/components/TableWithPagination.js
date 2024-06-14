@@ -41,6 +41,7 @@ const TableWithPagination = (props) => {
   const handleRowsPerPageChange = (event) => {
     setRowsPerPage(Number(event.target.value));
     setCurrentPage(1);
+    handleButtonClick(`MyBookmarks${event.target.value}rows`);
   };
 
   
@@ -65,7 +66,15 @@ function removeQueryParams(url) {
   }
   return url ;
 }
-
+const handleButtonClick = (eventName) => {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: eventName,
+    event_category: 'User',
+    event_action: 'Click',
+    event_label: eventName
+  });
+};
   return (
     <div className='Bookmarks border-linea mb-5 tabla-contenedor'>
       <table className="table table-striped table-bordered">
@@ -80,6 +89,7 @@ function removeQueryParams(url) {
         </thead>
         <tbody className='text-white'>
           {currentRows.map((row) => (
+            
             <tr key={row.id}>
               <td>
                 <div className='table-img d-flex align-items-center justify-content-start'>
@@ -99,12 +109,20 @@ function removeQueryParams(url) {
               </td>
               <td> {formatearTiempo(row.dias)}</td>
               <td>
-                <div className='table-img'>
-                <img src={`${API_BASE_URL}/see_photo?img=${row.selectd1 >= row.selectd2 ? encodeURIComponent(row.photo1_name) : encodeURIComponent(row.photo2_name)}`}/> 
-
-                <a className='text-white' href={removeQueryParams(row.selectd1 >= row.selectd2  ? row?.url1 : row?.url2 )+'?tag=plsq-20'} target="_blank">
-                <span className='ml-3'> {row.selectd1 >= row.selectd2 ? row.choice1_name : row.choice2_name}</span>
-                      </a>                  
+                <div className='table-img d-flex align-items-center justify-content-start' >
+                <img src={`${API_BASE_URL}/see_photo?img=${row.selectd1 >= row.selectd2 ? encodeURIComponent(row.photo1_name) : encodeURIComponent(row.photo2_name)}`} className='bookmark-img'/> 
+{
+   row?.url1 === null && row?.url2 === null ||  row?.url1 === "www" && row?.url2 === "www" ? (
+    <span className='ml-3'> {row.selectd1 >= row.selectd2 ? row.choice1_name : row.choice2_name}</span>
+   ):(
+   
+    <a className='text-white' href={removeQueryParams(row.selectd1 >= row.selectd2  ? row?.url1 : row?.url2 )+'?tag=plsq-20'} target="_blank">
+    <span className='ml-3'> {row.selectd1 >= row.selectd2 ? row.choice1_name : row.choice2_name}</span>
+          </a>    
+   
+       
+   ) 
+}             
                 </div>
                 
               </td>
@@ -130,12 +148,12 @@ function removeQueryParams(url) {
             <nav aria-label="Page navigation" className='mb-0'>
                 <ul className="pagination mb-0">
                 <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                    <button className="page-link" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+                    <button className="page-link" onClick={() => {handlePageChange(currentPage - 1);  handleButtonClick('MyBookmarksPrev');}} disabled={currentPage === 1}>
                     <i class="far fa-angle-left"></i>
                     </button>
                 </li>
                 <li className={`page-item ${currentRows.length < rowsPerPage ? 'disabled' : ''}`}>
-                    <button className="page-link" onClick={() => handlePageChange(currentPage + 1)} disabled={currentRows.length < rowsPerPage}>
+                    <button className="page-link" onClick={() => {handlePageChange(currentPage + 1); handleButtonClick('MyBookmarksNext');}} disabled={currentRows.length < rowsPerPage}>
                     <i class="far fa-angle-right"></i>
                     </button>
                 </li>

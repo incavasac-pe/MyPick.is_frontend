@@ -18,7 +18,7 @@ class Comments extends Component {
             mostrarFormularioRespuesta: {},
             login:true
         };
-        console.log("id_pick ",props.id_pick) 
+       
     }
 
     componentDidMount() {
@@ -172,9 +172,27 @@ class Comments extends Component {
             flag,
             login
         } = this.state;
+        console.log("comentarios",comentarios)
         if (comentarios.length === 0 && id_pick && flag === 1) {
            // this.fetchDataComments(id_pick)
         }
+        const handleButtonClick = (eventName) => {
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              event: eventName,
+              event_category: 'User',
+              event_action: 'Click',
+              event_label: eventName
+            });
+          };
+
+
+
+
+
+
+
+
         return (
             <div className="wrapper">
                 <div className="comment">
@@ -217,7 +235,7 @@ class Comments extends Component {
                                     <div className="content-footer">
                                         <button className="btn btn-outline"
                                             onClick={
-                                                () => this.agregarLikesComments(comentario.id)
+                                                () => {this.agregarLikesComments(comentario.id);  handleButtonClick('CommentLike');}
                                         }>
                                             <i className="fas fa-heart"></i>
                                             {
@@ -227,7 +245,7 @@ class Comments extends Component {
                                         </button>
                                         <button className="btn"
                                             onClick={
-                                                () => this.toggleMostrarFormularioRespuesta(comentario.id)
+                                                () => {this.toggleMostrarFormularioRespuesta(comentario.id); handleButtonClick('CommentReply');}
                                         }>
                                             <i class="fas fa-reply"></i>
                                             Reply
@@ -322,8 +340,8 @@ class Comments extends Component {
                             )}  
                     <div className='text-right'>
                         <button className='btn-login'
-                            onClick={
-                                this.agregarComentario
+                            onClick={() => {
+                                this.agregarComentario();  handleButtonClick('SubmitComment');}
                         }>Comment</button>
                     </div>
                 

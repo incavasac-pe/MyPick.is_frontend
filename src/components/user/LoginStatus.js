@@ -7,7 +7,7 @@ import { GoogleOAuthProvider ,GoogleLogin} from '@react-oauth/google';
 import jwt_decode from "jwt-decode";
 const API_BASE_URL = process.env.REACT_APP_URL_API
 
-const LoginStatus = () => { 
+const LoginStatus = ({event}) => { 
   const location = useLocation(); 
   const [loggedIn, setLoggedIn] = useState(false); // Estado de inicio de sesión 
   const [user, setUser] = useState(null); // Información del usuario
@@ -320,6 +320,15 @@ const LoginStatus = () => {
      setLoggedIn(false); 
    } 
  }
+ const handleButtonClickEvent = (eventName) => {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: eventName,
+    event_category: 'User',
+    event_action: 'Click',
+    event_label: eventName
+  });
+}
   return (
     <div className='user-solo-movil'>
       <nav>
@@ -329,7 +338,7 @@ const LoginStatus = () => {
               // Mostrar nombre y foto del usuario si ha iniciado sesión
               <div className="user-profile">                       
                 <div className="d-inline-block dropdown">
-                    <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" className="dropdown-toggle"> 
+                    <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" className="dropdown-toggle"    onClick={() => handleButtonClickEvent('Profile')}> 
                         <span className='user-close-movil text-white mr-4 font-family-SpaceGrotesk-Bold'>{user.name}</span>              
                          <img src={user.photo  ? user.photo : 'https://mypick.is/descarga.png'} /> 
                     </button>
@@ -347,8 +356,18 @@ const LoginStatus = () => {
               </div>
                 
             ) : (
-              // Mostrar botón de inicio de sesión si no ha iniciado sesión
-              <button data-toggle="modal" data-target="#ModaLogin"  onClick={handleButtonClick}  className='btn-login font-family-SpaceGrotesk-Bold solo-login'>Sign In / Sign up</button>
+            <>
+          
+              {
+                event === "mypick" ? (
+                  <button data-toggle="modal" data-target="#ModaLogin"  onClick={() => {handleButtonClick(); handleButtonClickEvent("MyPicksSignIn_Up");}}  className='btn-login font-family-SpaceGrotesk-Bold solo-login'>Sign In / Sign up</button>
+                ): event === "bookmark" ? (
+                  <button data-toggle="modal" data-target="#ModaLogin"  onClick={() => {handleButtonClick(); handleButtonClickEvent("MyBookmarksSignIn_Up");}}  className='btn-login font-family-SpaceGrotesk-Bold solo-login'>Sign In / Sign up</button>
+                ): event === "signup" ? (
+                  <button data-toggle="modal" data-target="#ModaLogin"  onClick={() => {handleButtonClick(); handleButtonClickEvent("SignIn_Up");}}  className='btn-login font-family-SpaceGrotesk-Bold solo-login'>Sign In / Sign up</button>
+                ): ""
+              }
+                </>
             )}
           </li>
         </ul>

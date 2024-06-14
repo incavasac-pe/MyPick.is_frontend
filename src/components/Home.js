@@ -36,7 +36,11 @@ const Home = (props) => {
   const scrollToComments = () => {
    
   };
-
+  function decodeHtmlEntities(text) {
+    const textArea = document.createElement('textarea');
+    textArea.innerHTML = text;
+    return textArea.value;
+  }
   const fetchIp = async () => {       
     fetch(`https://api.ipify.org?format=json`, {
       method: 'GET',       
@@ -92,11 +96,18 @@ const Home = (props) => {
     }
     
   };
-  
+  useEffect(() => {
+    // Update local storage whenever currentStep changes
+    if (currentStep === 1) {
+      localStorage.setItem('step', 1);
+    } else {
+      localStorage.setItem('step', currentStep);
+    }
+  }, [currentStep]);
  const goToFirstStep = () => {
   fetchData(ip)
   setcurrentStep(1)   
- 
+  localStorage.setItem('step', 1);
   };
  
  const handleClickImagen = (id_choice,imagen, texto,url,event) => { 
@@ -135,6 +146,7 @@ const Home = (props) => {
           seturlActivo(url)
           setcurrentStep(2)   
           fetchDataComments(id_pick)
+          localStorage.setItem('step',2);
         }
       })    
   };
@@ -321,7 +333,15 @@ const manejarClick = (dato) => {
   if(dato){
   commentsSectionRef.current.scrollIntoView({ behavior: 'smooth' });}
 }
- 
+const handleButtonClick = (eventName) => {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: eventName,
+    event_category: 'User',
+    event_action: 'Click',
+    event_label: eventName
+  });
+};
     return (
       <div>        
         <div className='container'>
@@ -339,32 +359,32 @@ const manejarClick = (dato) => {
                       <div className='columna col_div_ajus'>
                         <div
                           className={`box-img ${imagenActiva === muestras?.[0]?.photo1_name ? 'activo' : ''}`}
-                          onClick={() => handleClickImagen(muestras?.[0]?.id_choice1, muestras?.[0]?.photo1_name, muestras?.[0]?.choice1_name,muestras?.[0]?.url_choice1,'PickLeft')}
+                          onClick={() => {handleClickImagen(muestras?.[0]?.id_choice1, muestras?.[0]?.photo1_name, muestras?.[0]?.choice1_name,muestras?.[0]?.url_choice1,'PickLeft'); handleButtonClick('PickLeft');}}
                         >
                           <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(muestras?.[0]?.photo1_name)}`} width={"282px"}  height={"282px"} alt="ciudad"  />
                         </div>
-                        <div className='nombre link_url' style={{ cursor: 'pointer' }}>
+                        <div className='nombre link_url' style={{ cursor: 'pointer' }} onClick={() =>  handleButtonClick('HomeAffiliateLinkLeft')}>
                            <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice1)+'?tag=plsq-20'} target="_blank">
-                        {muestras?.[0]?.choice1_name.length > 70 ? `${muestras?.[0]?.choice1_name.substring(0, 70)}...` : muestras?.[0]?.choice1_name}
+                        {muestras?.[0]?.choice1_name.length > 70 ? `${decodeHtmlEntities(muestras?.[0]?.choice1_name.substring(0, 70))}...` : decodeHtmlEntities(muestras?.[0]?.choice1_name)}
                       </a>
                         </div>
                       </div>
                       <div className='columna-refresh'>
-                        <button class="reload-button" onClick={goToFirstStep}>
+                        <button class="reload-button" onClick={() => {goToFirstStep(); handleButtonClick('HomeReload');}}>
                           <i className="fas fa-redo"></i>
                         </button>
                       </div>
                       <div className='columna col_div_ajus'>
                         <div
                           className={`box-img ${imagenActiva === muestras?.[0]?.photo2_name ? 'activo' : ''}`}
-                          onClick={() => handleClickImagen(muestras?.[0]?.id_choice2,  muestras?.[0]?.photo2_name, muestras?.[0]?.choice2_name,muestras?.[0]?.url_choice2,'PickRight')}
+                          onClick={() => {handleClickImagen(muestras?.[0]?.id_choice2,  muestras?.[0]?.photo2_name, muestras?.[0]?.choice2_name,muestras?.[0]?.url_choice2,'PickRight'); handleButtonClick('PickRight');}}
                         >
                           <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(muestras?.[0]?.photo2_name)}`} width={"282px"}  height={"282px"} alt="ciudad" />
                         </div>
                         
-                        <div className='nombre link_url' style={{ cursor: 'pointer' }}>
+                        <div className='nombre link_url' style={{ cursor: 'pointer' }} onClick={() =>  handleButtonClick('HomeAffiliateLinkRight')}>
                         <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice2)+'?tag=plsq-20'} target="_blank">
-                            {muestras?.[0]?.choice2_name.length > 70 ? `${muestras?.[0]?.choice2_name.substring(0, 70)}...` : muestras?.[0]?.choice2_name}
+                            {muestras?.[0]?.choice2_name.length > 70 ? `${decodeHtmlEntities(muestras?.[0]?.choice2_name.substring(0, 70))}...` : decodeHtmlEntities(muestras?.[0]?.choice2_name)}
                           </a>
                            </div>
                       </div>
@@ -385,15 +405,15 @@ const manejarClick = (dato) => {
                       <div className='columna'>
                         <div className='box-img activo'>                      
                           {imagenActiva === muestras?.[0]?.photo1_name && (
-                            <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(muestras?.[0]?.photo1_name)}`} width={"282px"}  height={"282px"} alt="ciudad" onClick={nextStep}/>
+                            <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(muestras?.[0]?.photo1_name)}`} width={"282px"}  height={"282px"} alt="ciudad" onClick={() => {nextStep(); handleButtonClick('2ndScreenProductContinue')}}/>
                           )}
                           
                           {imagenActiva === muestras?.[0]?.photo2_name && (
-                            <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(muestras?.[0]?.photo2_name)}`}  width={"282px"}  height={"282px"}alt="ciudad" onClick={nextStep} />
+                            <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(muestras?.[0]?.photo2_name)}`}  width={"282px"}  height={"282px"}alt="ciudad"  onClick={() => {nextStep(); handleButtonClick('2ndScreenProductContinue')}} />
                           )}
                         
                         </div>
-                        <div className='nombre text-center'>
+                        <div className='nombre text-center' onClick={() =>  handleButtonClick('2ndScreenAffiliateLink')}>
                           <h3 className='text-morado font-family-SpaceGrotesk-Bold link_url2'>
                               I'm on team 
                               <span className='text-morado'>   
@@ -401,7 +421,7 @@ const manejarClick = (dato) => {
                                &nbsp;{ textoActivo}
                               </a></span>
                           </h3>
-                          <a href="#" onClick={nextStep} className='text-morado d-inline-block font-family-SpaceGrotesk-Bold animate__heartBeat'>
+                          <a href="#" onClick={() => {nextStep(); handleButtonClick('2ndScreenLinkContinue');}} className='text-morado d-inline-block font-family-SpaceGrotesk-Bold animate__heartBeat'>
                             Continue  <i class="fas fa-chevron-double-right arrow-top"></i>
                           </a>                      
                         </div>
@@ -424,7 +444,7 @@ const manejarClick = (dato) => {
                     </div>
                     <div className='box-flex'>
                       <div className='columna col_div_ajus' >
-                        <div className='box-img'>
+                        <div className='box-img' onClick={() =>  handleButtonClick('3rdScreenPickLeft')}>
                            <div className='box-color bg-morado'>
                               {porciento.map((percen) => (
                                 muestras?.[0]?.id_choice1 === percen.id_choice ? (
@@ -433,18 +453,18 @@ const manejarClick = (dato) => {
                               ))}
                             </div>
                         </div>
-                        <div className='nombre link_urlstep3'>
+                        <div className='nombre link_urlstep3'  onClick={() =>  handleButtonClick('3rdScreenAffiliateLinkLeft')}>
                           <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice1)+'?tag=plsq-20'} target="_blank"> 
                          {muestras?.[0]?.choice1_name.length > 70 ? `${muestras?.[0]?.choice1_name.substring(0, 70)}...` : muestras?.[0]?.choice1_name}</a>
                         </div>
                       </div>
                       <div className='columna-refresh1'>
-                        <button  class="reload-button1"  onClick={goToFirstStep} >
+                        <button  class="reload-button1" onClick={() => {goToFirstStep();  handleButtonClick('NextPick'); }} >
                          Next pick
                         </button>
                       </div>
                       <div className='columna col_div_ajus'>
-                        <div className='box-img'>                         
+                        <div className='box-img' onClick={() =>  handleButtonClick('3rdScreenPickRight')}>                         
                           <div className='box-color bg-gris'>
                               {porciento.map((percen2) => (
                                 muestras?.[0]?.id_choice2 === percen2.id_choice ? (
@@ -453,7 +473,7 @@ const manejarClick = (dato) => {
                               ))}
                             </div>
                         </div>
-                        <div className='nombre link_urlstep3'>
+                        <div className='nombre link_urlstep3'  onClick={() =>  handleButtonClick('3rdScreenAffiliateLinkRight')}>
                         <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice2)+'?tag=plsq-20'} target="_blank"> 
                           {muestras?.[0]?.choice2_name.length > 70 ? `${muestras?.[0]?.choice2_name.substring(0, 70)}...` : muestras?.[0]?.choice2_name}
                           </a>

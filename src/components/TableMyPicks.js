@@ -36,6 +36,7 @@ const TableMyPicks = (props) => {
   const handleRowsPerPageChange = (event) => {
     setRowsPerPage(Number(event.target.value));
     setCurrentPage(1);
+    // handleButtonClick(`MyPicks${event.target.value}rows`);
   };
 
   
@@ -59,7 +60,15 @@ function removeQueryParams(url) {
   }
   return url ;
 }
-
+// const handleButtonClick = (eventName) => {
+//   window.dataLayer = window.dataLayer || [];
+//   window.dataLayer.push({
+//     event: eventName,
+//     event_category: 'User',
+//     event_action: 'Click',
+//     event_label: eventName
+//   });
+// };
   return (
     <div className="col-md-12"> 
       <div className='Bookmarks border-linea tabla-contenedor'>

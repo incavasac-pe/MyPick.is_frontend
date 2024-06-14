@@ -102,6 +102,17 @@ const TrendingTopics = (props) => {
     if (muestras.length === 0) {
       return <p>No se encontraron resultados.</p>;   
     }
+    
+    const handleButtonClick = (eventName) => {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: eventName,
+        event_category: 'User',
+        event_action: 'Click',
+        event_label: eventName
+      });
+    };
+
     return (
       <div className='trending contenido mb-5'>
           <ToastContainer position="top-right"  autoClose={2000} closeOnClick theme="dark"/>    
@@ -117,7 +128,7 @@ const TrendingTopics = (props) => {
             <div
               to="#"
               className={`nav-link ${activeTab === 'Top Trending' ? 'active' : ''}`}               
-              onClick={() => changeTab('Top Trending','')}
+              onClick={() => {changeTab('Top Trending',''); handleButtonClick('Top Trending');}}
             >
               Top Trending
             </div>
@@ -128,7 +139,7 @@ const TrendingTopics = (props) => {
               <div
                 to="#"
                 className={`nav-link ${activeTab === category.category_name ? 'active' : ''}`} 
-                onClick={() => changeTab(category.category_name,category.id_category)}
+                onClick={() => {changeTab(category.category_name,category.id_category);  handleButtonClick(category?.category_name);}}
               >
               {category.category_name}
               </div>

@@ -24,7 +24,7 @@ const MyPicks = (props) => {
               Sorry, to continue, you must Login:
             </p>)}
             <p className='claseabrir text-center'>
-              <LoginStatus/>
+              <LoginStatus event="mypick"/>
             </p>
           </div>          
         </div>

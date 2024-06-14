@@ -19,10 +19,19 @@ class Menu extends Component {
       };
     render() {
         const { searchTerm } = this.state;
+        const handleButtonClick = (eventName) => {
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              event: eventName,
+              event_category: 'User',
+              event_action: 'Click',
+              event_label: eventName
+            });
+          };
         return (
             <div className="row">
                 <div className='col-3'>
-                <button type="button" className='btnmenu' style={{ fontSize: '30px', cursor: 'pointer' }} onClick={openNav}>
+                <button type="button" className='btnmenu' style={{ fontSize: '30px', cursor: 'pointer' }} onClick={() => {openNav(); handleButtonClick('Menu');}}>
                         <i className="fas fa-grip-lines text-white"></i>
                     </button>
                     <a href="/">
@@ -36,7 +45,7 @@ class Menu extends Component {
                     <Buscador onData={this.handleDataFromChild}/>
                 </div>
                 <div className='col-4 d-flex justify-content-center align-items-center'>
-                    <LoginStatus />
+                    <LoginStatus event="signup" />
                 </div>
             </div>
             

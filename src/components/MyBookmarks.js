@@ -13,7 +13,7 @@ import LoginStatus from './user/LoginStatus';
       const isAuthenticated = checkAuth();
       setlogin(isAuthenticated)  
     }, []);
- 
+   
   
     return (
       <div className='container contenido'>
@@ -25,7 +25,7 @@ import LoginStatus from './user/LoginStatus';
               Sorry, to continue, you must Login:
             </p>)}
             <p className='claseabrir text-center'>
-              <LoginStatus/>
+              <LoginStatus event="bookmark"/>
             </p>
 
           </div>          
