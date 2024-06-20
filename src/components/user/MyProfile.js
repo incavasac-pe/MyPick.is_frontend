@@ -123,9 +123,10 @@ const MyProfile = () => {
           if(data.error){        
              toast.error(data.msg);              
           } else {   
+            console.log("data",data) 
             const storedUser = localStorage.getItem('user');
             if (storedUser) {    
-                localStorage.setItem('user', JSON.stringify({ name: data.data.user.full_name,  email: data.data.user.email, nick:data.data.user.username}));
+                localStorage.setItem('user', JSON.stringify({ name: data.data.user.full_name,  email: data.data.user.email, nick:data.data.user.username,photo:data.data.user.photo}));
                 if(data.data.user.photo!=null)   localStorage.setItem('photo', JSON.stringify({ photo: `${API_BASE_URL}/see_photo?img=${data.data.user.photo}`}));
                } 
                   
@@ -174,7 +175,8 @@ const MyProfile = () => {
     };
         if(file){
         fetch(`${API_BASE_URL}/change_photo?email=${email}`, requestOptions) 
-              .then(response => {            
+              .then(response => {    
+                console.log("response",response)        
                 if (response.status===200){
                         localStorage.setItem('photo', JSON.stringify({ photo: `${API_BASE_URL}/see_photo?img=${file.name}`}));                      
              

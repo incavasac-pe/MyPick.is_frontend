@@ -32,7 +32,7 @@ const Home = (props) => {
   const [nuevaRespuesta, setnuevaRespuesta] = useState('');    
   const [mostrarRespuestas, setmostrarRespuestas] = useState({});   
   const [mostrarFormularioRespuesta, setmostrarFormularioRespuesta] = useState({}); 
-  
+  console.log("comentario",comentarios)
   const scrollToComments = () => {
    
   };
@@ -219,11 +219,13 @@ const Home = (props) => {
 const registerComments = (nuevoComentario) => { 
     const storedUser = localStorage.getItem('user'); 
         const parsedUser = JSON.parse(storedUser);
-
+        const storedUserPhoto = localStorage.getItem('photo'); 
+        const parsedUserPhoto = JSON.parse(storedUserPhoto);
+console.log("parsedUser",parsedUser)
         fetch(`${API_BASE_URL}/register_comments`, {
             method: 'POST',
             body: JSON.stringify(
-                {id_pick: id_pick, contenido: nuevoComentario, email: parsedUser.email}
+                {id_pick: id_pick, contenido: nuevoComentario, email: parsedUser.email,photo:parsedUserPhoto?.photo}
             ),
             headers: {
                 'Content-Type': 'application/json'
@@ -231,8 +233,10 @@ const registerComments = (nuevoComentario) => {
         }).then(response => response.json()).then(data => {
             if (data.data) {
               setCommentarios(data.data) 
+              fetchDataComments(id_pick)
             } 
         }) 
+       
 }
 
 
@@ -507,11 +511,8 @@ const handleButtonClick = (eventName) => {
                            { comentario.usuario !='' &&
                             <div   className="content">
                                 <div className="avatar">
-                                    <img src={
-                                            `${API_BASE_URL}/see_photo?img=${
-                                                comentario.foto
-                                            }`
-                                        }
+                                    <img src={ comentario?.foto ? comentario?.foto : "https://mypick.is/descarga.png"}
+                                        
                                         alt="user"/>
                                 </div>
                                 <div className="content-comment">

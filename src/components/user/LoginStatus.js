@@ -14,7 +14,7 @@ const LoginStatus = ({event}) => {
   const [errors, setErrors] = useState({});
   const [errors_re, setErrors_re] = useState({});
   const [showModal, setShowModal] = useState(false);
-  
+  console.log("user",user)
   const navigate = useNavigate(); // Hook de navegación
   
   useEffect(() => {   
@@ -170,7 +170,13 @@ const LoginStatus = ({event}) => {
                 
               toast.success('An email was sent to you to continue with account activation.', {
                 position: toast.POSITION.TOP_RIGHT,autoClose:5000
-            });          
+            });  
+            localStorage.setItem('user', JSON.stringify({
+              name: full_name,
+              email: email,
+              token: ""
+              
+          }));        
             setTimeout(() => {     
                 window.location.reload()            
           },5000); 
@@ -286,40 +292,74 @@ const LoginStatus = ({event}) => {
   
   /*Google*/
   
-  const responseGoogle = (response) => {    
-    var decoded = jwt_decode(response);
-    if (decoded.email) {
-     setLoggedIn(true);
-     
-     setUser({ google:true, name: decoded.name, 
-       photo:decoded.picture , email: decoded.email,token:response});                 
-     localStorage.setItem('user', JSON.stringify({ name: decoded.name,  email: decoded.email,token:response,nick:decoded.given_name}));
-     localStorage.setItem('photo', JSON.stringify({ photo: decoded.picture}));
-    
-     fetch(`${API_BASE_URL}/register`,   {
-       method: 'POST', 
-       body: JSON.stringify({ full_name: decoded.name, email:  decoded.email,password:'qwerty',origin:'google' }),
-       headers: {
-         'Content-Type': 'application/json'      
-       }  
-     })  
-     .then(response => {            
-       if (response.status===201 || response.status===401){ 
-        setTimeout(() => {     
-          window.location.reload()           
-        },4000);  
-       }
-     }) 
-   
-.catch(() => {
- // Manejar cualquier error de la solicitud           
- toast.error("An error has occurred upload");     
-});
-     
-   } else {
-     setLoggedIn(false); 
-   } 
- }
+  const responseGoogle = (response) => {
+    try {
+        var decoded = jwt_decode(response);
+        console.log("decoded", decoded);
+
+        if (decoded.email) {
+            setLoggedIn(true);
+            setUser({
+                google: true,
+                name: decoded.name,
+                photo: decoded.picture,
+                email: decoded.email,
+                token: response
+            });
+
+            localStorage.setItem('user', JSON.stringify({
+                name: decoded.name,
+                email: decoded.email,
+                token: response,
+                nick: decoded.given_name
+            }));
+           
+
+            fetch(`${API_BASE_URL}/register`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    full_name: decoded.name,
+                    email: decoded.email,
+                    password: 'qwerty',
+                    origin: 'google',
+                    photo: decoded.picture
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("response-----", data?.message);
+
+                localStorage.setItem('photo', JSON.stringify({ photo: data?.photo ? data?.photo : decoded?.picture }));
+                setUser({
+                    google: true,
+                    name: decoded.name,
+                    photo: data?.photo,
+                    email: decoded.email,
+                    token: data.token
+                });
+
+                if (data.status === 201 || data?.message === "user already exist" || data.status === 401) {
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 4000);
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                toast.error("An error has occurred while uploading");
+            });
+        } else {
+            setLoggedIn(false);
+        }
+    } catch (error) {
+        console.error("Error decoding token:", error);
+        setLoggedIn(false);
+    }
+};
+
  const handleButtonClickEvent = (eventName) => {
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({
@@ -340,7 +380,7 @@ const LoginStatus = ({event}) => {
                 <div className="d-inline-block dropdown">
                     <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" className="dropdown-toggle"    onClick={() => handleButtonClickEvent('Profile')}> 
                         <span className='user-close-movil text-white mr-4 font-family-SpaceGrotesk-Bold'>{user.name}</span>              
-                         <img src={user.photo  ? user.photo : 'https://mypick.is/descarga.png'} /> 
+                         <img src={user.photo  ? user.photo :  'https://mypick.is/descarga.png'} /> 
                     </button>
                     <div tabIndex={-1} role="menu" aria-hidden="true" className="dropdown-menu dropdown-menu-right" x-placement="bottom-end">
                         <ul className="nav flex-column">                        

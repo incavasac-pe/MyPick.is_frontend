@@ -7,6 +7,8 @@ const API_BASE_URL = process.env.REACT_APP_URL_API
 class Comments extends Component {
 
     constructor(props) {
+        const storedUserPhoto = localStorage.getItem('photo');
+        const parsedUserPhoto = JSON.parse(storedUserPhoto);    
         super(props);
         this.state = {
             comentarios:[],
@@ -16,7 +18,8 @@ class Comments extends Component {
             nuevaRespuesta: '',
             mostrarRespuestas: {},
             mostrarFormularioRespuesta: {},
-            login:true
+            login:true,
+            userPhoto:parsedUserPhoto
         };
        
     }
@@ -36,16 +39,19 @@ class Comments extends Component {
         }).then(response => response.json()).then(data => {
             if (data.error) {
                 this.setState({comentarios: [], flag: 2});
+                console.log("comentarios------",data.errora)
             } else {
                 if (data.data) {
                     this.setState({comentarios: data.data, flag: 3}); // Actualizar el estado con los valores de data.data
+                    console.log("comentarios",data.data)
                 }
             }
         })
     }
 
     registerComments = (nuevoComentario) => {
-        const {id_pick} = this.state;
+        const {id_pick,userPhoto} = this.state;
+        console.log("userPhoto",userPhoto)
         const storedUser = localStorage.getItem('user');
    
             const parsedUser = JSON.parse(storedUser);
@@ -53,7 +59,7 @@ class Comments extends Component {
             fetch(`${API_BASE_URL}/register_comments`, {
                 method: 'POST',
                 body: JSON.stringify(
-                    {id_pick: id_pick, contenido: nuevoComentario, email: parsedUser.email}
+                    {id_pick: id_pick, contenido: nuevoComentario, email: parsedUser.email, photo: "hello"}
                 ),
                 headers: {
                     'Content-Type': 'application/json'
@@ -172,7 +178,12 @@ class Comments extends Component {
             flag,
             login
         } = this.state;
-        console.log("comentarios",comentarios)
+
+
+
+        
+
+
         if (comentarios.length === 0 && id_pick && flag === 1) {
            // this.fetchDataComments(id_pick)
         }
@@ -189,9 +200,9 @@ class Comments extends Component {
 
 
 
+          
 
-
-
+        
 
         return (
             <div className="wrapper">
@@ -239,7 +250,7 @@ class Comments extends Component {
                                         }>
                                             <i className="fas fa-heart"></i>
                                             {
-                                            comentario.likes +' ' ?? '0 ' 
+                                            comentario.likes +' ' ?? '0' 
                                         }
                                              Likes
                                         </button>
