@@ -36,7 +36,7 @@ const TableMyPicks = (props) => {
   const handleRowsPerPageChange = (event) => {
     setRowsPerPage(Number(event.target.value));
     setCurrentPage(1);
-    // handleButtonClick(`MyPicks${event.target.value}rows`);
+    handleButtonClick(`MyPicks${event.target.value}rows`);
   };
 
   
@@ -60,15 +60,15 @@ function removeQueryParams(url) {
   }
   return url ;
 }
-// const handleButtonClick = (eventName) => {
-//   window.dataLayer = window.dataLayer || [];
-//   window.dataLayer.push({
-//     event: eventName,
-//     event_category: 'User',
-//     event_action: 'Click',
-//     event_label: eventName
-//   });
-// };
+const handleButtonClick = (eventName) => {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: eventName,
+    event_category: 'User',
+    event_action: 'Click',
+    event_label: eventName
+  });
+};
   return (
     <div className="col-md-12"> 
       <div className='Bookmarks border-linea tabla-contenedor'>
@@ -130,12 +130,12 @@ function removeQueryParams(url) {
               <nav aria-label="Page navigation" className='mb-0'>
                   <ul className="pagination mb-0">
                   <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                      <button className="page-link" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+                      <button className="page-link" onClick={() => {handlePageChange(currentPage - 1);  handleButtonClick('MyPicksPrev');}}disabled={currentPage === 1}>
                       <i class="far fa-angle-left"></i>
                       </button>
                   </li>
                   <li className={`page-item ${currentRows.length < rowsPerPage ? 'disabled' : ''}`}>
-                      <button className="page-link" onClick={() => handlePageChange(currentPage + 1)} disabled={currentRows.length < rowsPerPage}>
+                      <button className="page-link" onClick={() => {handlePageChange(currentPage + 1); handleButtonClick('MyPicksNext');}} disabled={currentRows.length < rowsPerPage}>
                       <i class="far fa-angle-right"></i>
                       </button>
                   </li>
