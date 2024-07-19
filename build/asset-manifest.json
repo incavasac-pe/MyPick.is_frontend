@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/static/css/main.acb8463e.css",
+    "main.js": "/static/js/main.e94cc498.js",
+    "static/js/787.63849a88.chunk.js": "/static/js/787.63849a88.chunk.js",
+    "static/media/about.jpg": "/static/media/about.738d10091880bae60790.jpg",
+    "static/media/logo.png": "/static/media/logo.8925f60ba6407cb06be9.png",
+    "static/media/Inter-Bold.ttf": "/static/media/Inter-Bold.88fa7ae373b07b41ecce.ttf",
+    "static/media/Inter-SemiBold.ttf": "/static/media/Inter-SemiBold.4d56bb21f2399db8ad48.ttf",
+    "static/media/Inter-Medium.ttf": "/static/media/Inter-Medium.6dcbc9bed1ec438907ee.ttf",
+    "static/media/logo-white.png": "/static/media/logo-white.4d73a49285dbe9cac801.png",
+    "static/media/SpaceMono-BoldItalic.ttf": "/static/media/SpaceMono-BoldItalic.973410642f95c92e505b.ttf",
+    "static/media/SpaceMono-Regular.ttf": "/static/media/SpaceMono-Regular.8a2aa304d0bd5e41d186.ttf",
+    "static/media/SpaceGrotesk-Bold.otf": "/static/media/SpaceGrotesk-Bold.976fa659aafb91f8ab62.otf",
+    "static/media/SpaceGrotesk-SemiBold.otf": "/static/media/SpaceGrotesk-SemiBold.bc2d5813b3a08afba8d8.otf",
+    "static/media/SpaceGrotesk-Medium.otf": "/static/media/SpaceGrotesk-Medium.8c68c53cf6879e94a6a4.otf",
+    "static/media/SpaceGrotesk-Light.otf": "/static/media/SpaceGrotesk-Light.7bfde2a39d42e1338ad8.otf",
+    "static/media/SpaceGrotesk-Regular.otf": "/static/media/SpaceGrotesk-Regular.2f7eb2452707376fcb59.otf",
+    "static/media/x-corp-logo.png": "/static/media/x-corp-logo.5d37a5071bc096abd756.png",
+    "index.html": "/index.html",
+    "main.acb8463e.css.map": "/static/css/main.acb8463e.css.map",
+    "main.e94cc498.js.map": "/static/js/main.e94cc498.js.map",
+    "787.63849a88.chunk.js.map": "/static/js/787.63849a88.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.acb8463e.css",
+    "static/js/main.e94cc498.js"
+  ]
+}
