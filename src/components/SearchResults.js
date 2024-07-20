@@ -66,7 +66,11 @@ const SearchResults = (props) => {
         }
         return url ;
       }
-      
+      function decodeHtmlEntities(text) {
+        const textArea = document.createElement('textarea');
+        textArea.innerHTML = text;
+        return textArea.value;
+      }
     
     return (
         <div className='container'>
@@ -98,8 +102,8 @@ const SearchResults = (props) => {
                                                     <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(row.photo2_name)}`} alt={`${encodeURIComponent(row.photo2_name)}`} className='pc' />
                                                 </div>
                                                 <div>
-                                                <span className='ml-3 d-block manito' onClick={() => handleRedirectMypick(row.id)}>- {row.choice1_name}</span>
-                                                <span className='ml-3 d-block manito' onClick={() => handleRedirectMypick(row.id)}>- {row.choice2_name}</span>
+                                                <span className='ml-3 d-block manito' onClick={() => handleRedirectMypick(row.id)}>- {decodeHtmlEntities(row.choice1_name)}</span>
+                                                <span className='ml-3 d-block manito' onClick={() => handleRedirectMypick(row.id)}>- {decodeHtmlEntities(row.choice2_name)}</span>
                                                 </div>
                                             </div>
                                         </td>
@@ -110,7 +114,7 @@ const SearchResults = (props) => {
                                             <img src={`${API_BASE_URL}/see_photo?img=${row.selectd1 >= row.selectd2 ? encodeURIComponent(row.photo1_name) : encodeURIComponent(row.photo2_name)}`} alt="equipo" />
                                           
                                             <a className='text-white' href={removeQueryParams(row.selectd1 >= row.selectd2  ? row?.url_choice1 : row?.url_choice2 )+'?tag=plsq-20'} target="_blank">
-                                             <span className='ml-3'> {row.selectd1 >= row.selectd2 ? row.choice1_name : row.choice2_name}</span>
+                                             <span className='ml-3'> {decodeHtmlEntities(row.selectd1 >= row.selectd2 ? row.choice1_name : row.choice2_name)}</span>
                                             </a> 
                                             </div>
 
