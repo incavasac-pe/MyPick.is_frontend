@@ -368,7 +368,7 @@ const handleButtonClick = (eventName) => {
                           <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(muestras?.[0]?.photo1_name)}`} width={"282px"}  height={"282px"} alt="ciudad"  />
                         </div>
                         <div className='nombre link_url' style={{ cursor: 'pointer' }} onClick={() =>  handleButtonClick('HomeAffiliateLinkLeft')}>
-                           <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice1)+'?tag=plsq-20'} target="_blank">
+                           <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice1)+'?tag=plsq06-20'} target="_blank">
                         {muestras?.[0]?.choice1_name.length > 70 ? `${decodeHtmlEntities(muestras?.[0]?.choice1_name.substring(0, 70))}...` : decodeHtmlEntities(muestras?.[0]?.choice1_name)}
                       </a>
                         </div>
@@ -387,7 +387,7 @@ const handleButtonClick = (eventName) => {
                         </div>
                         
                         <div className='nombre link_url' style={{ cursor: 'pointer' }} onClick={() =>  handleButtonClick('HomeAffiliateLinkRight')}>
-                        <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice2)+'?tag=plsq-20'} target="_blank">
+                        <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice2)+'?tag=plsq06-20'} target="_blank">
                             {muestras?.[0]?.choice2_name.length > 70 ? `${decodeHtmlEntities(muestras?.[0]?.choice2_name.substring(0, 70))}...` : decodeHtmlEntities(muestras?.[0]?.choice2_name)}
                           </a>
                            </div>
@@ -421,7 +421,7 @@ const handleButtonClick = (eventName) => {
                           <h3 className='text-morado font-family-SpaceGrotesk-Bold link_url2'>
                               I'm on team 
                               <span className='text-morado'>   
-                              <a className='text-white font-family-SpaceGrotesk-Bold'  href={removeQueryParams(urlActivo)+'?tag=plsq-20'} target="_blank">
+                              <a className='text-white font-family-SpaceGrotesk-Bold'  href={removeQueryParams(urlActivo)+'?tag=plsq06-20'} target="_blank">
                                &nbsp;{ textoActivo}
                               </a></span>
                           </h3>
@@ -458,7 +458,7 @@ const handleButtonClick = (eventName) => {
                             </div>
                         </div>
                         <div className='nombre link_urlstep3'  onClick={() =>  handleButtonClick('3rdScreenAffiliateLinkLeft')}>
-                          <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice1)+'?tag=plsq-20'} target="_blank"> 
+                          <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice1)+'?tag=plsq06-20'} target="_blank"> 
                          {muestras?.[0]?.choice1_name.length > 70 ? `${muestras?.[0]?.choice1_name.substring(0, 70)}...` : muestras?.[0]?.choice1_name}</a>
                         </div>
                       </div>
@@ -478,7 +478,7 @@ const handleButtonClick = (eventName) => {
                             </div>
                         </div>
                         <div className='nombre link_urlstep3'  onClick={() =>  handleButtonClick('3rdScreenAffiliateLinkRight')}>
-                        <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice2)+'?tag=plsq-20'} target="_blank"> 
+                        <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice2)+'?tag=plsq06-20'} target="_blank"> 
                           {muestras?.[0]?.choice2_name.length > 70 ? `${muestras?.[0]?.choice2_name.substring(0, 70)}...` : muestras?.[0]?.choice2_name}
                           </a>
                         </div>
