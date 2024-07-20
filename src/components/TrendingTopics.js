@@ -112,7 +112,11 @@ const TrendingTopics = (props) => {
         event_label: eventName
       });
     };
-
+    function decodeHtmlEntities(text) {
+      const textArea = document.createElement('textarea');
+      textArea.innerHTML = text;
+      return textArea.value;
+    }
     return (
       <div className='trending contenido mb-5'>
           <ToastContainer position="top-right"  autoClose={2000} closeOnClick theme="dark"/>    
@@ -162,7 +166,7 @@ const TrendingTopics = (props) => {
                       <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(top.photo1_name)}`} alt='icon' />
                       </div>                    
                       <h2 className='font-family-SpaceGrotesk-Bold manito'onClick={() => changeTabName(top.trending_choice)}>                    
-                        {top.trending_choice}
+                        {decodeHtmlEntities(top.trending_choice)}
                       </h2>
                       <div className='box-tabs-footer'>                        
                         <div>
@@ -194,7 +198,7 @@ const TrendingTopics = (props) => {
                       <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(top_by_cat.photo1_name)}`} alt='icon' />
                       </div>                       
                       <h2 className='font-family-SpaceGrotesk-Bold manito'   onClick={() => changeTabName(top_by_cat.trending_choice)}>
-                        {top_by_cat.trending_choice}
+                        {decodeHtmlEntities(top_by_cat.trending_choice)}
                       </h2>    
                       <div className='box-tabs-footer'>                        
                         <div>
