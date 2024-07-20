@@ -214,7 +214,9 @@ const MyProfile = () => {
     setNewPassword('');
     setNewPasswordConfirm('');
   };
-
+  function updateImageUrl(url) {
+    return url.replace('profile', 'api/profile');
+  }
   return (
     <div className='container contenido'>
       <div className='row'>
@@ -313,7 +315,7 @@ const MyProfile = () => {
                 <div className='align-items-center col-5 col-md-4 d-flex justify-content-center'>
                   <div className='img-profile'>
                     {selectedFileNew ? (
-                      <img src={selectedFileNew} alt="Vista previa" />
+                      <img src={updateImageUrl(selectedFileNew)} alt="Vista previa" />
                     ) : (
                       <img src="https://mypick.is/descarga.png" alt="Imagen por defecto" />
                     )}
