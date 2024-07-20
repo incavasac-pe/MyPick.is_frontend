@@ -369,6 +369,9 @@ const LoginStatus = ({event}) => {
     event_label: eventName
   });
 }
+function updateImageUrl(url) {
+  return url.replace('profile', 'api/profile');
+}
   return (
     <div className='user-solo-movil'>
       <nav>
@@ -380,7 +383,7 @@ const LoginStatus = ({event}) => {
                 <div className="d-inline-block dropdown">
                     <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" className="dropdown-toggle"    onClick={() => handleButtonClickEvent('Profile')}> 
                         <span className='user-close-movil text-white mr-4 font-family-SpaceGrotesk-Bold'>{user.name}</span>              
-                         <img src={user.photo  ? user.photo :  'https://mypick.is/descarga.png'} /> 
+                         <img src={user.photo  ? updateImageUrl(user.photo) :  'https://mypick.is/descarga.png'} /> 
                     </button>
                     <div tabIndex={-1} role="menu" aria-hidden="true" className="dropdown-menu dropdown-menu-right" x-placement="bottom-end">
                         <ul className="nav flex-column">                        
