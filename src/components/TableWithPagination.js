@@ -96,14 +96,19 @@ const handleButtonClick = (eventName) => {
             
             <tr key={row.id}>
               <td>
-                <div className='table-img d-flex align-items-start justify-content-start'>
-                 <div className='manito' onClick={() => handleRedirectMypick(row.id)}> 
-                      <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(row.photo1_name)}`} alt={`${row.photo1_name}`} />
-                      <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(row.photo2_name)}`} alt={`${row.photo2_name}`} className='pc' />
+                <div className='table-img '>
+                 <div className='manito d-flex align-items-start justify-content-start' onClick={() => handleRedirectMypick(row.id)}> 
+                    <div>  <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(row.photo1_name)}`} alt={`${row.photo1_name}`} /></div>
+                      <span className='ml-3 d-block manito' onClick={() => handleRedirectMypick(row.id)}>- {decodeHtmlEntities(row.choice1_name)}</span>
                     </div>                    
                     <div>
-                    <span className='ml-3 d-block manito' onClick={() => handleRedirectMypick(row.id)}>- {decodeHtmlEntities(row.choice1_name)}</span>
+                    <div className='table-img '>
+                    <div className='manito d-flex align-items-start justify-content-start' onClick={() => handleRedirectMypick(row.id)}> 
+                  <div> <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(row.photo2_name)}`} alt={`${row.photo2_name}`} className='pc' /></div> 
+                  
                     <span className='ml-3 d-block manito' onClick={() => handleRedirectMypick(row.id)}>- {decodeHtmlEntities(row.choice2_name)}</span>
+                    </div>
+                    </div>
                     </div>
                 </div>        
               </td>
@@ -114,7 +119,7 @@ const handleButtonClick = (eventName) => {
               <td> {formatearTiempo(row.dias)}</td>
               <td>
                 <div className='table-img d-flex align-items-start justify-content-start' >
-                <img src={`${API_BASE_URL}/see_photo?img=${row.selectd1 >= row.selectd2 ? encodeURIComponent(row.photo1_name) : encodeURIComponent(row.photo2_name)}`} className='bookmark-img'/> 
+              <div> <img src={`${API_BASE_URL}/see_photo?img=${row.selectd1 >= row.selectd2 ? encodeURIComponent(row.photo1_name) : encodeURIComponent(row.photo2_name)}`} className='bookmark-img'/> </div> 
 {
    row?.url1 === null && row?.url2 === null ||  row?.url1 === "www" && row?.url2 === "www" ? (
     <span > {decodeHtmlEntities(row.selectd1 >= row.selectd2 ? row.choice1_name : row.choice2_name)}</span>
