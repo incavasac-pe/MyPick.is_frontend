@@ -561,10 +561,10 @@ header .buscador p{
   width: 32px;
 }
 .wrapper .comment .content .avatar img {
-  height: 32px;
-  width: 32px;
-  object-fit: cover;
-  border-radius: 999px;
+  height: 32px !important;
+  width: 32px !important;
+  object-fit: cover !important;
+  border-radius: 999px !important;
 }
 
 .wrapper .comment .content-comment {
