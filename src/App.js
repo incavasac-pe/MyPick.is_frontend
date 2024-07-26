@@ -33,6 +33,7 @@ const App = () => {
         </header>
         <Sidebar />
         <Routes> 
+    
            <Route path="/pick" element={<Home1 idCat={id}  />} />
             <Route path="/" element={<Home1 idCat={id}  />} />
             <Route path="/SearchResults" element={<SearchResults search={searchTerm}  />} />

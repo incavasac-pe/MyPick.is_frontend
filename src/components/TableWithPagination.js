@@ -96,7 +96,7 @@ const handleButtonClick = (eventName) => {
             
             <tr key={row.id}>
               <td>
-                <div className='table-img d-flex align-items-center justify-content-start'>
+                <div className='table-img d-flex align-items-start justify-content-start'>
                  <div className='manito' onClick={() => handleRedirectMypick(row.id)}> 
                       <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(row.photo1_name)}`} alt={`${row.photo1_name}`} />
                       <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(row.photo2_name)}`} alt={`${row.photo2_name}`} className='pc' />
@@ -113,15 +113,15 @@ const handleButtonClick = (eventName) => {
               </td>
               <td> {formatearTiempo(row.dias)}</td>
               <td>
-                <div className='table-img d-flex align-items-center justify-content-start' >
+                <div className='table-img d-flex align-items-start justify-content-start' >
                 <img src={`${API_BASE_URL}/see_photo?img=${row.selectd1 >= row.selectd2 ? encodeURIComponent(row.photo1_name) : encodeURIComponent(row.photo2_name)}`} className='bookmark-img'/> 
 {
    row?.url1 === null && row?.url2 === null ||  row?.url1 === "www" && row?.url2 === "www" ? (
-    <span className='ml-3'> {decodeHtmlEntities(row.selectd1 >= row.selectd2 ? row.choice1_name : row.choice2_name)}</span>
+    <span > {decodeHtmlEntities(row.selectd1 >= row.selectd2 ? row.choice1_name : row.choice2_name)}</span>
    ):(
    
-    <a className='text-white' href={removeQueryParams(row.selectd1 >= row.selectd2  ? row?.url1 : row?.url2 )+'?tag=plsq-20'} target="_blank">
-    <span className='ml-3'> {decodeHtmlEntities(row.selectd1 >= row.selectd2 ? row.choice1_name : row.choice2_name)}</span>
+    <a className='text-white' href={removeQueryParams(row.selectd1 >= row.selectd2  ? row?.url1 : row?.url2 )+'?tag=plsq06-20'} target="_blank">
+    <span> {decodeHtmlEntities(row.selectd1 >= row.selectd2 ? row.choice1_name : row.choice2_name)}</span>
           </a>    
    
        

@@ -162,7 +162,9 @@ const Home = (props) => {
 
   }, []);
 
- 
+  function updateImageUrl(url) {
+    return url.replace("profile", "api/profile");
+  }
   const fetchData = async (ip) => {    
     setMuestras(null)    
     let email
@@ -511,7 +513,7 @@ const handleButtonClick = (eventName) => {
                            { comentario.usuario !='' &&
                             <div   className="content">
                                 <div className="avatar">
-                                    <img src={ comentario?.foto ? comentario?.foto : "https://mypick.is/descarga.png"}
+                                    <img src={ comentario?.foto ? updateImageUrl(comentario?.foto) : "https://mypick.is/descarga.png"}
                                         
                                         alt="user"/>
                                 </div>

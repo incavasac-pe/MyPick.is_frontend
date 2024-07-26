@@ -113,7 +113,7 @@ const SearchResults = (props) => {
                                             <div  onClick={() => handleRedirectMypick(row.id)} className='table-img d-flex align-items-center justify-content-start manito'>
                                             <img src={`${API_BASE_URL}/see_photo?img=${row.selectd1 >= row.selectd2 ? encodeURIComponent(row.photo1_name) : encodeURIComponent(row.photo2_name)}`} alt="equipo" />
                                           
-                                            <a className='text-white' href={removeQueryParams(row.selectd1 >= row.selectd2  ? row?.url_choice1 : row?.url_choice2 )+'?tag=plsq-20'} target="_blank">
+                                            <a className='text-white' href={removeQueryParams(row.selectd1 >= row.selectd2  ? row?.url_choice1 : row?.url_choice2 )+'?tag=plsq06-20'} target="_blank">
                                              <span className='ml-3'> {decodeHtmlEntities(row.selectd1 >= row.selectd2 ? row.choice1_name : row.choice2_name)}</span>
                                             </a> 
                                             </div>
