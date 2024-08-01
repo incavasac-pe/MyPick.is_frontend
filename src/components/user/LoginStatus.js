@@ -370,7 +370,14 @@ const LoginStatus = ({event}) => {
   });
 }
 function updateImageUrl(url) {
-  return url.replace('profile', 'api/profile');
+
+  if (url.includes('uploads/https:')) {
+ 
+      return url.replace('http://mypick.is/api/profile/uploads/', '');
+  } else {
+
+      return url.replace('profile', 'api/profile');
+  }
 }
   return (
     <div className='user-solo-movil'>
