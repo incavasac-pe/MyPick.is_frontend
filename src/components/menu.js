@@ -12,7 +12,8 @@ class Menu extends Component {
         };       
       }
         
-    handleDataFromChild = (data) => {  
+    handleDataFromChild = (data) => { 
+      console.log("data---------",data) 
         this.setState({ searchTerm: data.name }); 
         this.props.onMenuDataChange(data);
         
@@ -34,7 +35,7 @@ class Menu extends Component {
                 <button type="button" className='btnmenu' style={{ fontSize: '30px', cursor: 'pointer' }} onClick={() => {openNav(); handleButtonClick('Menu');}}>
                         <i className="fas fa-grip-lines text-white"></i>
                     </button>
-                    <a href="/">
+                    <a href="/" onClick={() =>  handleButtonClick('Home')}>
                         <img src={require('./img/logo.png')} alt="logo" className='logo-side' /> 
                     </a>  
                      <b className="text-white mr-4 font-family-SpaceGrotesk-Bold title-logo" >MyPick.Is</b>

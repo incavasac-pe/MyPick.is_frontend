@@ -10,14 +10,14 @@ const TableWithPagination = (props) => {
   }
   const [data, setMyBookmark] = useState([]);
   const idCat = props.idCat; 
- 
+ console.log("idCat----",idCat)
   useEffect(() => { 
      
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);    
 
-    fetch(`${API_BASE_URL}/my_bookmarks?email=${parsedUser.email}&id_category=${idCat}`, {
+    fetch(`${API_BASE_URL}/my_bookmarks?email=${parsedUser.email}&id_category=20`, {
       method: 'GET',      
       headers: {
         'Content-Type': 'application/json'      
@@ -97,7 +97,7 @@ const handleButtonClick = (eventName) => {
             <tr key={row.id}>
               <td>
                 <div className='table-img '>
-                 <div className='manito d-flex align-items-start justify-content-start' onClick={() => handleRedirectMypick(row.id)}> 
+                 <div className='manito d-flex align-items-start justify-content-start mb-2' onClick={() => handleRedirectMypick(row.id)}> 
                     <div>  <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(row.photo1_name)}`} alt={`${row.photo1_name}`} /></div>
                       <span className='ml-3 d-block manito' onClick={() => handleRedirectMypick(row.id)}>- {decodeHtmlEntities(row.choice1_name)}</span>
                     </div>                    

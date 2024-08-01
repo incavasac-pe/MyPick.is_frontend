@@ -246,7 +246,7 @@ class Comments extends Component {
                         handleButtonClick("CommentLike");
                       }}
                     >
-                      <i className="fas fa-heart"></i>
+                      <i className="fas fa-heart" ></i>
                       {comentario.likes + " " ?? "0"}
                       Likes
                     </button>

@@ -538,8 +538,8 @@ const handleButtonClick = (eventName) => {
                                     <div className="content-footer">
                                         <button className="btn btn-outline"
                                             onClick={
-                                                () => agregarLikesComments(comentario.id)
-                                        }>
+                                              () => {agregarLikesComments(comentario.id);    handleButtonClick("CommentLike"); }
+                                      }>
                                             <i className="fas fa-heart"></i>
                                             {
                                             comentario.likes +' ' ?? '0 ' 
@@ -548,8 +548,8 @@ const handleButtonClick = (eventName) => {
                                         </button>
                                         <button className="btn"
                                             onClick={
-                                                () => toggleMostrarFormularioRespuesta(comentario.id)
-                                        }>
+                                              () =>{ toggleMostrarFormularioRespuesta(comentario.id);  handleButtonClick("CommentReply");}
+                                      }>
                                             <i class="fas fa-reply"></i>
                                             Reply
                                         </button>
@@ -644,9 +644,9 @@ const handleButtonClick = (eventName) => {
                             )}  
                     <div className='text-right'>
                         <button className='btn-login'
-                            onClick={
-                                agregarComentario
-                        }>Comment</button>
+                            onClick={() => {
+                              agregarComentario();  handleButtonClick("SubmitComment");}
+                      }>Comment</button>
                     </div>
                 
                 </div>  
@@ -705,7 +705,7 @@ const handleButtonClick = (eventName) => {
                                     <div className="content-footer">
                                         <button className="btn btn-outline"
                                             onClick={
-                                                () => agregarLikesComments(comentario.id)
+                                                () => {agregarLikesComments(comentario.id);    handleButtonClick("CommentLike"); }
                                         }>
                                             <i className="fas fa-heart"></i>
                                             {
@@ -715,7 +715,7 @@ const handleButtonClick = (eventName) => {
                                         </button>
                                         <button className="btn"
                                             onClick={
-                                                () => toggleMostrarFormularioRespuesta(comentario.id)
+                                                () =>{ toggleMostrarFormularioRespuesta(comentario.id);  handleButtonClick("CommentReply");}
                                         }>
                                             <i class="fas fa-reply"></i>
                                             Reply
@@ -810,8 +810,8 @@ const handleButtonClick = (eventName) => {
                             )}  
                     <div className='text-right'>
                         <button className='btn-login'
-                            onClick={
-                                agregarComentario
+                            onClick={() => {
+                                agregarComentario();  handleButtonClick("SubmitComment");}
                         }>Comment</button>
                     </div>
                 

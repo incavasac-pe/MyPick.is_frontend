@@ -8,7 +8,7 @@ import LoginStatus from './user/LoginStatus';
   const MyBookmarks = (props) => {
     const [login, setlogin] = useState('');
     const idCat = props.idCat; 
-
+console.log("idCat",idCat)
     useEffect(() => { 
       const isAuthenticated = checkAuth();
       setlogin(isAuthenticated)  

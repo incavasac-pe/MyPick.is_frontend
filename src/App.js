@@ -18,8 +18,9 @@ import SearchResults from "./components/SearchResults";
 const App = () => {
   const [id, setIdcategory] = useState(''); 
   const [searchTerm, setsearchTerm] = useState('');  
-
+console.log("id-----",id)
   const handleMenuDataChange = (newMenuData) => {  
+    console.log("newMenuData",newMenuData)
     setIdcategory(newMenuData.id)
     setsearchTerm(newMenuData.searchTerm)  
   };

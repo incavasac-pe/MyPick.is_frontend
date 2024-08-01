@@ -12,7 +12,15 @@ const Sidebar = () => {
   const handleLinkClick = () => {
     closeNav();
   };
-
+  const handleButtonClick = (eventName) => {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: eventName,
+      event_category: 'User',
+      event_action: 'Click',
+      event_label: eventName
+    });
+  };
   return (
     <div className="sidebar" id="mySidenav">
       <div className="position-relative">
@@ -20,7 +28,7 @@ const Sidebar = () => {
         <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>
           &times;
         </a>
-        <a href='/'>  <img src={require('./img/logo.png')} alt="logo" onClick={redirectPage}   className='logo-side'/></a>
+        <a href='/' onClick={() =>  handleButtonClick('Home')}>  <img src={require('./img/logo.png')} alt="logo" onClick={redirectPage}   className='logo-side'/></a>
        
          <b className="text-white mr-4 font-family-SpaceGrotesk-Bold title-logo" >MyPick.Is</b>
       </div>
