@@ -353,6 +353,7 @@ const handleButtonClick = (eventName) => {
     event_label: eventName
   });
 };
+console.log("-----------------------",muestras?.[0]?.url_choice1 )
     return (
       <div>        
         <div className='container'>
@@ -375,9 +376,21 @@ const handleButtonClick = (eventName) => {
                           <img src={`${API_BASE_URL}/see_photo?img=${encodeURIComponent(muestras?.[0]?.photo1_name)}`} width={"282px"}  height={"282px"} alt="ciudad"  />
                         </div>
                         <div className='nombre link_url' style={{ cursor: 'pointer' }} onClick={() =>  handleButtonClick('HomeAffiliateLinkLeft')}>
-                           <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice1)+'?tag=plsq06-20'} target="_blank">
+                        {
+   muestras?.[0]?.url_choice1 === null  || muestras?.[0]?.url_choice1 === "www" ? (
+    <span className='text-white font-family-SpaceGrotesk-Bold'> {decodeHtmlEntities(muestras?.[0]?.choice1_name)}</span>
+   ):(
+   
+    <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice1)+'?tag=plsq06-20'} target="_blank">
+    {muestras?.[0]?.choice1_name.length > 70 ? `${decodeHtmlEntities(muestras?.[0]?.choice1_name.substring(0, 70))}...` : decodeHtmlEntities(muestras?.[0]?.choice1_name)}
+  </a> 
+   
+       
+   ) 
+}         
+                           {/* <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice1)+'?tag=plsq06-20'} target="_blank">
                         {muestras?.[0]?.choice1_name.length > 70 ? `${decodeHtmlEntities(muestras?.[0]?.choice1_name.substring(0, 70))}...` : decodeHtmlEntities(muestras?.[0]?.choice1_name)}
-                      </a>
+                      </a> */}
                         </div>
                       </div>
                       <div className='columna-refresh'>
@@ -394,9 +407,19 @@ const handleButtonClick = (eventName) => {
                         </div>
                         
                         <div className='nombre link_url' style={{ cursor: 'pointer' }} onClick={() =>  handleButtonClick('HomeAffiliateLinkRight')}>
-                        <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice2)+'?tag=plsq06-20'} target="_blank">
+                        {
+   muestras?.[0]?.url_choice2 === null  ||  muestras?.[0]?.url_choice2 === "www" ? (
+    <span className='text-white font-family-SpaceGrotesk-Bold'> {decodeHtmlEntities(muestras?.[0]?.choice2_name)}</span>
+   ):(
+   
+    <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice2)+'?tag=plsq06-20'} target="_blank">
                             {muestras?.[0]?.choice2_name.length > 70 ? `${decodeHtmlEntities(muestras?.[0]?.choice2_name.substring(0, 70))}...` : decodeHtmlEntities(muestras?.[0]?.choice2_name)}
                           </a>
+   
+       
+   ) 
+}         
+                       
                            </div>
                       </div>
                     </div>
@@ -427,10 +450,20 @@ const handleButtonClick = (eventName) => {
                         <div className='nombre text-center' onClick={() =>  handleButtonClick('2ndScreenAffiliateLink')}>
                           <h3 className='text-morado font-family-SpaceGrotesk-Bold link_url2'>
                               I'm on team 
-                              <span className='text-morado'>   
-                              <a className='text-white font-family-SpaceGrotesk-Bold'  href={removeQueryParams(urlActivo)+'?tag=plsq06-20'} target="_blank">
+                              <span className='text-morado'>  
+                              {
+   urlActivo === null  || urlActivo === "www" ? (
+    <span className='text-white font-family-SpaceGrotesk-Bold'> {decodeHtmlEntities(textoActivo)}</span>
+   ):(
+   
+    <a className='text-white font-family-SpaceGrotesk-Bold'  href={removeQueryParams(urlActivo)+'?tag=plsq06-20'} target="_blank">
                                &nbsp;{ decodeHtmlEntities(textoActivo)}
-                              </a></span>
+                              </a>
+   
+       
+   ) 
+}          
+                             </span>
                           </h3>
                           <a href="#" onClick={() => {nextStep(); handleButtonClick('2ndScreenLinkContinue');}} className='text-morado d-inline-block font-family-SpaceGrotesk-Bold animate__heartBeat'>
                             Continue  <i class="fas fa-chevron-double-right arrow-top"></i>
@@ -465,8 +498,18 @@ const handleButtonClick = (eventName) => {
                             </div>
                         </div>
                         <div className='nombre link_urlstep3'  onClick={() =>  handleButtonClick('3rdScreenAffiliateLinkLeft')}>
-                          <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice1)+'?tag=plsq06-20'} target="_blank"> 
+                        {
+   muestras?.[0]?.url_choice1 === null  || muestras?.[0]?.url_choice1 === "www" ? (
+    <span className='text-white font-family-SpaceGrotesk-Bold'> {muestras?.[0]?.choice1_name.length > 70 ? `${decodeHtmlEntities(muestras?.[0]?.choice1_name.substring(0, 70))}...` : decodeHtmlEntities(muestras?.[0]?.choice1_name)}</span>
+   ):(
+   
+    <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice1)+'?tag=plsq06-20'} target="_blank"> 
                          {muestras?.[0]?.choice1_name.length > 70 ? `${decodeHtmlEntities(muestras?.[0]?.choice1_name.substring(0, 70))}...` : decodeHtmlEntities(muestras?.[0]?.choice1_name)}</a>
+   
+       
+   ) 
+}          
+                         
                         </div>
                       </div>
                       <div className='columna-refresh1'>
@@ -485,9 +528,19 @@ const handleButtonClick = (eventName) => {
                             </div>
                         </div>
                         <div className='nombre link_urlstep3'  onClick={() =>  handleButtonClick('3rdScreenAffiliateLinkRight')}>
-                        <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice2)+'?tag=plsq06-20'} target="_blank"> 
+                        {
+   muestras?.[0]?.url_choice2 === null  || muestras?.[0]?.url_choice2 === "www" ? (
+    <span className='text-white font-family-SpaceGrotesk-Bold'>{muestras?.[0]?.choice2_name.length > 70 ? `${decodeHtmlEntities(muestras?.[0]?.choice2_name.substring(0, 70))}...` : decodeHtmlEntities(muestras?.[0]?.choice2_name)}</span>
+   ):(
+   
+    <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice2)+'?tag=plsq06-20'} target="_blank"> 
                           {muestras?.[0]?.choice2_name.length > 70 ? `${decodeHtmlEntities(muestras?.[0]?.choice2_name.substring(0, 70))}...` : decodeHtmlEntities(muestras?.[0]?.choice2_name)}
                           </a>
+   
+       
+   ) 
+}          
+                        
                         </div>
                       </div>
                     </div>
