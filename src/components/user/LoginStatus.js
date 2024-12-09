@@ -61,7 +61,7 @@ const LoginStatus = ({ event }) => {
           if (data.error) {
             toast.error(data.msg);
           } else {
-            // Lógica para iniciar sesión
+            // Lógica para iniciar sesión 
             setErrors({});
             setEmail("");
             setPassword("");
@@ -344,102 +344,122 @@ const LoginStatus = ({ event }) => {
   /*Google*/
 
   console.log("updateImageUrl",updateImageUrl)
-  const responseGoogle = (response) => {
+  const responseGoogle = async (response) => {
     try {
-      var decoded = jwt_decode(response);
-      console.log("decoded", decoded);
-
-      if (decoded.email) {
-        setLoggedIn(true);
-        setUser({
-          google: true,
+      console.log("Google Response:", response);
+  
+      const decoded = jwt_decode(response);
+      console.log("Decoded Token:", decoded);
+  
+      // Validate decoded token fields
+      if (!decoded.email || !decoded.name || !decoded.picture) {
+        console.error("Invalid token fields:", decoded);
+        toast.error("Invalid Google response.");
+        setLoggedIn(false);
+        return;
+      }
+  
+      // Set initial user state
+      setLoggedIn(true);
+      setUser({
+        google: true,
+        name: decoded.name,
+        photo: decoded.picture,
+        email: decoded.email,
+        token: response,
+      });
+  
+      // Save to localStorage
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
           name: decoded.name,
-          photo: decoded.picture,
           email: decoded.email,
           token: response,
-        });
-
-        localStorage.setItem(
-          "user",
-          JSON.stringify({
-            name: decoded.name,
-            email: decoded.email,
-            token: response,
-            nick: decoded.given_name,
-          })
-        );
-
-        fetch(`${API_BASE_URL}/register`, {
-          method: "POST",
-          body: JSON.stringify({
-            full_name: decoded.name,
-            email: decoded.email,
-            password: "qwerty",
-            origin: "google",
-            photo: decoded.picture,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
+          nick: decoded.given_name,
         })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log("response-----", data?.message);
-            console.log("data-----", data?.photo.includes("/null"));
-            console.log("dataiiiiiiiii-----", data?.photo);
-            console.log("decoded?.picture-----", decoded?.picture);
-            console.log("---------}}}}}}}}", 
-              data?.photo &&
-              data?.photo !== "null" &&
-              data?.photo !== undefined &&
-              !data?.photo.includes("/null")
-                ? `${API_BASE_URL}/see_photo?img=${data?.photo.split("/null")[1]}`
-                : decoded?.picture,
-            );
-            
-            localStorage.setItem(
-              "photo",
-              JSON.stringify({
-                photo: 
-                data?.photo &&
-                data?.photo !== "null" &&
-                data?.photo !== undefined &&
-                !data?.photo.includes("/null")
-                  ? `${API_BASE_URL}/see_photo?img=${data?.photo.split("uploads/")[1]}`
-                  : decoded?.picture,
-              
-              })
-            );
-            setUser({
-              google: true,
-              name: decoded.name,
-              photo: data?.photo,
-              email: decoded.email,
-              token: data.token,
-            });
-
-            if (
-              data.status === 201 ||
-              data?.message === "user already exist" ||
-              data.status === 401
-            ) {
-              setTimeout(() => {
-                window.location.reload();
-              }, 4000);
-            }
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-            toast.error("An error has occurred while uploading");
-          });
-      } else {
-        setLoggedIn(false);
+      );
+  
+      // Backend API call to register the user
+      const payload = {
+        full_name: decoded.name,
+        email: decoded.email,
+        password: "qwerty",
+        origin: "google",
+        photo: decoded.picture,
+      };
+      console.log("Payload to /register:", payload);
+  
+      const rawResponse = await fetch(`${API_BASE_URL}/register`, {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      console.log("Raw Response:", rawResponse);
+  
+      // Parse response JSON
+      const data = await rawResponse.json();
+      console.log("Parsed Data:", data);
+  
+      if (!data || (!data.status && !data.msg)) {
+        throw new Error("Unexpected backend response structure.");
+      }
+  
+      // Resolve photo URL
+      const photoUrl =
+        data?.photo &&
+        data?.photo !== "null" &&
+        data?.photo !== undefined &&
+        !data?.photo.includes("/null")
+          ? `${API_BASE_URL}/see_photo?img=${data?.photo.split("uploads/")[1]}`
+          : decoded?.picture;
+  
+      console.log("Resolved Photo URL:", photoUrl);
+  
+      // Save photo to localStorage
+      localStorage.setItem(
+        "photo",
+        JSON.stringify({
+          photo: photoUrl,
+        })
+      );
+  
+      // Update user state
+      setUser({
+        google: true,
+        name: decoded.name,
+        photo: photoUrl,
+        email: decoded.email,
+        token: data.token,
+      });
+  
+      // Handle response statuses
+      if (
+        data.status === 201 ||
+        data.msg === "user already exist" ||
+        data.status === 401
+      ) {
+        toast.success("User registered successfully!");
+        setTimeout(() => {
+          window.location.reload(); // Only reload if absolutely necessary
+        }, 4000);
+      }else if (data?.msg === "Successful registration") {
+        toast.success("User registered successfully!");
+        setTimeout(() => {
+          window.location.reload(); // Only reload if absolutely necessary
+        }, 4000);
       }
     } catch (error) {
-      console.error("Error decoding token:", error);
+      console.error("Error:", error);
+      toast.error("An error has occurred while uploading");
       setLoggedIn(false);
     }
   };
+  
+  
 
   const handleButtonClickEvent = (eventName) => {
     window.dataLayer = window.dataLayer || [];

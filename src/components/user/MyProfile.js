@@ -258,7 +258,7 @@ const MyProfile = () => {
     }
   }
   
-  
+  console.log(" storedImage?.photo", storedImage?.photo)
   return (
     <div className="container contenido">
       <div className="row">
