@@ -19,6 +19,7 @@ const LoginStatus = ({ event }) => {
   const navigate = useNavigate(); // Hook de navegación
   const storedUserPhoto = localStorage.getItem("photo");
   const parsedUserPhoto = JSON.parse(storedUserPhoto);
+  console.log("parsedUserPhoto",parsedUserPhoto)
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
 
@@ -61,7 +62,7 @@ const LoginStatus = ({ event }) => {
           if (data.error) {
             toast.error(data.msg);
           } else {
-            // Lógica para iniciar sesión 
+            // Lógica para iniciar sesión
             setErrors({});
             setEmail("");
             setPassword("");
@@ -343,14 +344,14 @@ const LoginStatus = ({ event }) => {
 
   /*Google*/
 
-  console.log("updateImageUrl",updateImageUrl)
+  console.log("updateImageUrl", updateImageUrl);
   const responseGoogle = async (response) => {
     try {
       console.log("Google Response:", response);
-  
+
       const decoded = jwt_decode(response);
       console.log("Decoded Token:", decoded);
-  
+
       // Validate decoded token fields
       if (!decoded.email || !decoded.name || !decoded.picture) {
         console.error("Invalid token fields:", decoded);
@@ -358,7 +359,7 @@ const LoginStatus = ({ event }) => {
         setLoggedIn(false);
         return;
       }
-  
+
       // Set initial user state
       setLoggedIn(true);
       setUser({
@@ -368,7 +369,7 @@ const LoginStatus = ({ event }) => {
         email: decoded.email,
         token: response,
       });
-  
+
       // Save to localStorage
       localStorage.setItem(
         "user",
@@ -379,7 +380,7 @@ const LoginStatus = ({ event }) => {
           nick: decoded.given_name,
         })
       );
-  
+
       // Backend API call to register the user
       const payload = {
         full_name: decoded.name,
@@ -389,7 +390,7 @@ const LoginStatus = ({ event }) => {
         photo: decoded.picture,
       };
       console.log("Payload to /register:", payload);
-  
+
       const rawResponse = await fetch(`${API_BASE_URL}/register`, {
         method: "POST",
         body: JSON.stringify(payload),
@@ -397,28 +398,32 @@ const LoginStatus = ({ event }) => {
           "Content-Type": "application/json",
         },
       });
-  
+
       console.log("Raw Response:", rawResponse);
-  
+
       // Parse response JSON
       const data = await rawResponse.json();
       console.log("Parsed Data:", data);
-  
-      if (!data || (!data.status && !data.msg)) {
+
+      if (!data || (!data.status && !data?.msg ? data?.msg : data?.message)) {
         throw new Error("Unexpected backend response structure.");
       }
-  
+
       // Resolve photo URL
-      const photoUrl =
+
+      console.log("image-----------",data?.photo)
+      const photoUrl = data?.photo === undefined ? decoded?.picture :
         data?.photo &&
         data?.photo !== "null" &&
         data?.photo !== undefined &&
-        !data?.photo.includes("/null")
+        data?.photo.includes("/uploads")
+        ? decoded?.picture
+        : !data?.photo.includes("/null")
           ? `${API_BASE_URL}/see_photo?img=${data?.photo.split("uploads/")[1]}`
-          : decoded?.picture;
-  
+          : decoded?.picture
+
       console.log("Resolved Photo URL:", photoUrl);
-  
+
       // Save photo to localStorage
       localStorage.setItem(
         "photo",
@@ -426,7 +431,7 @@ const LoginStatus = ({ event }) => {
           photo: photoUrl,
         })
       );
-  
+
       // Update user state
       setUser({
         google: true,
@@ -435,18 +440,16 @@ const LoginStatus = ({ event }) => {
         email: decoded.email,
         token: data.token,
       });
-  
+
       // Handle response statuses
-      if (
-        data.status === 201 ||
-        data.msg === "user already exist" ||
-        data.status === 401
-      ) {
+      if (data?.message !== undefined && data?.message === "user already exist") {
+        console.log("start---------")
         toast.success("User registered successfully!");
         setTimeout(() => {
           window.location.reload(); // Only reload if absolutely necessary
         }, 4000);
-      }else if (data?.msg === "Successful registration") {
+      }else if (data?.msg !== undefined && data?.msg === "Successful registration") {
+        console.log("start222222222---------")
         toast.success("User registered successfully!");
         setTimeout(() => {
           window.location.reload(); // Only reload if absolutely necessary
@@ -458,8 +461,6 @@ const LoginStatus = ({ event }) => {
       setLoggedIn(false);
     }
   };
-  
-  
 
   const handleButtonClickEvent = (eventName) => {
     window.dataLayer = window.dataLayer || [];
@@ -475,19 +476,21 @@ const LoginStatus = ({ event }) => {
       // Return an empty string if URL is undefined or null
       return "";
     }
-  
+
     if (url.includes("uploads/https:")) {
+      console.log("-----start1")
       // Correctly handle the case where URL contains "uploads/https:"
       return url.replace("http://api.mypick.is/profile/", "");
-    } else if (url.startsWith("http:") || url.startsWith("https:")) {
+    } else if (url.startsWith("http:") ) {
+      console.log("-----start2")
       // Handle cases where URL starts with "http:" or "https:"
       return url.replace("https://api.mypick.is/profile/", ""); // Adjust according to your actual URL
     } else {
+      console.log("-----start3")
       // Handle default case for any other URLs
       return url.replace("profile/uploads", "profile"); // No real change here
     }
   }
-  
 
   console.log("image", parsedUserPhoto?.photo);
   return (

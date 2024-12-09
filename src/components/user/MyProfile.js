@@ -14,8 +14,7 @@ const MyProfile = () => {
   const [email, setEmail] = useState("");
 
   const [errors, setErrors] = useState({});
-  const storedImage = localStorage.getItem("photo");
-  console.log("storedImage", storedImage);
+ 
   useEffect(() => {
     const body = document.body;
     if (location.state && location.state.modalOpen) {
@@ -258,7 +257,8 @@ const MyProfile = () => {
     }
   }
   
-  console.log(" storedImage?.photo", storedImage?.photo)
+  const storedImage = localStorage.getItem("photo");
+  console.log("storedImage", storedImage);
   return (
     <div className="container contenido">
       <div className="row">
@@ -416,7 +416,7 @@ const MyProfile = () => {
                         src={
                           selectedFileNew
                             ? updateImageUrl(selectedFileNew)
-                            : storedImage?.photo ||
+                            : storedImage ||
                               "https://mypick.is/descarga.png"
                         }
                         alt="Vista previa"
