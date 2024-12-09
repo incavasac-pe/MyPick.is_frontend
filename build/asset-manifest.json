@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.42ea946d.css",
-    "main.js": "/static/js/main.ee4c046a.js",
+    "main.css": "/static/css/main.de70ca41.css",
+    "main.js": "/static/js/main.7594144c.js",
     "static/js/787.63849a88.chunk.js": "/static/js/787.63849a88.chunk.js",
     "static/media/about.jpg": "/static/media/about.738d10091880bae60790.jpg",
     "static/media/logo.png": "/static/media/logo.8925f60ba6407cb06be9.png",
@@ -18,12 +18,12 @@
     "static/media/SpaceGrotesk-Regular.otf": "/static/media/SpaceGrotesk-Regular.2f7eb2452707376fcb59.otf",
     "static/media/x-corp-logo.png": "/static/media/x-corp-logo.5d37a5071bc096abd756.png",
     "index.html": "/index.html",
-    "main.42ea946d.css.map": "/static/css/main.42ea946d.css.map",
-    "main.ee4c046a.js.map": "/static/js/main.ee4c046a.js.map",
+    "main.de70ca41.css.map": "/static/css/main.de70ca41.css.map",
+    "main.7594144c.js.map": "/static/js/main.7594144c.js.map",
     "787.63849a88.chunk.js.map": "/static/js/787.63849a88.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.42ea946d.css",
-    "static/js/main.ee4c046a.js"
+    "static/css/main.de70ca41.css",
+    "static/js/main.7594144c.js"
   ]
 }

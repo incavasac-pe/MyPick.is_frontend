@@ -405,6 +405,7 @@ header .buscador p{
     border-style: none;
     max-width: 100%;
     max-height: 100%;
+    object-fit: cover;
 } 
 #stepWizard .box-flex .columna-refresh   button{
   border: 1px solid #4C5D70;
@@ -1131,6 +1132,7 @@ input:-webkit-autofill:active {
   background-color: transparent;
   border: 0;
   padding: 0;
+  object-fit: cover !important;
 }
 .user-profile button img{
   width: 40px;
@@ -1140,6 +1142,7 @@ input:-webkit-autofill:active {
   -moz-border-radius: 50%;
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
+  object-fit: cover !important;
 }
 .user-profile .dropdown-menu{
   background-color:#1F2129;
@@ -1428,6 +1431,7 @@ input:-webkit-autofill:active {
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
   border: 1px solid #757E95;
+  object-fit: cover;
 }
 .box-editar{
   min-height: 205px;

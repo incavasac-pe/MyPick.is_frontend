@@ -17,7 +17,7 @@ const TableWithPagination = (props) => {
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);    
 
-    fetch(`${API_BASE_URL}/my_bookmarks?email=${parsedUser.email}&id_category=20`, {
+    fetch(`${API_BASE_URL}/my_bookmarks?email=${parsedUser.email}`, {
       method: 'GET',      
       headers: {
         'Content-Type': 'application/json'      
@@ -125,7 +125,7 @@ const handleButtonClick = (eventName) => {
     <span > {decodeHtmlEntities(row.selectd1 >= row.selectd2 ? row.choice1_name : row.choice2_name)}</span>
    ):(
    
-    <a className='text-white' href={removeQueryParams(row.selectd1 >= row.selectd2  ? row?.url1 : row?.url2 )+'?tag=plsq06-20'} target="_blank">
+    <a className='text-white' href={removeQueryParams(row.selectd1 >= row.selectd2  ? row?.url1 : row?.url2 )+'?tag=plsqa-20'} target="_blank">
     <span> {decodeHtmlEntities(row.selectd1 >= row.selectd2 ? row.choice1_name : row.choice2_name)}</span>
           </a>    
    

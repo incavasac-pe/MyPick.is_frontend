@@ -18,6 +18,7 @@ class Comments extends Component {
       mostrarFormularioRespuesta: {},
       login: true,
       userPhoto: parsedUserPhoto,
+      isSubmitButtonClicked: false,
     };
   }
 
@@ -58,6 +59,7 @@ class Comments extends Component {
       method: "POST",
       body: JSON.stringify({
         id_pick: id_pick,
+        username:parsedUser.name ,
         contenido: nuevoComentario,
         email: parsedUser.email,
         photo: "hello",
@@ -189,6 +191,7 @@ class Comments extends Component {
       // this.fetchDataComments(id_pick)
     }
     const handleButtonClick = (eventName) => {
+
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
         event: eventName,
@@ -203,7 +206,7 @@ class Comments extends Component {
           return url.replace('http://mypick.is/profile/uploads/', '') ;
       } else {
     
-          return url.replace('profile', 'api/profile');
+          return url.replace('profile', 'profile');
       }
     }  
 
@@ -335,15 +338,16 @@ class Comments extends Component {
             onChange={this.handleChangeNuevoComentario}
             placeholder="Leave a comment..."
           />
-          {!login && (
+          {!login && isSubmitButtonClicked ? (
             <div className="comments_login">
               Sorry, to continue, you must login.
             </div>
-          )}
+          ) : ""}
           <div className="text-right">
             <button
               className="btn-login"
               onClick={() => {
+                this.setState({ isSubmitButtonClicked: true });
                 this.agregarComentario();
                 handleButtonClick("SubmitComment");
               }}

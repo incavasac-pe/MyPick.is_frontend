@@ -29,7 +29,8 @@ const Home = (props) => {
 
   const [comentarios, setCommentarios] = useState([]);    
   const [nuevoComentario, setnuevoComentario] = useState('');   
-  const [nuevaRespuesta, setnuevaRespuesta] = useState('');    
+  const [nuevaRespuesta, setnuevaRespuesta] = useState('');   
+  const [isSubmitButtonClicked, setSubmitButtonClicked] = useState(false);  
   const [mostrarRespuestas, setmostrarRespuestas] = useState({});   
   const [mostrarFormularioRespuesta, setmostrarFormularioRespuesta] = useState({}); 
   console.log("comentario",comentarios)
@@ -167,7 +168,7 @@ const Home = (props) => {
         return url.replace('http://mypick.is/profile/uploads/', '') ;
     } else {
   
-        return url.replace('profile', 'api/profile');
+        return url.replace('profile', 'profile');
     }
   }  
   const fetchData = async (ip) => {    
@@ -232,7 +233,7 @@ console.log("parsedUser",parsedUser)
         fetch(`${API_BASE_URL}/register_comments`, {
             method: 'POST',
             body: JSON.stringify(
-                {id_pick: id_pick, contenido: nuevoComentario, email: parsedUser.email,photo:parsedUserPhoto?.photo}
+                {id_pick: id_pick, contenido: nuevoComentario,username:parsedUser.name, email: parsedUser.email,photo:parsedUserPhoto?.photo}
             ),
             headers: {
                 'Content-Type': 'application/json'
@@ -381,14 +382,14 @@ console.log("-----------------------",muestras?.[0]?.url_choice1 )
     <span className='text-white font-family-SpaceGrotesk-Bold'> {decodeHtmlEntities(muestras?.[0]?.choice1_name)}</span>
    ):(
    
-    <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice1)+'?tag=plsq06-20'} target="_blank">
+    <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice1)+'?tag=plsqa-20'} target="_blank">
     {muestras?.[0]?.choice1_name.length > 70 ? `${decodeHtmlEntities(muestras?.[0]?.choice1_name.substring(0, 70))}...` : decodeHtmlEntities(muestras?.[0]?.choice1_name)}
   </a> 
    
        
    ) 
 }         
-                           {/* <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice1)+'?tag=plsq06-20'} target="_blank">
+                           {/* <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice1)+'?tag=plsqa-20'} target="_blank">
                         {muestras?.[0]?.choice1_name.length > 70 ? `${decodeHtmlEntities(muestras?.[0]?.choice1_name.substring(0, 70))}...` : decodeHtmlEntities(muestras?.[0]?.choice1_name)}
                       </a> */}
                         </div>
@@ -412,7 +413,7 @@ console.log("-----------------------",muestras?.[0]?.url_choice1 )
     <span className='text-white font-family-SpaceGrotesk-Bold'> {decodeHtmlEntities(muestras?.[0]?.choice2_name)}</span>
    ):(
    
-    <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice2)+'?tag=plsq06-20'} target="_blank">
+    <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice2)+'?tag=plsqa-20'} target="_blank">
                             {muestras?.[0]?.choice2_name.length > 70 ? `${decodeHtmlEntities(muestras?.[0]?.choice2_name.substring(0, 70))}...` : decodeHtmlEntities(muestras?.[0]?.choice2_name)}
                           </a>
    
@@ -456,7 +457,7 @@ console.log("-----------------------",muestras?.[0]?.url_choice1 )
     <span className='text-white font-family-SpaceGrotesk-Bold'> {decodeHtmlEntities(textoActivo)}</span>
    ):(
    
-    <a className='text-white font-family-SpaceGrotesk-Bold'  href={removeQueryParams(urlActivo)+'?tag=plsq06-20'} target="_blank">
+    <a className='text-white font-family-SpaceGrotesk-Bold'  href={removeQueryParams(urlActivo)+'?tag=plsqa-20'} target="_blank">
                                &nbsp;{ decodeHtmlEntities(textoActivo)}
                               </a>
    
@@ -503,7 +504,7 @@ console.log("-----------------------",muestras?.[0]?.url_choice1 )
     <span className='text-white font-family-SpaceGrotesk-Bold'> {muestras?.[0]?.choice1_name.length > 70 ? `${decodeHtmlEntities(muestras?.[0]?.choice1_name.substring(0, 70))}...` : decodeHtmlEntities(muestras?.[0]?.choice1_name)}</span>
    ):(
    
-    <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice1)+'?tag=plsq06-20'} target="_blank"> 
+    <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice1)+'?tag=plsqa-20'} target="_blank"> 
                          {muestras?.[0]?.choice1_name.length > 70 ? `${decodeHtmlEntities(muestras?.[0]?.choice1_name.substring(0, 70))}...` : decodeHtmlEntities(muestras?.[0]?.choice1_name)}</a>
    
        
@@ -533,7 +534,7 @@ console.log("-----------------------",muestras?.[0]?.url_choice1 )
     <span className='text-white font-family-SpaceGrotesk-Bold'>{muestras?.[0]?.choice2_name.length > 70 ? `${decodeHtmlEntities(muestras?.[0]?.choice2_name.substring(0, 70))}...` : decodeHtmlEntities(muestras?.[0]?.choice2_name)}</span>
    ):(
    
-    <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice2)+'?tag=plsq06-20'} target="_blank"> 
+    <a className='text-white font-family-SpaceGrotesk-Bold' href={removeQueryParams(muestras?.[0]?.url_choice2)+'?tag=plsqa-20'} target="_blank"> 
                           {muestras?.[0]?.choice2_name.length > 70 ? `${decodeHtmlEntities(muestras?.[0]?.choice2_name.substring(0, 70))}...` : decodeHtmlEntities(muestras?.[0]?.choice2_name)}
                           </a>
    
@@ -690,14 +691,15 @@ console.log("-----------------------",muestras?.[0]?.url_choice1 )
                             handleChangeNuevoComentario
                         }
                         placeholder="Leave a comment..."/>
-                            {!login && (
+                            {!login && isSubmitButtonClicked ? (
                                 <div className="comments_login">
                                Sorry, to continue, you must login.
                                 </div>
-                            )}  
+                            ): ""}  
                     <div className='text-right'>
                         <button className='btn-login'
                             onClick={() => {
+                             setSubmitButtonClicked(true);
                               agregarComentario();  handleButtonClick("SubmitComment");}
                       }>Comment</button>
                     </div>
@@ -856,7 +858,7 @@ console.log("-----------------------",muestras?.[0]?.url_choice1 )
                             handleChangeNuevoComentario
                         }
                         placeholder="Leave a comment..."/>
-                            {!login && (
+                            {!login &&  (
                                 <div className="comments_login">
                                Sorry, to continue, you must login.
                                 </div>
