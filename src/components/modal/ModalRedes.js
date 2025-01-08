@@ -6,7 +6,7 @@ const ModalRedes =  (props) => {
     const urlToShare = 'https://www.mypick.is/pick/?myPick='+id_pick;
     const urlToShareEndFace = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(urlToShare)}`;  
     const urlToShareEndReddit = `https://www.reddit.com/submit?url=${encodeURIComponent(urlToShare)}`;  
-    const urlToShareEndTwitter = `https://twitter.com/intent/tweet?url=${encodeURIComponent(urlToShare)}"`;  
+    const urlToShareEndTwitter = `https://twitter.com/intent/tweet?url=${encodeURIComponent(urlToShare)}`;  
   
         return (
             <div className='row'>
